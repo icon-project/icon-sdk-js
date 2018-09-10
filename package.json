@@ -3,7 +3,11 @@
   "version": "0.0.1",
   "description": "JavaScript SDK for ICON",
   "main": "index.js",
-  "author": "Sanghoo Park",
+  "author": {
+    "id": "iconfoundation",
+    "name": "icon.foundation",
+    "email": "foo@icon.foundation"
+  },
   "license": "MIT",
   "dependencies": {
     "crypto": "^1.0.1",
