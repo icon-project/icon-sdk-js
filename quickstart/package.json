@@ -1,0 +1,35 @@
+{
+  "name": "icon-sdk-js-quickstart",
+  "version": "1.0.0",
+  "author": {
+    "id": "iconfoundation",
+    "name": "icon.foundation",
+    "email": "foo@icon.foundation"
+  },
+  "description": "ICON Javascript SDK Quickstart Example",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/icon-project/icon-sdk-js/issues"
+  },
+  "homepage": "https://github.com/icon-project/icon-sdk-js/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/icon-project/icon-sdk-js/quickstart"
+  },
+  "main": "./index.js",
+  "scripts": {
+    "start": "webpack-dev-server --config conf/webpack.dev.js"
+  },
+  "devDependencies": {
+    "babel-core": "6.26.0",
+    "babel-eslint": "7.2.3",
+    "babel-loader": "7.1.2",
+    "babel-preset-env": "1.6.0",
+    "clean-webpack-plugin": "0.1.16",
+    "html-webpack-plugin": "2.30.1",
+    "webpack": "3.5.5",
+    "webpack-dev-server": "2.7.1",
+    "webpack-merge": "4.1.0"
+  },
+  "dependencies": {}
+}

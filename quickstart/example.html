@@ -1,0 +1,47 @@
+<html>
+    <head>
+    </head>
+    <body>
+        <div>
+            SDK
+        </div>
+        <script src="../build/icon-sdk-js.js"></script>
+        <script>
+            const IconService = window['icon-sdk-js'];
+            const { IconAmount } = IconService;
+            const url = "https://testwallet.icon.foundation/api/v3"; /* node url */
+            const provider = new IconService.default.providers.HttpProvider(url);
+            // Create IconService instance
+            const iconService = new IconService.default(provider);
+            const { Wallet, Builder, SignedTransaction } = iconService;
+            const { IcxTransactionBuilder } = Builder;
+            const wallet = Wallet.loadPrivateKey('86414d34ff8cdaa2bc335ac8f6bd56a16e15921a6b70ffad24ce47d47435275d');
+            const value = IconAmount.toLoop('1', 'icx');
+            console.log(value);
+            const stepLimit = '0x186a0'
+
+            const icxTimestamp = (new Date()).getTime() * 1000
+            
+            const icxTransactionBuilder = new IcxTransactionBuilder()
+            const transaction = icxTransactionBuilder
+            .nid(2)
+            .from(wallet.getAddress())
+            .to('hx5d61858c20ca7c1676740926faef0bc60ff7dc21')
+            .value(value)
+            .stepLimit(stepLimit)
+            // .stepLimit(0x10000000000990909000)
+            .timestamp(icxTimestamp)
+            .build();
+            const signedTransaction = new SignedTransaction(transaction, wallet)
+            console.log(signedTransaction)
+            console.log(signedTransaction.getProperties())
+           // const txHash = iconService.sendTransaction(signedTransaction.getProperties()).execute();
+           const block = iconService.getBlock('latest').execute();
+            console.log(block);
+//             const transactionResult = iconService.getTransactionResult('0x69c07ff23e2eafb068ec026f1a116082f0d869b3964531e43088f6638bcfe0f7').execute();
+// console.log(transactionResult)
+
+           // const txHash = iconService.sendTransaction(signedTransaction.getProperties()).execute()
+        </script>
+    </body>
+</html>
