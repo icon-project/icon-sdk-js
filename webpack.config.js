@@ -2,10 +2,12 @@
 
 // const webpack = require('webpack');
 const path = require('path');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const { env } = require('yargs').argv; // use --env with webpack 2
 const pkg = require('./package.json');
 
-const libraryName = pkg.name;
+
+const libraryName = 'icon-sdk';
 
 let outputFile;
 let mode;
@@ -34,12 +36,12 @@ const config = {
 			{
 				test: /(\.jsx|\.js)$/,
 				use: [{
-					loader: require.resolve('babel-loader'),
+					loader: 'babel-loader?cacheDirectory',
 					options: {
 						plugins: ['transform-object-rest-spread', '@babel/plugin-transform-runtime'],
 					},
 				}],
-				exclude: /(node_modules|bower_components)/,
+				exclude: /(node_modules|bower_components|quickstart)/,
 			},
 			{
 				test: /(\.jsx|\.js)$/,
@@ -49,8 +51,14 @@ const config = {
 		],
 	},
 	resolve: {
-		modules: [path.resolve('./node_modules'), path.resolve('./src')],
+		modules: [path.resolve('./node_modules')],
 		extensions: ['.json', '.js'],
+	},
+	optimization: {
+		minimizer: [new UglifyJsPlugin({
+			cache: true,
+			parallel: true,
+		})],
 	},
 };
 
