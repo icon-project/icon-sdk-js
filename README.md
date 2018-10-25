@@ -3,26 +3,24 @@
 ICON supports SDK for 3rd party or user services development. You can integrate ICON SDK for your project and utilize ICON’s functionality.
 
 
-
 ## Quick start
 
 A simple query of the balance by address is as follows.
 
 ```javascript
-import IconService, { HttpProvider } from 'icon-sdk-js'
+import IconService, { IconHttpProvider } from 'icon-sdk-js'
 
-const iconService = new IconService(new HttpProvider("https://url"));
+const iconService = new IconService(new IconHttpProvider("https://url"));
 
 const request = iconService.getBalance("hx1987...922");
 try {
     const balance = request.execute()
     ...
 }
-catch (e) {
+catch (error) {
     ...
 }
 ```
-
 
 
 # IconService
@@ -33,9 +31,8 @@ It can be initialized as follows.
 
 ```javascript
 // Creates an instance of IconService using the HTTP provider.
-const iconService = new IconService(new HttpProvider("https://url"));
+const iconService = new IconService(new IconHttpProvider("https://url"));
 ```
-
 
 
 ## Queries
@@ -48,17 +45,10 @@ Once the request has been executed, the request can not be executed again.
 
 ```javascript
 // Synchronized request execution
-const balance = request.execute()
+const balance = request.execute(false)
 
 // Asynchronized request execution
-request.execute(function (error, balance) {
-    if (error) {
-        console.error(error)
-    }
-    else {
-        console.log(balance)
-    }
-})
+const balanceAsync = await reqeust.execute(true)
 ```
 
 The querying APIs are as follows.
@@ -130,7 +120,7 @@ const transaction = transactionBuilder
     .to(scoreAddress)
     .value(new BigNumber("150000000"))
     .stepLimit(new BigNumber("1000000"))
-    .nonce(35)
+    .nonce(new BigNumber("1000000"))
     .build();
 
 // deploy
@@ -151,7 +141,7 @@ const transaction = transactionBuilder
     .to(scoreAddress)
     .value(new BigNumber("150000000"))
     .stepLimit(new BigNumber("1000000"))
-    .nonce(35)
+    .nonce(new BigNumber("1000000"))
     .call("transfer")
     .params(params)
     .build();
@@ -161,9 +151,9 @@ const transaction = transactionBuilder
     .nid(networkId)
     .from(wallet.getAddress())
     .to(scoreAddress)
-    .value(BigInteger("150000000"))
-    .stepLimit(BigInteger("1000000"))
-    .nonce(35)
+    .value(new BigNumber("150000000"))
+    .stepLimit(new BigNumber("1000000"))
+    .nonce(new BigNumber("1000000"))
     .message(message)
     .build();
 ```
@@ -180,15 +170,8 @@ const signedTransaction = new SignedTransaction(transaction, wallet);
 const request = iconService.sendTransaction(signedTransaction);
 
 // Synchronized request execution
-const txHash = request.execute()
+const txHash = request.execute(false)
 
 // Asynchronized request execution
-function callback(error, result) {
-    if (error) {
-        console.error(error)
-    }
-    else {
-        console.log(txHash)
-    }
-}
-const result = request.execute(callback)
+const txHash = await reqeust.execute(true)
+```
