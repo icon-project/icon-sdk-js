@@ -20,7 +20,7 @@ if (env === 'build') {
 
 const config = {
 	mode,
-	entry: `${__dirname}/src/index.js`,
+	entry: `${__dirname}/index.js`,
 	devtool: 'source-map',
 	output: {
 		path: `${__dirname}/build`,
@@ -33,7 +33,12 @@ const config = {
 		rules: [
 			{
 				test: /(\.jsx|\.js)$/,
-				loader: 'babel-loader',
+				use: [{
+					loader: require.resolve('babel-loader'),
+					options: {
+						plugins: ['transform-object-rest-spread', '@babel/plugin-transform-runtime'],
+					},
+				}],
 				exclude: /(node_modules|bower_components)/,
 			},
 			{
