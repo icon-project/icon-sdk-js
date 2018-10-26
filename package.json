@@ -2,7 +2,7 @@
   "name": "icon-sdk-js",
   "version": "0.0.1",
   "description": "JavaScript SDK for ICON",
-  "main": "index.js",
+  "main": "build/icon-sdk-js.min.js",
   "author": {
     "id": "iconfoundation",
     "name": "icon.foundation",
@@ -27,7 +27,7 @@
     "umd",
     "commonjs"
   ],
-  "license": "MIT",
+  "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/icon-project/icon-sdk-js/issues"
   },
