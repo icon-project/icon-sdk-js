@@ -1,5 +1,5 @@
 /* eslint-disable */
-import IconService, { IconAmount, IconConverter, IconHttpProvider } from '../../icon-sdk.min';
+import IconService, { IconAmount, IconConverter, IconHttpProvider } from '../../icon-sdk-js.min';
 import MockData from '../../mockData/index.js';
 
 let icxTransactionExample;
@@ -51,6 +51,7 @@ class IcxTransactionExample {
         document.getElementById('I01-1').innerHTML = `<b>Signed Transaction</b>: ${signedTransactionProperties}`;
         // Send transaction
         this.txHash = this.iconService.sendTransaction(signedTransaction).execute();
+        console.log(this.txHash)
         document.getElementById('I03-1').innerHTML = this.txHash;
         // Print transaction hash
         document.getElementById('I01-2').innerHTML = `<b>Transfer Request Complete.</b> Tx hash is ${this.txHash}`;
