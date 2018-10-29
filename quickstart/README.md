@@ -19,15 +19,14 @@ Please install dependency to use `icon-sdk-js`.
 
 npm
 ```nodejs
-npm install // install basic dependencies for executing the quickstart project
-npm install --save icon-sdk-js // install icon-sdk-js
+npm install   // install basic dependencies for executing the quickstart project
+npm install --save icon-sdk-js   // install icon-sdk-js
 ```
 
 #### Run example file
 Run example file.
 ```nodejs
-npm start
-// open http://localhost:3000/ in browser
+npm start   // open http://localhost:3000/ in browser
 ```
 
 #### Set Node URL
@@ -48,11 +47,10 @@ Generate `IconService` to communicate with the nodes.
 
 ```javascript
 // HttpProvider is used to communicate with http.
-const provider = new IconService.providers.HttpProvider(NODE_URL);
+const provider = new IconHttpProvider(MockData.NODE_URL);
 // Create IconService instance
 const iconService = new IconService(provider);
 ```
-
 
 
 ---
