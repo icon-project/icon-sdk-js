@@ -7,7 +7,7 @@ const { env } = require('yargs').argv; // use --env with webpack 2
 const pkg = require('./package.json');
 
 
-const libraryName = 'icon-sdk';
+const libraryName = 'icon-sdk-js';
 
 let outputFile;
 let mode;
