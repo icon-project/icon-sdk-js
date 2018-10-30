@@ -114,7 +114,7 @@ class DeployTokenExample {
         const stepLimit = this.getMaxStepLimit();
         const walletAddress = this.wallet.getAddress();
         // networkId of node 1:mainnet, 2~:etc
-        const networkId = IconConverter.toBigNumber(2);
+        const networkId = IconConverter.toBigNumber(3);
         const version = IconConverter.toBigNumber(3);
         // Timestamp is used to prevent the identical transactions. Only current time is required (Standard unit : us)
         // If the timestamp is considerably different from the current time, the transaction will be rejected.

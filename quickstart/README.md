@@ -31,9 +31,9 @@ npm start   // open http://localhost:3000/ in browser
 
 #### Set Node URL
 
-If you want to use custom ICON node url, change the value of `NODE_URL` variable in `./mockData/index.js`. Default value of `NODE_URL` is `https://testwallet.icon.foundation/api/v3`
+If you want to use custom ICON node url, change the value of `NODE_URL` variable in `./mockData/index.js`. Default value of `NODE_URL` is `https://bicon.net.solidwallet.io/api/v3`
 ```javascript
-const NODE_URL = 'https://testwallet.icon.foundation/api/v3'; 
+const NODE_URL = 'https://bicon.net.solidwallet.io/api/v3'; 
 ```
 
 
@@ -84,20 +84,20 @@ After creation, address and private Key can be looked up.
 
 ```javascript
 // Load Wallet with private key
-const walletLoadedByPrivateKey = Wallet.loadPrivateKey('86414d34ff8cdaa2bc335ac8f6bd56a16e15921a6b70ffad24ce47d47435275d');
+const walletLoadedByPrivateKey = Wallet.loadPrivateKey('38f792b95a5202ab431bfc799f7e1e5c74ec0b9ede5c6142ee7364f2c84d72f6');
 console.log(walletLoadedByPrivateKey.getAddress());
-// Output: hx56614cd4a1a7fcfd92e9a723b75f6cef04695226
+// Output: hx902ecb51c109183ace539f247b4ea1347fbf23b5
 console.log(walletLoadedByPrivateKey.getPrivateKey());
-// Output: 86414d34ff8cdaa2bc335ac8f6bd56a16e15921a6b70ffad24ce47d47435275d);
+// Output: 38f792b95a5202ab431bfc799f7e1e5c74ec0b9ede5c6142ee7364f2c84d72f6);
 
 // Get keystore object from wallet
 const keystoreFile = walletLoadedByPrivateKey.store('qwer1234!');
 // Load wallet with keystore file
 const walletLoadedByKeyStore = Wallet.loadKeystore(keystoreFile, 'qwer1234!');
 console.log(walletLoadedByKeyStore.getAddress());
-// Output: hx56614cd4a1a7fcfd92e9a723b75f6cef04695226
+// Output: hx902ecb51c109183ace539f247b4ea1347fbf23b5
 console.log(walletLoadedByKeyStore.getPrivateKey());
-// Output: 86414d34ff8cdaa2bc335ac8f6bd56a16e15921a6b70ffad24ce47d47435275d);
+// Output: 38f792b95a5202ab431bfc799f7e1e5c74ec0b9ede5c6142ee7364f2c84d72f6);
 ```
 
 #### Store
@@ -107,30 +107,30 @@ After `Wallet` object creation, Keystore file can be stored by calling `store` f
 After calling `store`, Keystore json object can be looked up with the returned value.
 
 ```javascript
-const privateKey = '86414d34ff8cdaa2bc335ac8f6bd56a16e15921a6b70ffad24ce47d47435275d'
+const privateKey = '38f792b95a5202ab431bfc799f7e1e5c74ec0b9ede5c6142ee7364f2c84d72f6'
 const wallet = Wallet.loadPrivateKey(privateKey);
 console.log(wallet.store('qwer1234!'));
 // Output: 
 // {
-//     "version": 3,
-//     "id": "5cadce02-7925-4dab-838c-efe58e181d5e",
-//     "address": "hx56614cd4a1a7fcfd92e9a723b75f6cef04695226",
-//     "crypto": {
-//         "ciphertext": "5b79944249eda02e524334d5fbd3032cf63ea0b7d52fa19fb2652dc2d0a02ec2",
-//         "cipherparams": {
-//             "iv": "af911ac71940b33abd42bb96c7a31bf1"
-//         },
-//         "cipher": "aes-128-ctr",
-//         "kdf": "scrypt",
-//         "kdfparams": {
-//             "dklen": 32,
-//             "salt": "adc48f5f5719ca1e7709e784e88583ecf633332f0a36f0805837df80703b3cf8",
-//             "n": 16384,
-//             "r": 8,
-//             "p": 1
-//         },
-//         "mac": "35c26237547c0a21f142cf1ae8d9d651d5eebe50f1c16d8608548f9f7ae12531"
-//     }
+// 	"version": 3,
+// 	"id": "e00e113c-1e45-47e4-b732-10f3d1903d75",
+// 	"address": "hx7d3d4c743bb82b927ea8a0551a3b9288e722ac84",
+// 	"crypto": {
+// 		"ciphertext": "d5df37230528bbfc0015e93c61e60041a31fb63266f61ffec60a31f474d4d7d0",
+// 		"cipherparams": {
+// 			"iv": "feaf0cc19678e4b78369904a99ba411e"
+// 		},
+// 		"cipher": "aes-128-ctr",
+// 		"kdf": "scrypt",
+// 		"kdfparams": {
+// 			"dklen": 32,
+// 			"salt": "e2e3666919161044f7b369d6ad4296380d4a13b9b5e844301c64a502ea3da240",
+// 			"n": 16384,
+// 			"r": 8,
+// 			"p": 1
+// 		},
+// 		"mac": "43789e78de4744d06c14cf966b9609fadbcd815b5380caf3f778797f9824d9d7"
+// 	}
 // }
 ```
 
@@ -221,13 +221,13 @@ const signedTransaction = new SignedTransaction(transaction, wallet);
 console.log(signedTransaction.getProperties());
 // Output: 
 // {
-//     from: "hx56614cd4a1a7fcfd92e9a723b75f6cef04695226",
-//     nid: "0x2",
+//     from: "hx902ecb51c109183ace539f247b4ea1347fbf23b5",
+//     nid: "0x3",
 //     nonce: "0x1",
 //     signature: "OE/yJbKn+3kXiC/5x1mvOCpdbTiCAvdlZDgSH31//alTe4kTEVRCETXsQx+Jkbfwa6Qel1PUddoowdkQJDLPrgE=",
 //     stepLimit: "0x186a0",
 //     timestamp: "0x578ed370a3780",
-//     to: "hx5d61858c20ca7c1676740926faef0bc60ff7dc21",
+//     to: "hxd008c05cbc0e689f04a5bb729a66b42377a9a497",
 //     value: "0xde0b6b3a7640000",
 //     version: "0x3",
 // }
@@ -370,7 +370,7 @@ const walletAddress = this.wallet.getAddress();
 const value = IconAmount.of(1, IconAmount.Unit.ICX).toLoop();
 const stepLimit = this.getDefaultStepCost();
 // networkId of node 1:mainnet, 2~:etc
-const networkId = IconConverter.toBigNumber(2);
+const networkId = IconConverter.toBigNumber(3);
 const version = IconConverter.toBigNumber(3);
 // Timestamp is used to prevent the identical transactions. Only current time is required (Standard unit : us)
 // If the timestamp is considerably different from the current time, the transaction will be rejected.
@@ -552,7 +552,7 @@ const installScore = MockData.SCORE_INSTALL_ADDRESS;
 const stepLimit = this.getMaxStepLimit();
 const walletAddress = this.wallet.getAddress();
 // networkId of node 1:mainnet, 2~:etc
-const networkId = IconConverter.toBigNumber(2);
+const networkId = IconConverter.toBigNumber(3);
 const version = IconConverter.toBigNumber(3);
 // Timestamp is used to prevent the identical transactions. Only current time is required (Standard unit : us)
 // If the timestamp is considerably different from the current time, the transaction will be rejected.
