@@ -292,6 +292,20 @@ console.log(balance);
 // 100432143214321432143
 ```
 
+#### Execute functions asynchronously
+
+You can call `IconService` functions asynchronously by adding `true` in first parameter in `execute` function. 
+
+```javascript
+// Get the wallet balance asynchronously.
+// It returns Promise.
+const balancePromise = iconService.getBalance(wallet.getAddress()).execute(true);
+balancePromise.then((balance) => {
+    console.log(balance);
+})
+// Output: 
+// 100432143214321432143
+```
 
 ---
 
