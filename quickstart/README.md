@@ -35,6 +35,9 @@ npm run quickstart:rebuild   // open http://localhost:3000/ in browser
 #### Set Node URL
 
 If you want to use custom ICON node url, change the value of `NODE_URL` variable in `./mockData/index.js`. Default value of `NODE_URL` is `https://bicon.net.solidwallet.io/api/v3`
+
+*For more information on the testnet, see [the documentation](https://github.com/icon-project/icon-project.github.io/blob/master/docs/icon_network.md) for the ICON network.*
+
 ```javascript
 const NODE_URL = 'https://bicon.net.solidwallet.io/api/v3'; 
 ```
