@@ -2,7 +2,7 @@
   "name": "icon-sdk-js",
   "version": "0.0.1",
   "description": "JavaScript SDK for ICON",
-  "main": "index.js",
+  "main": "build/icon-sdk-js.min.js",
   "author": {
     "id": "iconfoundation",
     "name": "icon.foundation",
@@ -12,7 +12,10 @@
     "build": "NODE_PATH=./ webpack --env build",
     "dev": "NODE_PATH=./ webpack --progress --colors --watch --env dev",
     "test": "NODE_PATH=./ mocha --require babel-register --colors ./test/**/*.spec.js",
-    "test:watch": "NODE_PATH=./ mocha --require babel-register --colors -w ./test/**/*.spec.js"
+    "test:watch": "NODE_PATH=./ mocha --require babel-register --colors -w ./test/**/*.spec.js",
+    "quickstart:install": "cd quickstart && npm install",
+    "quickstart:start": "cd quickstart && npm start",
+    "quickstart:rebuild": "NODE_PATH=./ webpack --env build && cd quickstart && npm install && mkdir node_modules/icon-sdk-js; cp -rf ../build ./node_modules/icon-sdk-js/build; cp -rf ../package.json ./node_modules/icon-sdk-js/package.json && npm start"
   },
   "repository": {
     "type": "git",

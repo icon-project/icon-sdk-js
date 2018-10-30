@@ -1,7 +1,7 @@
 /* eslint-disable */
 
 /* eslint-disable */
-import IconService, { IconAmount, IconConverter, IconHttpProvider } from '../../icon-sdk-js.min';
+import IconService, { IconAmount, IconConverter, IconHttpProvider } from 'icon-sdk-js';
 import MockData from '../../mockData/index.js';
 
 let deployTokenExample;
