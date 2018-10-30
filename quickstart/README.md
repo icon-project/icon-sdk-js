@@ -9,24 +9,28 @@ In this project, the examples are implemented as below.
 | WalletExample | An example of creating and loading a wallet. |
 | IcxTransactionExample | An example of transferring ICX and confirming the result. |
 | TokenTransactionExample | An example of transferring IRC token and confirming the result. |
-| DeployTokenExample | An example of deploying token. |
+| DeployAndTransferTokenExample | An example of deploying IRC token and transferring deployed token. |
 | SyncBlockExample | An example of checking block confirmation and printing the ICX and token transfer information. |
 
 ### Get Started
 
 #### Install Dependency
-Please install dependency to use `icon-sdk-js`.
+Please go to `quickstart` directory and install dependency to use `icon-sdk-js`.
 
 npm
-```nodejs
-npm install   // install basic dependencies for executing the quickstart project
-npm install --save icon-sdk-js   // install icon-sdk-js
+```bash
+npm install   // install dependencies for executing the quickstart project (including icon-sdk-js package)
 ```
 
 #### Run example file
 Run example file.
-```nodejs
+```bash
 npm start   // open http://localhost:3000/ in browser
+```
+
+If you want to rebuild icon-sdk-js library and run quickstart project, go to icon-sdk-js root directory and run `npm run quickstart:rebuild` command.
+```bash
+npm run quickstart:rebuild   // open http://localhost:3000/ in browser
 ```
 
 #### Set Node URL
@@ -189,7 +193,7 @@ Generate transaction using the values above.
 
 ```javascript
 // networkId of node 1:mainnet, 2~:etc
-const networkId = new BigNumber("2"); // input node’s networkld
+const networkId = new BigNumber("3"); // input node’s networkld
 const version = new BigNumber("3"); // version
 
 // Recommended icx transfer step limit :
@@ -317,157 +321,13 @@ This example shows how to send token and check the balance.
 
 *For Wallet and IconService generation, please refer to the information above.*
 
-#### Token Transfer
-
-You can send the token (`MockData.TOKEN_ADDRESS`) that is already generated as an example.
-
-You can generate Wallet using `MockData.PRIVATE_KEY_1` just like in the case of `IcxTransactionExample`, then send 1 Token to `MockData.WALLET_ADDRESS_2`
-
-You need token address to send your token.
-
-```javascript
-const wallet = Wallet.loadPrivateKey(MockData.PRIVATE_KEY_1);
-const toAddress = MockData.WALLET_ADDRESS_2;
-const tokenAddress = MockData.TOKEN_ADDRESS; //token Address
-const tokenDecimals = 18; // token decimal
-// 1 ICX -> 1000000000000000000 conversion
-const value = IconAmount.of(1, IconAmount.Unit.ICX).toLoop();
-```
-
-You can get a step cost to send token as follows.
-
-```javascript
-getDefaultStepCost() {
-    const { Builder } = this.iconService;
-    const { CallBuilder } = Builder;
-    
-    // Get apis that provides Governance SCORE
-    // GOVERNANCE_ADDRESS : cx0000000000000000000000000000000000000001
-    const governanceApi = this.iconService.getScoreApi(MockData.GOVERNANCE_ADDRESS).execute();
-    console.log(governanceApi)
-    const methodName = 'getStepCosts';
-
-    // Get step costs by iconService.call
-    const callBuilder = new CallBuilder();
-    const call = callBuilder
-        .to(MockData.GOVERNANCE_ADDRESS)
-        .method(methodName)
-        .build();
-    const stepCosts = this.iconService.call(call).execute();
-    // For sending token, it is about twice the default value.
-    return IconConverter.toBigNumber(stepCosts.default).times(2)
-}
-```
-
-Generate Transaction with the given parameters above. You have to add receiving address and value to param object to send token.
-
-```javascript
-const { Builder } = this.iconService;
-const { CallTransactionBuilder } = Builder;
-
-const walletAddress = this.wallet.getAddress();
-// You can use "governance score apis" to get step costs.
-const value = IconAmount.of(1, IconAmount.Unit.ICX).toLoop();
-const stepLimit = this.getDefaultStepCost();
-// networkId of node 1:mainnet, 2~:etc
-const networkId = IconConverter.toBigNumber(3);
-const version = IconConverter.toBigNumber(3);
-// Timestamp is used to prevent the identical transactions. Only current time is required (Standard unit : us)
-// If the timestamp is considerably different from the current time, the transaction will be rejected.
-const timestamp = (new Date()).getTime() * 1000;
-// SCORE name that send transaction is “transfer”.
-const methodName = "transfer";
-// Enter receiving address and the token value.
-// You must enter the given key name("_to", "_value"). Otherwise, the transaction will be rejected.
-const params = {
-    _to: MockData.WALLET_ADDRESS_2,
-    _value: IconConverter.toHex(value)
-}
-
-//Enter transaction information
-const tokenTransactionBuilder = new CallTransactionBuilder();
-const transaction = tokenTransactionBuilder
-    .nid(networkId)
-    .from(walletAddress)
-    .to(MockData.TOKEN_ADDRESS)
-    .stepLimit(stepLimit)
-    .timestamp(timestamp)
-    .method(methodName)
-    .params(params)
-    .version(version)
-    .build();        
-return transaction;
-```
-
-Generate SignedTransaction to add signature to your transaction.
-
-```javascript
-// Generate transaction signature.
-const signedTokenTransfer = new SignedTransaction(transaction, wallet);
-// Read params to send to nodes.
-console.log(signedTokenTransfer.getProperties());
-```
-
- Call sendTransaction from ‘IconService’ to check the transaction hash. Token transaction is now sent.
-
-```javascript
-// Send transaction
-const tokenTxHash = iconService.sendTransaction(signedTokenTransfer).execute();
-// Print transaction hash
-console.log(tokenTxHash);
-// Output
-// 0x6b17886de346655d96373f2e0de494cb8d7f36ce9086cb15a57d3dcf24523c8f
-```
-
-#### Check the Result
-
-You can check the result with the returned hash value of your transaction.
-
-In this example, you can check your transaction result in every 2 seconds because of the block confirmation time.
-Checking the result is as follows:
-
-```javascript
-// Check the result with the transaction hash
-const transactionResult = iconService.getTransactionResult(tokenTxHash).execute();
-console.log("transaction status(1:success, 0:failure): "+transactionResult.status);
-// Output
-// transaction status(1:success, 0:failure):1
-```
-
-*For the TransactionResult, please refer to the `IcxTransactionExample`.*
-
-#### Check the Token Balance
-
-In this example, you can check the token balance before and after the transaction.
-
-You can check the token balance by calling ‘balanceOf’ from the token SCORE.
-
-```javascript
-const { Builder } = this.iconService;
-const { CallBuilder } = Builder;
-const tokenAddress = MockData.TOKEN_ADDRESS;
-// Method name to check the balance
-const methodName = "balanceOf";
-// You must enter the given key name (“_owner”).
-const params = {
-    _owner: address
-}
-const callBuilder = new CallBuilder();
-const call = callBuilder
-    .to(tokenAddress)
-    .method(methodName)
-    .params(params)
-    .build();
-// Check the wallet balance
-const balance = this.iconService.call(call).execute();
-```
 
 ---
 
 
-### DeployTokenExample
+### DeployAndTransferTokenExample
 
-This example shows how to deploy token and check the result.
+This example shows how to deploy IRC token and transfer deployed token.
 
 *For the Wallet and IconService generation, please refer to the information above.*
 
@@ -586,11 +446,172 @@ const signedTransactionProperties = JSON.stringify(signedTransaction.getProperti
 You can check the transaction hash value by calling sendTransaction from ‘IconService`. Deployment is now completed.
 
 ```javascript
-// Token Transfer
-const transactionResult = this.iconService.getTransactionResult(this.txHash).execute();
+this.deployTxHash = this.iconService.sendTransaction(signedTransaction).execute();
+```
+
+After transaction is sent, the result can be looked up with the returned hash value.
+You can also check the ST Token score address that you deployed.
+
+Checking the result is as follows:
+
+```javascript
+// Check the result with the transaction hash
+const transactionResult = iconService.getTransactionResult(this.deployTxHash).execute();
+
+console.log("transaction status(1:success, 0:failure): "+transactionResult.status);
+console.log("Your score address: " + transactionResult.scoreAddress);
+
+// Output
+// transaction status(1:success, 0:failure): 1
+// Your score address: cx19584dcfacd0d7cc5e0562a53959069213d7adca
 ```
 
 *For the 'TransactionResult', please refer to the `IcxTransactionExample`.*
+
+#### Token Transfer
+
+You can send the ST token that you deployed right before.
+
+You can generate Wallet using `MockData.PRIVATE_KEY_1` just like in the case of `IcxTransactionExample`, then send 1 ST Token to `MockData.WALLET_ADDRESS_2`
+
+You need token address to send your token.
+
+```javascript
+const wallet = Wallet.loadPrivateKey(MockData.PRIVATE_KEY_1);
+const toAddress = MockData.WALLET_ADDRESS_2;
+const tokenAddress = this.scoreAddress; //ST Token Address that you deployed
+const tokenDecimals = 18; // token decimal
+// 1 ICX -> 1000000000000000000 conversion
+const value = IconAmount.of(1, IconAmount.Unit.ICX).toLoop();
+```
+
+You can get a step cost to send token as follows.
+
+```javascript
+getDefaultStepCost() {
+    const { Builder } = this.iconService;
+    const { CallBuilder } = Builder;
+    
+    // Get apis that provides Governance SCORE
+    // GOVERNANCE_ADDRESS : cx0000000000000000000000000000000000000001
+    const governanceApi = this.iconService.getScoreApi(MockData.GOVERNANCE_ADDRESS).execute();
+    console.log(governanceApi)
+    const methodName = 'getStepCosts';
+
+    // Get step costs by iconService.call
+    const callBuilder = new CallBuilder();
+    const call = callBuilder
+        .to(MockData.GOVERNANCE_ADDRESS)
+        .method(methodName)
+        .build();
+    const stepCosts = this.iconService.call(call).execute();
+    // For sending token, it is about twice the default value.
+    return IconConverter.toBigNumber(stepCosts.default).times(2)
+}
+```
+
+Generate Transaction with the given parameters above. You have to add receiving address and value to param object to send token.
+
+```javascript
+const { Builder } = this.iconService;
+const { CallTransactionBuilder } = Builder;
+
+const walletAddress = this.wallet.getAddress();
+// You can use "governance score apis" to get step costs.
+const value = IconAmount.of(1, IconAmount.Unit.ICX).toLoop();
+const stepLimit = this.getDefaultStepCost();
+// networkId of node 1:mainnet, 2~:etc
+const networkId = IconConverter.toBigNumber(3);
+const version = IconConverter.toBigNumber(3);
+// Timestamp is used to prevent the identical transactions. Only current time is required (Standard unit : us)
+// If the timestamp is considerably different from the current time, the transaction will be rejected.
+const timestamp = (new Date()).getTime() * 1000;
+// SCORE name that send transaction is “transfer”.
+const methodName = "transfer";
+// Enter receiving address and the token value.
+// You must enter the given key name("_to", "_value"). Otherwise, the transaction will be rejected.
+const params = {
+    _to: MockData.WALLET_ADDRESS_2,
+    _value: IconConverter.toHex(value)
+}
+
+//Enter transaction information
+const tokenTransactionBuilder = new CallTransactionBuilder();
+const transaction = tokenTransactionBuilder
+    .nid(networkId)
+    .from(walletAddress)
+    .to(this.scoreAddress)
+    .stepLimit(stepLimit)
+    .timestamp(timestamp)
+    .method(methodName)
+    .params(params)
+    .version(version)
+    .build();        
+return transaction;
+```
+
+Generate SignedTransaction to add signature to your transaction.
+
+```javascript
+// Generate transaction signature.
+const signedTokenTransfer = new SignedTransaction(transaction, wallet);
+// Read params to send to nodes.
+console.log(signedTokenTransfer.getProperties());
+```
+
+ Call sendTransaction from ‘IconService’ to check the transaction hash. Token transaction is now sent.
+
+```javascript
+// Send transaction
+this.transactionTxHash = iconService.sendTransaction(signedTokenTransfer).execute();
+// Print transaction hash
+console.log(this.transactionTxHash);
+// Output
+// 0x6b17886de346655d96373f2e0de494cb8d7f36ce9086cb15a57d3dcf24523c8f
+```
+
+#### Check the Result
+
+You can check the result with the returned hash value of your transaction.
+
+In this example, you can check your transaction result in every 2 seconds because of the block confirmation time.
+Checking the result is as follows:
+
+```javascript
+// Check the result with the transaction hash
+const transactionResult = iconService.getTransactionResult(this.transactionTxHash).execute();
+console.log("transaction status(1:success, 0:failure): "+transactionResult.status);
+// Output
+// transaction status(1:success, 0:failure):1
+```
+
+*For the TransactionResult, please refer to the `IcxTransactionExample`.*
+
+#### Check the Token Balance
+
+In this example, you can check the token balance before and after the transaction.
+
+You can check the token balance by calling ‘balanceOf’ from the token SCORE.
+
+```javascript
+const { Builder } = this.iconService;
+const { CallBuilder } = Builder;
+const tokenAddress = this.scoreAddress;
+// Method name to check the balance
+const methodName = "balanceOf";
+// You must enter the given key name (“_owner”).
+const params = {
+    _owner: address
+}
+const callBuilder = new CallBuilder();
+const call = callBuilder
+    .to(tokenAddress)
+    .method(methodName)
+    .params(params)
+    .build();
+// Check the wallet balance
+const balance = this.iconService.call(call).execute();
+```
 
 
 

@@ -11,26 +11,19 @@ ICON supports SDK for 3rd party or user services development. You can integrate 
 npm install icon-sdk-js
 ```
 
-
 ## Quick start
 
-A simple query of the balance by address is as follows.
+Quickstart is an example project of Icon SDK Javascript.
+Detail description is written in `readme` file in quickstart directory .
 
-```javascript
-import IconService, { IconHttpProvider } from 'icon-sdk-js'
 
-const iconService = new IconService(new IconHttpProvider("https://url"));
+### Rebuild icon-sdk-js and Run quickstart
 
-const request = iconService.getBalance("hx1987...922");
-try {
-    const balance = request.execute()
-    ...
-}
-catch (error) {
-    ...
-}
+If you want to rebuild icon-sdk-js library and run quickstart project, run `npm run quickstart:rebuild` command at icon-sdk-js root directory.
+
+```bash
+npm run quickstart:rebuild   // open http://localhost:3000/ in browser
 ```
-
 
 ## IconService
 
