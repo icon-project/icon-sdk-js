@@ -14,6 +14,9 @@ In this project, the examples are implemented as below.
 ### Get Started
 
 #### Install Dependency
+**TODO: Currently, icon-sdk-js is not uploaded on npm, so if you want to run quickstart project, please use `npm run quickstart:rebuild` command at icon-sdk-js root directory.**
+
+<!---
 Please go to `quickstart` directory and install dependency to use `icon-sdk-js`.
 
 npm
@@ -26,7 +29,7 @@ Run example file.
 ```bash
 npm start   // open http://localhost:3000/ in browser
 ```
-
+-->
 If you want to rebuild icon-sdk-js library and run quickstart project, go to icon-sdk-js root directory and run `npm run quickstart:rebuild` command.
 ```bash
 npm run quickstart:rebuild   // open http://localhost:3000/ in browser
