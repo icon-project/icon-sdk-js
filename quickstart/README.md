@@ -8,7 +8,6 @@ In this project, the examples are implemented as below.
 | ------------- | ----------- |
 | WalletExample | An example of creating and loading a wallet. |
 | IcxTransactionExample | An example of transferring ICX and confirming the result. |
-| TokenTransactionExample | An example of transferring IRC token and confirming the result. |
 | DeployAndTransferTokenExample | An example of deploying IRC token and transferring deployed token. |
 | SyncBlockExample | An example of checking block confirmation and printing the ICX and token transfer information. |
 
@@ -310,17 +309,6 @@ balancePromise.then((balance) => {
 // Output: 
 // 100432143214321432143
 ```
-
----
-
-
-
-### TokenTransactionExample
-
-This example shows how to send token and check the balance.
-
-*For Wallet and IconService generation, please refer to the information above.*
-
 
 ---
 
