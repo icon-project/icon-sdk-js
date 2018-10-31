@@ -31,5 +31,7 @@
     "webpack-dev-server": "2.7.1",
     "webpack-merge": "4.1.0"
   },
-  "dependencies": {}
+  "dependencies": {
+    "icon-sdk-js": "^0.0.3"
+  }
 }
