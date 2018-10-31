@@ -5,7 +5,8 @@ ICON supports SDK for 3rd party or user services development. You can integrate 
 
 ## Installation
 
-**TODO: Currently, icon-sdk-js is not uploaded on npm, so if you want to use icon-sdk-js, please use build file in `build` directory.**
+
+**TODO: Currently, icon-sdk-js is not uploaded on npm, so if you want to use icon-sdk-js, please import package from cdn.**
 
 <!--
 ### Node.js
@@ -13,6 +14,14 @@ ICON supports SDK for 3rd party or user services development. You can integrate 
 npm install icon-sdk-js
 ```
 -->
+
+CDN
+
+`icon-sdk-js` is available over a CDN.
+```html
+<script src="https://cdn.jsdelivr.net/gh/icon-project/icon-sdk-js/build/icon-sdk-js.min.js"></script>
+```
+
 
 ## Quick start
 
