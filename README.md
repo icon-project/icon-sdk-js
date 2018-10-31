@@ -36,7 +36,7 @@ It can be initialized as follows.
 
 ```javascript
 // Creates an instance of IconService using the HTTP provider.
-const iconService = new IconService(new IconHttpProvider("https://url"));
+const iconService = new IconService(new HttpProvider("https://url"));
 ```
 
 

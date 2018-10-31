@@ -1,5 +1,6 @@
 /* eslint-disable */
-import IconService, { IconAmount, IconConverter, IconHttpProvider } from 'icon-sdk-js';
+
+import IconService, { IconAmount, IconConverter, HttpProvider, IconWallet, IconBuilder, SignedTransaction } from 'icon-sdk-js';
 import MockData from '../../mockData/index.js';
 
 let icxTransactionExample;
@@ -8,14 +9,13 @@ class IcxTransactionExample {
 	constructor() {
 
 		// HttpProvider is used to communicate with http.
-		this.provider = new IconHttpProvider(MockData.NODE_URL);
+		this.provider = new HttpProvider(MockData.NODE_URL);
 		
 		// Create IconService instance
         this.iconService = new IconService(this.provider);
         
         // Load wallet
-        const { Wallet } = this.iconService;
-        this.wallet = Wallet.loadPrivateKey(MockData.PRIVATE_KEY_1);
+        this.wallet = IconWallet.loadPrivateKey(MockData.PRIVATE_KEY_1);
         this.txHash = '';
 
         this.addListener();
@@ -41,7 +41,6 @@ class IcxTransactionExample {
     }
 
     sendTransaction() {
-        const { SignedTransaction } = this.iconService;
         // Build raw transaction object
         const transaction = this.buildICXTransaction();
         // Create signature of the transaction
@@ -58,8 +57,7 @@ class IcxTransactionExample {
     }
 
     buildICXTransaction() {
-        const { Builder } = this.iconService;
-        const { IcxTransactionBuilder } = Builder;
+        const { IcxTransactionBuilder } = IconBuilder;
 
         const walletAddress = this.wallet.getAddress();
         // 1 ICX -> 1000000000000000000 conversion
@@ -88,8 +86,7 @@ class IcxTransactionExample {
     }
 
     getDefaultStepCost() {
-        const { Builder } = this.iconService;
-        const { CallBuilder } = Builder;
+        const { CallBuilder } = IconBuilder;
         
         // Get governance score api list
         const governanceApi = this.iconService.getScoreApi(MockData.GOVERNANCE_ADDRESS).execute();

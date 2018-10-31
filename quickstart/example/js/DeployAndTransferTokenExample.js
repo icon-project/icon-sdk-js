@@ -1,7 +1,6 @@
 /* eslint-disable */
 
-/* eslint-disable */
-import IconService, { IconAmount, IconConverter, IconHttpProvider } from 'icon-sdk-js';
+import IconService, { IconAmount, IconConverter, HttpProvider, IconWallet, IconBuilder, SignedTransaction } from 'icon-sdk-js';
 import MockData from '../../mockData/index.js';
 
 let deployAndTransferTokenExample;
@@ -9,14 +8,13 @@ let deployAndTransferTokenExample;
 class DeployAndTransferTokenExample {
 	constructor() {
 		// HttpProvider is used to communicate with http.
-		this.provider = new IconHttpProvider(MockData.NODE_URL);
+		this.provider = new HttpProvider(MockData.NODE_URL);
 		
 		// Create IconService instance
         this.iconService = new IconService(this.provider);
         
         // Load wallet
-        const { Wallet } = this.iconService;
-        this.wallet = Wallet.loadPrivateKey(MockData.PRIVATE_KEY_1);
+        this.wallet = IconWallet.loadPrivateKey(MockData.PRIVATE_KEY_1);
         
         this.deployTxHash = '';
         this.transactionTxHash = '';
@@ -96,7 +94,6 @@ class DeployAndTransferTokenExample {
     }
 
     deployScore() {
-        const { SignedTransaction } = this.iconService;
         // Build raw transaction object
         const transaction = this.buildDeployTransaction();
         // Create signature of the transaction
@@ -112,8 +109,7 @@ class DeployAndTransferTokenExample {
     }
 
     buildDeployTransaction() {
-        const { Builder } = this.iconService;
-        const { DeployTransactionBuilder } = Builder;
+        const { DeployTransactionBuilder } = IconBuilder;
 
         const initialSupply = IconConverter.toBigNumber("100000000000");
         const decimals = IconConverter.toBigNumber("18");
@@ -156,8 +152,7 @@ class DeployAndTransferTokenExample {
     }
 
     getMaxStepLimit() {
-        const { Builder } = this.iconService;
-        const { CallBuilder } = Builder;
+        const { CallBuilder } = IconBuilder;
         
         const governanceApi = this.iconService.getScoreApi(MockData.GOVERNANCE_ADDRESS).execute();
         // "getMaxStepLimit" : the maximum step limit value that any SCORE execution should be bounded by.
@@ -204,7 +199,6 @@ class DeployAndTransferTokenExample {
             return;
         }
 
-        const { SignedTransaction } = this.iconService;
         // Build raw transaction object
         const transaction = this.buildTokenTransaction();
         // Create signature of the transaction
@@ -220,8 +214,7 @@ class DeployAndTransferTokenExample {
     }
 
     buildTokenTransaction() {
-        const { Builder } = this.iconService;
-        const { CallTransactionBuilder } = Builder;
+        const { CallTransactionBuilder } = IconBuilder;
 
         const walletAddress = this.wallet.getAddress();
         // You can use "governance score apis" to get step costs.
@@ -258,8 +251,7 @@ class DeployAndTransferTokenExample {
     }
 
     getDefaultStepCost() {
-        const { Builder } = this.iconService;
-        const { CallBuilder } = Builder;
+        const { CallBuilder } = IconBuilder;
         
         // Get governance score api list
         const governanceApi = this.iconService.getScoreApi(MockData.GOVERNANCE_ADDRESS).execute();
@@ -287,8 +279,7 @@ class DeployAndTransferTokenExample {
             document.getElementById('D04-1').innerHTML = 'Deploy ST Token and check deployment transaction first.';
         }
 
-        const { Builder } = this.iconService;
-        const { CallBuilder } = Builder;
+        const { CallBuilder } = IconBuilder;
         const tokenAddress = this.scoreAddress;
         // Method name to check the balance
         const methodName = "balanceOf";

@@ -1,22 +1,15 @@
 /* eslint-disable */
-import IconService, { IconAmount, IconConverter, IconHttpProvider } from 'icon-sdk-js';
+
+import { IconWallet } from 'icon-sdk-js';
 import MockData from '../../mockData/index.js';
 
 let walletExample;
 
 class WalletExample {
 	constructor() {
-
-		// HttpProvider is used to communicate with http.
-		const provider = new IconHttpProvider(MockData.NODE_URL);
-
-		// Create IconService instance
-		const iconService = new IconService(provider);
-		const { Wallet } = iconService;
-
 		// 1. Create Wallet
 		document.getElementById('W01').addEventListener('click', () => {
-			const wallet = Wallet.create(); //Wallet Creation
+			const wallet = IconWallet.create(); //Wallet Creation
 			const address = wallet.getAddress(); // Get Address
 			const privateKey = wallet.getPrivateKey(); // Get Private Key
 
@@ -27,7 +20,7 @@ class WalletExample {
 		// 2. Store Wallet
 		document.getElementById('W02').addEventListener('click', () => {
 			const privateKey = MockData.PRIVATE_KEY_1;
-			const wallet = Wallet.loadPrivateKey(privateKey);
+			const wallet = IconWallet.loadPrivateKey(privateKey);
 			const keystore = wallet.store(MockData.PASSWORD);
 
 			document.getElementById('W02-1').innerHTML = `Keystore object: ${JSON.stringify(keystore)}`;
@@ -36,7 +29,7 @@ class WalletExample {
 
 		// 3. Load Wallet By Keystore File
 		document.getElementById('W03').addEventListener('click', () => {
-			const walletLoadedByKeystoreFile = Wallet.loadKeystore(MockData.KEYSTORE_FILE, MockData.PASSWORD);
+			const walletLoadedByKeystoreFile = IconWallet.loadKeystore(MockData.KEYSTORE_FILE, MockData.PASSWORD);
 
 			document.getElementById('W03-1').innerHTML = `Address: ${walletLoadedByKeystoreFile.getAddress()}`;
 			document.getElementById('W03-2').innerHTML = `Successfully loaded.`;
@@ -44,7 +37,7 @@ class WalletExample {
 
 		// 4. Load Wallet By Private Key
 		document.getElementById('W04').addEventListener('click', () => {
-			const walletLoadedByPrivateKey = Wallet.loadPrivateKey(MockData.PRIVATE_KEY_1);
+			const walletLoadedByPrivateKey = IconWallet.loadPrivateKey(MockData.PRIVATE_KEY_1);
 
 			document.getElementById('W04-1').innerHTML = `Address: ${walletLoadedByPrivateKey.getAddress()}`;
 			document.getElementById('W04-2').innerHTML = `Successfully loaded.`;

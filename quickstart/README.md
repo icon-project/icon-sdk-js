@@ -56,7 +56,7 @@ Generate `IconService` to communicate with the nodes.
 
 ```javascript
 // HttpProvider is used to communicate with http.
-const provider = new IconHttpProvider(MockData.NODE_URL);
+const provider = new HttpProvider(MockData.NODE_URL);
 // Create IconService instance
 const iconService = new IconService(provider);
 ```
@@ -75,8 +75,7 @@ This example shows how to create a new `Wallet` and load wallet with privateKey 
 Create new EOA by calling `create` function. After creation, the address and private Key can be looked up.
 
 ```javascript
-const { Wallet } = iconService;
-const wallet = Wallet.create(); //Wallet Creation
+const wallet = IconWallet.create(); //Wallet Creation
 console.log("Address: " + wallet.getAddress()); // Address Check
 console.log("PrivateKey: " + wallet.getPrivateKey()); // PrivateKey Check
 
@@ -93,7 +92,7 @@ After creation, address and private Key can be looked up.
 
 ```javascript
 // Load Wallet with private key
-const walletLoadedByPrivateKey = Wallet.loadPrivateKey('38f792b95a5202ab431bfc799f7e1e5c74ec0b9ede5c6142ee7364f2c84d72f6');
+const walletLoadedByPrivateKey = IconWallet.loadPrivateKey('38f792b95a5202ab431bfc799f7e1e5c74ec0b9ede5c6142ee7364f2c84d72f6');
 console.log(walletLoadedByPrivateKey.getAddress());
 // Output: hx902ecb51c109183ace539f247b4ea1347fbf23b5
 console.log(walletLoadedByPrivateKey.getPrivateKey());
@@ -102,7 +101,7 @@ console.log(walletLoadedByPrivateKey.getPrivateKey());
 // Get keystore object from wallet
 const keystoreFile = walletLoadedByPrivateKey.store('qwer1234!');
 // Load wallet with keystore file
-const walletLoadedByKeyStore = Wallet.loadKeystore(keystoreFile, 'qwer1234!');
+const walletLoadedByKeyStore = IconWallet.loadKeystore(keystoreFile, 'qwer1234!');
 console.log(walletLoadedByKeyStore.getAddress());
 // Output: hx902ecb51c109183ace539f247b4ea1347fbf23b5
 console.log(walletLoadedByKeyStore.getPrivateKey());
@@ -117,7 +116,7 @@ After calling `store`, Keystore json object can be looked up with the returned v
 
 ```javascript
 const privateKey = '38f792b95a5202ab431bfc799f7e1e5c74ec0b9ede5c6142ee7364f2c84d72f6'
-const wallet = Wallet.loadPrivateKey(privateKey);
+const wallet = IconWallet.loadPrivateKey(privateKey);
 console.log(wallet.store('qwer1234!'));
 // Output: 
 // {
@@ -160,7 +159,7 @@ This example shows how to transfer ICX and check the result.
 In this example, you can create Wallet with `MockData.PRIVATE_KEY_1` and transfer 1 ICX to `MockData.WALLET_ADDRESS_2`.
 
 ```javascript
-const wallet = Wallet.loadPrivateKey(MockData.PRIVATE_KEY_1);
+const wallet = IconWallet.loadPrivateKey(MockData.PRIVATE_KEY_1);
 const walletAddress = wallet.getAddress();
 // 1 ICX -> 1000000000000000000 conversion
 const value = IconAmount.of(1, IconAmount.Unit.ICX).toLoop();
@@ -172,8 +171,7 @@ You can get a step cost for transfering icx as follows.
 
 ```javascript
 getDefaultStepCost() {
-    const { Builder } = this.iconService;
-    const { CallBuilder } = Builder;
+    const { CallBuilder } = IconBuilder;
     
     // Get apis that provides Governance SCORE
     const governanceApi = this.iconService.getScoreApi(MockData.GOVERNANCE_ADDRESS).execute();
@@ -292,7 +290,7 @@ ICX balance can be confirmed by calling getBalance function from `IconService`
 
 ```javascript
 // create or load wallet
-const wallet = Wallet.loadPrivateKey(MockData.PRIVATE_KEY_2);
+const wallet = IconWallet.loadPrivateKey(MockData.PRIVATE_KEY_2);
 // Check the wallet balance
 const balance = iconService.getBalance(wallet.getAddress()).execute();
 console.log(balance);
@@ -337,7 +335,7 @@ Generate wallet using `MockData.PRIVATE_KEY_1`, then read the binary data from �
 
 ```javascript
 const { Wallet } = this.iconService;
-this.wallet = Wallet.loadPrivateKey(MockData.PRIVATE_KEY_1);
+this.wallet = IconWallet.loadPrivateKey(MockData.PRIVATE_KEY_1);
 
 this.content = '';
 // Read test.zi from ‘resources’ folder.
@@ -358,8 +356,7 @@ You can get the maximum step limit value as follows.
 // Get apis that provides Governance SCORE
 // GOVERNANCE_ADDRESS : cx0000000000000000000000000000000000000001
  getMaxStepLimit() {
-    const { Builder } = this.iconService;
-    const { CallBuilder } = Builder;
+    const { CallBuilder } = IconBuilder;
     
     const governanceApi = this.iconService.getScoreApi(MockData.GOVERNANCE_ADDRESS).execute();
     // "getMaxStepLimit" : the maximum step limit value that any SCORE execution should be bounded by.
@@ -385,8 +382,7 @@ You can get the maximum step limit value as follows.
 Generate transaction with the given values above.
 
 ```javascript
-const { Builder } = this.iconService;
-const { DeployTransactionBuilder } = Builder;
+const { DeployTransactionBuilder } = IconBuilder;
 
 const initialSupply = IconConverter.toBigNumber("100000000000");
 const decimals = IconConverter.toBigNumber("18");
@@ -471,7 +467,7 @@ You can generate Wallet using `MockData.PRIVATE_KEY_1` just like in the case of 
 You need token address to send your token.
 
 ```javascript
-const wallet = Wallet.loadPrivateKey(MockData.PRIVATE_KEY_1);
+const wallet = IconWallet.loadPrivateKey(MockData.PRIVATE_KEY_1);
 const toAddress = MockData.WALLET_ADDRESS_2;
 const tokenAddress = this.scoreAddress; //ST Token Address that you deployed
 const tokenDecimals = 18; // token decimal
@@ -483,8 +479,7 @@ You can get a step cost to send token as follows.
 
 ```javascript
 getDefaultStepCost() {
-    const { Builder } = this.iconService;
-    const { CallBuilder } = Builder;
+    const { CallBuilder } = IconBuilder;
     
     // Get apis that provides Governance SCORE
     // GOVERNANCE_ADDRESS : cx0000000000000000000000000000000000000001
@@ -507,8 +502,7 @@ getDefaultStepCost() {
 Generate Transaction with the given parameters above. You have to add receiving address and value to param object to send token.
 
 ```javascript
-const { Builder } = this.iconService;
-const { CallTransactionBuilder } = Builder;
+const { CallTransactionBuilder } = IconBuilder;
 
 const walletAddress = this.wallet.getAddress();
 // You can use "governance score apis" to get step costs.
@@ -588,8 +582,7 @@ In this example, you can check the token balance before and after the transactio
 You can check the token balance by calling ‘balanceOf’ from the token SCORE.
 
 ```javascript
-const { Builder } = this.iconService;
-const { CallBuilder } = Builder;
+const { CallBuilder } = IconBuilder;
 const tokenAddress = this.scoreAddress;
 // Method name to check the balance
 const methodName = "balanceOf";
@@ -694,8 +687,7 @@ You can check the token SCORE by calling the `name` and `symbol` functions.
 
 ```javascript
 getTokenName(to) {
-    const { Builder } = this.iconService;
-    const { CallBuilder } = Builder;
+    const { CallBuilder } = IconBuilder;
     const tokenAddress = to; // token address
     const callBuilder = new CallBuilder();
     const call = callBuilder
@@ -708,8 +700,7 @@ getTokenName(to) {
 ```
 ```javascript
 getTokenSymbol(to) {
-    const { Builder } = this.iconService;
-    const { CallBuilder } = Builder;
+    const { CallBuilder } = IconBuilder;
     const tokenAddress = to; // token address
     const callBuilder = new CallBuilder();
     const call = callBuilder

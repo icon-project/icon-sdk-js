@@ -1,7 +1,6 @@
 /* eslint-disable */
 
-/* eslint-disable */
-import IconService, { IconAmount, IconConverter, IconHttpProvider } from 'icon-sdk-js';
+import IconService, { IconConverter, HttpProvider } from 'icon-sdk-js';
 import MockData from '../../mockData/index.js';
 
 let syncBlockExample;
@@ -9,7 +8,7 @@ let syncBlockExample;
 class SyncBlockExample {
 	constructor() {
 		// HttpProvider is used to communicate with http.
-		this.provider = new IconHttpProvider(MockData.NODE_URL);
+		this.provider = new HttpProvider(MockData.NODE_URL);
 		
 		// Create IconService instance
         this.iconService = new IconService(this.provider);
