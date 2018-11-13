@@ -14,7 +14,7 @@ npm install --save icon-sdk-js
 
 `icon-sdk-js` is available over a CDN.
 ```html
-<script src="https://cdn.jsdelivr.net/gh/icon-project/icon-sdk-js/build/icon-sdk-js.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/icon-project/icon-sdk-js@latest/build/icon-sdk-js.min.js"></script>
 ```
 
 
