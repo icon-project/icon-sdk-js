@@ -6,7 +6,7 @@
     "name": "icon.foundation",
     "email": "foo@icon.foundation"
   },
-  "description": "ICON Javascript SDK Quickstart Example",
+  "description": "ICON JavaScript SDK Quickstart Example",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/icon-project/icon-sdk-js/issues"
@@ -32,6 +32,6 @@
     "webpack-merge": "4.1.0"
   },
   "dependencies": {
-    "icon-sdk-js": "^0.0.4"
+    "icon-sdk-js": "^0.0.5"
   }
 }

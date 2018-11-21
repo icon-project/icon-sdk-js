@@ -1,6 +1,6 @@
-# ICON SDK Javascript Quickstart
+# ICON SDK JavaScript Quickstart
 
-This is an example project of Icon SDK Javascript.
+This is an example project of Icon SDK JavaScript.
 
 In this project, the examples are implemented as below.
 
