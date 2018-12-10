@@ -2,18 +2,20 @@
   "name": "icon-sdk-js",
   "version": "0.0.5",
   "description": "JavaScript SDK for ICON",
-  "main": "build/icon-sdk-js.min.js",
+  "main": "./build/icon-sdk-js.node.js",
   "author": {
     "id": "iconfoundation",
     "name": "icon.foundation",
     "email": "foo@icon.foundation"
   },
   "scripts": {
+    "build:node": "NODE_PATH=./ webpack --env build && cd quickstart && cp -rf ../build ./node_modules/icon-sdk-js && node node.js",
+    "build:native": "NODE_PATH=./ webpack --env build && cd ../react-native-test && cp -rf ../icon-sdk-js/build ./ && expo start",
     "build": "NODE_PATH=./ webpack --env build",
     "dev": "NODE_PATH=./ webpack --progress --colors --watch --env dev",
     "test": "NODE_PATH=./ mocha --require babel-register --colors ./test/**/*.spec.js",
     "test:watch": "NODE_PATH=./ mocha --require babel-register --colors -w ./test/**/*.spec.js",
-    "quickstart:rebuild": "eslint --fix lib && NODE_PATH=./ webpack --env build && cd quickstart && npm install && mkdir node_modules/icon-sdk-js; cp -rf ../build ./node_modules/icon-sdk-js/; cp -rf ../package.json ./node_modules/icon-sdk-js/package.json && npm start"
+    "quickstart:rebuild": "eslint --fix lib && NODE_PATH=./ webpack --env build && cd quickstart && npm install && mkdir ./node_modules/icon-sdk-js; cp -rf ../build ./node_modules/icon-sdk-js; cp -rf ../package.json ./node_modules/icon-sdk-js/package.json && npm start"
   },
   "repository": {
     "type": "git",
@@ -62,14 +64,12 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.1.2",
-    "axios": "^0.18.0",
     "bignumber.js": "^7.2.1",
-    "crypto": "^1.0.1",
     "js-sha3": "^0.8.0",
-    "scryptsy": "^2.0.0",
     "secp256k1": "^3.5.2",
     "sync-request": "^6.0.0",
     "uuid": "^3.3.2",
-    "xhr": "^2.5.0"
-  }
+    "xmlhttprequest": "^1.8.0"
+  },
+  "browser": "./build/icon-sdk-js.web.js"
 }

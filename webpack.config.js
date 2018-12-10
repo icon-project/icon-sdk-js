@@ -1,35 +1,49 @@
 /* global __dirname, require, module */
+/* eslint-disable */
 
-// const webpack = require('webpack');
+const webpack = require('webpack');
 const path = require('path');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const { env } = require('yargs').argv; // use --env with webpack 2
-const pkg = require('./package.json');
+const LIBRARY_NAME = 'icon-sdk-js';
+const MODE = {
+	PROD: 'production',
+	DEV: 'development'
+};
+const TARGET = {
+	WEB: 'web',
+	NODE: 'node'
+};
 
+const mode = env !== 'build' ? MODE.PROD : MODE.DEV;
 
-const libraryName = 'icon-sdk-js';
+const setLibraryName = (libraryName, target, mode) => (
+	`${libraryName}.${target}.${mode === MODE.PROD ? 'min.js' : 'js'}`
+);
 
-let outputFile;
-let mode;
+const setPlugin = (target) => (
+	target === 'web' ? [
+		new webpack.NormalModuleReplacementPlugin(/(.*)\/module\/node\.js(.*)/, function (resource) {
+			resource.request = resource.request.replace(/node/, `browser`);
+		})
+	] : []
+);
 
-if (env === 'build') {
-	mode = 'production';
-	outputFile = `${libraryName}.min.js`;
-} else {
-	mode = 'development';
-	outputFile = `${libraryName}.js`;
-}
-
-const config = {
+const config = (target) => ({
 	mode,
 	entry: `${__dirname}/index.js`,
 	devtool: 'source-map',
+	target,
 	output: {
 		path: `${__dirname}/build`,
-		filename: outputFile,
-		library: libraryName,
+		filename: setLibraryName(LIBRARY_NAME, target, mode),
+		library: setLibraryName(LIBRARY_NAME, target, mode),
 		libraryTarget: 'umd',
 		umdNamedDefine: true,
+		/*
+			Resolve global, window no-def issue.
+		*/
+		globalObject: 'this'
 	},
 	module: {
 		rules: [
@@ -46,7 +60,8 @@ const config = {
 			{
 				test: /(\.jsx|\.js)$/,
 				loader: 'eslint-loader',
-				exclude: /node_modules/,
+				exclude: [/module/, /node_modules/]
+
 			},
 		],
 	},
@@ -58,8 +73,22 @@ const config = {
 		minimizer: [new UglifyJsPlugin({
 			cache: true,
 			parallel: true,
+			uglifyOptions: {
+				mangle: true,
+				compress: true,
+			},
 		})],
 	},
-};
+	plugins: setPlugin(target),
+	externals: {
+		/*
+			Exclude node modules ('crypto, fs, child_process')
+		*/
+		crypto: 'crypto',
+		fs: 'fs',
+		child_process: 'child_process'
+	}
+});
 
-module.exports = config;
+
+module.exports = [config(TARGET.WEB), config(TARGET.NODE)];
