@@ -1,19 +1,24 @@
 import assert from 'assert';
-import { IconValidator, IconConverter } from '../';
+import { IconValidator, IconConverter } from '..';
+import BigNumber from 'bignumber.js'
 
 const tests = [
-    { value: 20137, is: false },
-    { value: IconConverter.toBigNumber(20137), is: true },
-    { value: IconConverter.toBigNumber(-3), is: false },
-]
+	{ value: -777, is: false },
+	{ value: 0, is: true },
+	{ value: 0.777, is: false },
+	{ value: 777, is: true },
+	{ value: IconConverter.toBigNumber(777), is: true },
+	{ value: IconConverter.toBigNumber(0), is: true },
+	{ value: 'latest', is: false },
+	{ value: '0x4fa0e0dc138133f15620e36dbd0da3ab4678116b89205ebdd29ba41cd440bb13', is: false },
+];
 
-describe('data/Validator', function () {
-    describe('isBlockNumber()', function () {
-        tests.forEach(function (test) {
-            it(`${test.value} is ${test.is}`, function () {
-                assert.strictEqual(IconValidator.isBlockNumber(test.value), test.is);
-            });
-        })
-    });
+describe('data/Validator', () => {
+	describe('isBlockNumber()', () => {
+		tests.forEach((test) => {
+			it(`${test.value} is ${test.is}`, () => {
+				assert.strictEqual(IconValidator.isBlockNumber(test.value), test.is);
+			});
+		});
+	});
 });
-

@@ -1,42 +1,39 @@
 import assert from 'assert';
-import { IconConverter, IconBuilder } from '../';
-const { MessageTransactionBuilder } = IconBuilder
+import { IconConverter, IconBuilder } from '..';
 
-describe('builder/transaction', function () {
-    describe('MessageTransaction', function () {
-        const from = 'hx46293d558d3bd489c3715e7e3648de0e35086bfd'
-        const to = 'hx87a90bfe8ed49e1a25184ce77fa0d9c4b0484d6a'
-        const stepLimit = IconConverter.toBigNumber(100000)
-        const nid = IconConverter.toBigNumber(3)
-        const nonce = IconConverter.toBigNumber(1)
-        const version = IconConverter.toBigNumber(3)
-        const timestamp = 1544596599371000
-        const data = IconConverter.toHex('Aqua Man')
+const { MessageTransactionBuilder } = IconBuilder;
 
-        const builder = new MessageTransactionBuilder()
-        const transaction = builder
-            .from(from)
-            .to(to)
-            .stepLimit(stepLimit)
-            .nid(nid)
-            .nonce(nonce)
-            .version(version)
-            .timestamp(timestamp)
-            .data(data)
-            .build();
+const tests = [{
+	input: (new MessageTransactionBuilder()
+		.from('hx46293d558d3bd489c3715e7e3648de0e35086bfd')
+		.to('hx87a90bfe8ed49e1a25184ce77fa0d9c4b0484d6a')
+		.stepLimit(IconConverter.toBigNumber(100000))
+		.nid(IconConverter.toBigNumber(3))
+		.nonce(IconConverter.toBigNumber(1))
+		.version(IconConverter.toBigNumber(3))
+		.timestamp(1544596599371000)
+		.data(IconConverter.fromUtf8('Aqua Man'))
+		.build()
+	),
+	result: {
+		from: 'hx46293d558d3bd489c3715e7e3648de0e35086bfd',
+		to: 'hx87a90bfe8ed49e1a25184ce77fa0d9c4b0484d6a',
+		stepLimit: IconConverter.toBigNumber(100000),
+		nid: IconConverter.toBigNumber(3),
+		nonce: IconConverter.toBigNumber(1),
+		version: IconConverter.toBigNumber(3),
+		timestamp: 1544596599371000,
+		dataType: 'message',
+		data: IconConverter.fromUtf8('Aqua Man'),
+	},
+}];
 
-        it('should return the right object', function () {
-            assert.deepEqual(transaction, {
-                from,
-                to,
-                stepLimit,
-                nid,
-                nonce,
-                version,
-                timestamp,
-                dataType: 'message',
-                data,
-            })
-        });
-    });
+describe('builder/transaction', () => {
+	describe('MessageTransaction', () => {
+		tests.forEach((test) => {
+			it('should return the right MessageTransaction object', () => {
+				assert.deepEqual(test.input, test.result);
+			});
+		});
+	});
 });

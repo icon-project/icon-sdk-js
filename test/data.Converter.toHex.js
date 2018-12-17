@@ -1,19 +1,24 @@
 import assert from 'assert';
-import { IconConverter } from '../';
+import { IconConverter } from '..';
 
 const tests = [
-    { value: 7, expected: '0x7' },
-    { value: 0x10, expected: '0x10' },
-    { value: 'Modern Family', expected: '0x4d6f6465726e2046616d696c79' },
-    { value: IconConverter.toBigNumber(100), expected: '0x64' },
-]
+	{ value: 77, expected: '0x4d' },
+	{ value: '77', expected: '0x3737' },
+	{ value: 0x77, expected: '0x77' },
+	{ value: '0x77', expected: '0x77' },
+	{ value: IconConverter.toBigNumber(77), expected: '0x4d' },
+	{ value: IconConverter.toBigNumber('77'), expected: '0x4d' },
+	{ value: IconConverter.toBigNumber(0x77), expected: '0x77' },
+	{ value: IconConverter.toBigNumber('0x77'), expected: '0x77' },
+	{ value: 'Modern Family', expected: '0x4d6f6465726e2046616d696c79' },
+];
 
-describe('data/Converter', function () {
-    describe('toHex()', function () {
-        tests.forEach(function (test) {
-            it('should turn ' + test.value + ' to ' + test.expected, function () {
-                assert.strictEqual(IconConverter.toHex(test.value), test.expected);
-            });
-        })
-    });
+describe('data/Converter', () => {
+	describe('toHex()', () => {
+		tests.forEach((test) => {
+			it(`should turn ${test.value} to ${test.expected}`, () => {
+				assert.strictEqual(IconConverter.toHex(test.value), test.expected);
+			});
+		});
+	});
 });

@@ -1,20 +1,25 @@
 import assert from 'assert';
-import { IconConverter } from '../';
 import BigNumber from 'bignumber.js';
+import { IconConverter } from '..';
 
 const tests = [
-    { value: 5, expected: new BigNumber(5) },
-    { value: '6', expected: new BigNumber(6) },
-    { value: IconConverter.toBigNumber(7), expected: new BigNumber(7) },
-    { value: '0x10', expected: new BigNumber(16) },
-]
+	{ value: '0.00008', expected: new BigNumber(0.00008) },
+	{ value: 0.00007, expected: new BigNumber(0.00007) },
+	{ value: '-6', expected: new BigNumber(-6) },
+	{ value: -5, expected: new BigNumber(-5) },
+	{ value: 10, expected: new BigNumber(10) },
+	{ value: '10', expected: new BigNumber(10) },
+	{ value: 0x10, expected: new BigNumber(16) },
+	{ value: '0x10', expected: new BigNumber(16) },
+	{ value: IconConverter.toBigNumber(7), expected: new BigNumber(7) },
+];
 
-describe('data/Converter', function () {
-    describe('toBigNumber()', function () {
-        tests.forEach(function (test) {
-            it('should turn ' + test.value + ' to ' + test.expected, function () {
-                assert.deepEqual(IconConverter.toBigNumber(test.value), test.expected);
-            });
-        })
-    });
+describe('data/Converter', () => {
+	describe('toBigNumber()', () => {
+		tests.forEach((test) => {
+			it(`should turn ${test.value} to ${test.expected}`, () => {
+				assert.deepEqual(IconConverter.toBigNumber(test.value), test.expected);
+			});
+		});
+	});
 });
