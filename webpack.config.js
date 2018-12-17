@@ -15,7 +15,7 @@ const TARGET = {
 	NODE: 'node'
 };
 
-const mode = env !== 'build' ? MODE.PROD : MODE.DEV;
+const mode = env === 'build' ? MODE.PROD : MODE.DEV;
 
 const setLibraryName = (libraryName, target, mode) => (
 	`${libraryName}.${target}.${mode === MODE.PROD ? 'min.js' : 'js'}`
