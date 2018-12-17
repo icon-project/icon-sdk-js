@@ -27,33 +27,33 @@ class DeployAndTransferTokenExample {
 
     addListener() {
         // 1. Upload Score File
-		document.getElementById('D01').addEventListener('click', () => {
-			this.readFile();
+		document.getElementById('D01').addEventListener('click', async () => {
+			await this.readFile();
         });
 
         // 2. Check Score Deployment TX Status
-		document.getElementById('D02').addEventListener('click', () => {
-			this.checkDeployTxStatus();
+		document.getElementById('D02').addEventListener('click', async () => {
+			await this.checkDeployTxStatus();
         });
 
         // 3. Send ST Token
-		document.getElementById('D03').addEventListener('click', () => {
-			this.sendTransaction();
+		document.getElementById('D03').addEventListener('click', async () => {
+			await this.sendTransaction();
         });
         
         // 4. Check ST Token Balance
-		document.getElementById('D04').addEventListener('click', () => {
-			this.getTokenBalance(MockData.WALLET_ADDRESS_1);
-            this.getTokenBalance(MockData.WALLET_ADDRESS_2);
+		document.getElementById('D04').addEventListener('click', async () => {
+			await this.getTokenBalance(MockData.WALLET_ADDRESS_1);
+            await this.getTokenBalance(MockData.WALLET_ADDRESS_2);
         });
 
         // 5. Check ST Token Transaction TX Status
-		document.getElementById('D05').addEventListener('click', () => {
-			this.checkTransactionTxStatus();
+		document.getElementById('D05').addEventListener('click', async () => {
+			await this.checkTransactionTxStatus();
         });
     }
 
-    readFile() {
+    async readFile() {
         let input, file, fr;
         const self = this;
     
@@ -66,13 +66,11 @@ class DeployAndTransferTokenExample {
             input = document.getElementById('fileinput');
             file = input.files[0];
             fr = new FileReader();
-            fr.onload = receivedBinary;
-            fr.readAsBinaryString(file);
-        
-            function receivedBinary () {
+            fr.onload = async () => {
                 self.content = showResult(fr);
-                self.deployScore();
-            }
+                await self.deployScore();
+            };
+            fr.readAsBinaryString(file);
 
             function showResult (fr) {
                 let markup, result, n, aByte, byteStr;
@@ -93,22 +91,22 @@ class DeployAndTransferTokenExample {
         }
     }
 
-    deployScore() {
+    async deployScore() {
         // Build raw transaction object
-        const transaction = this.buildDeployTransaction();
+        const transaction = await this.buildDeployTransaction();
         // Create signature of the transaction
         const signedTransaction = new SignedTransaction(transaction, this.wallet);
         // Read params to transfer to nodes
         const signedTransactionProperties = JSON.stringify(signedTransaction.getProperties()).split(",").join(", \n")
         document.getElementById('D01-2').innerHTML = `<b>Signed Transaction</b>: ${signedTransactionProperties}`;
         // Send transaction
-        this.deployTxHash = this.iconService.sendTransaction(signedTransaction).execute();
+        this.deployTxHash = await this.iconService.sendTransaction(signedTransaction).execute();
         document.getElementById('D02-1').innerHTML = this.deployTxHash;
         // Print transaction hash
         document.getElementById('D01-3').innerHTML = `<b>Transfer Request Complete.</b> Tx hash is ${this.deployTxHash}`;
     }
 
-    buildDeployTransaction() {
+    async buildDeployTransaction() {
         const { DeployTransactionBuilder } = IconBuilder;
 
         const initialSupply = IconConverter.toBigNumber("100000000000");
@@ -126,7 +124,7 @@ class DeployAndTransferTokenExample {
             symbol: tokenSymbol
         }
         const installScore = MockData.SCORE_INSTALL_ADDRESS;
-        const stepLimit = this.getMaxStepLimit();
+        const stepLimit = await this.getMaxStepLimit();
         const walletAddress = this.wallet.getAddress();
         // networkId of node 1:mainnet, 2~:etc
         const networkId = IconConverter.toBigNumber(3);
@@ -151,10 +149,10 @@ class DeployAndTransferTokenExample {
         return transaction; 
     }
 
-    getMaxStepLimit() {
+    async getMaxStepLimit() {
         const { CallBuilder } = IconBuilder;
         
-        const governanceApi = this.iconService.getScoreApi(MockData.GOVERNANCE_ADDRESS).execute();
+        const governanceApi = await this.iconService.getScoreApi(MockData.GOVERNANCE_ADDRESS).execute();
         // "getMaxStepLimit" : the maximum step limit value that any SCORE execution should be bounded by.
         const methodName = 'getMaxStepLimit';
         // Check input and output parameters of api if you need
@@ -173,15 +171,15 @@ class DeployAndTransferTokenExample {
             .method(methodName)
             .params(params)
             .build();
-        const maxStepLimit = this.iconService.call(call).execute();
+        const maxStepLimit = await this.iconService.call(call).execute();
         return IconConverter.toBigNumber(maxStepLimit)
     }
 
-    checkDeployTxStatus() {
+    async checkDeployTxStatus() {
         if (!this.deployTxHash) {
             document.getElementById('D02-1').innerHTML = 'Deploy ST Token first.';
         }
-        const transactionResult = this.iconService.getTransactionResult(this.deployTxHash).execute();
+        const transactionResult = await this.iconService.getTransactionResult(this.deployTxHash).execute();
         const status = transactionResult.status === 1 ? 'success' : 'failure';
         this.scoreAddress = transactionResult.scoreAddress;
         document.getElementById('D02-2').innerHTML = `<b>tx status</b> : ${status}`;
@@ -193,33 +191,33 @@ class DeployAndTransferTokenExample {
         }
     }
 
-    sendTransaction() {
+    async sendTransaction() {
         if (!this.scoreAddress) {
             document.getElementById('D03-1').innerHTML = 'Deploy ST Token and check deployment transaction first.';
             return;
         }
 
         // Build raw transaction object
-        const transaction = this.buildTokenTransaction();
+        const transaction = await this.buildTokenTransaction();
         // Create signature of the transaction
         const signedTransaction = new SignedTransaction(transaction, this.wallet);
         // Read params to transfer to nodes
         const signedTransactionProperties = JSON.stringify(signedTransaction.getProperties()).split(",").join(", \n")
         document.getElementById('D03-1').innerHTML = `<b>Signed Transaction</b>: ${signedTransactionProperties}`;
         // Send transaction
-        this.transactionTxHash = this.iconService.sendTransaction(signedTransaction).execute();
+        this.transactionTxHash = await this.iconService.sendTransaction(signedTransaction).execute();
         document.getElementById('D05-1').innerHTML = this.transactionTxHash;
         // Print transaction hash
         document.getElementById('D03-2').innerHTML = `<b>Transfer Request Complete.</b> Tx hash is ${this.transactionTxHash}`;
     }
 
-    buildTokenTransaction() {
+    async buildTokenTransaction() {
         const { CallTransactionBuilder } = IconBuilder;
 
         const walletAddress = this.wallet.getAddress();
         // You can use "governance score apis" to get step costs.
         const value = IconAmount.of(1, IconAmount.Unit.ICX).toLoop();
-        const stepLimit = this.getDefaultStepCost();
+        const stepLimit = await this.getDefaultStepCost();
         // networkId of node 1:mainnet, 2~:etc
         const networkId = IconConverter.toBigNumber(3);
         const version = IconConverter.toBigNumber(3);
@@ -250,11 +248,11 @@ class DeployAndTransferTokenExample {
         return transaction;
     }
 
-    getDefaultStepCost() {
+    async getDefaultStepCost() {
         const { CallBuilder } = IconBuilder;
         
         // Get governance score api list
-        const governanceApi = this.iconService.getScoreApi(MockData.GOVERNANCE_ADDRESS).execute();
+        const governanceApi = await this.iconService.getScoreApi(MockData.GOVERNANCE_ADDRESS).execute();
         console.log(governanceApi)
         const methodName = 'getStepCosts';
         // Check input and output parameters of api if you need
@@ -269,12 +267,12 @@ class DeployAndTransferTokenExample {
             .to(MockData.GOVERNANCE_ADDRESS)
             .method(methodName)
             .build();
-        const stepCosts = this.iconService.call(call).execute();
+        const stepCosts = await this.iconService.call(call).execute();
         // For sending token, it is about twice the default value.
         return IconConverter.toBigNumber(stepCosts.default).times(2)
     }
 
-    getTokenBalance(address) {
+    async getTokenBalance(address) {
         if (!this.scoreAddress) {
             document.getElementById('D04-1').innerHTML = 'Deploy ST Token and check deployment transaction first.';
         }
@@ -294,12 +292,12 @@ class DeployAndTransferTokenExample {
             .params(params)
             .build();
         // Check the wallet balance
-        const balance = this.iconService.call(call).execute();
+        const balance = await this.iconService.call(call).execute();
         const htmlId = address === MockData.WALLET_ADDRESS_1 ? 'D04-2' : 'D04-3';
         document.getElementById(htmlId).innerHTML = `<b>${IconAmount.of(balance, IconAmount.Unit.LOOP).convertUnit(IconAmount.Unit.ICX)}</b>`;
     }
 
-    checkTransactionTxStatus() {
+    async checkTransactionTxStatus() {
         if (!this.transactionTxHash) {
             document.getElementById('D05-1').innerHTML = 'Make token transaction first.';
         }
@@ -307,7 +305,7 @@ class DeployAndTransferTokenExample {
             document.getElementById('D05-1').innerHTML = 'Deploy ST Token and check deployment transaction first.';
         }
 
-        const transactionResult = this.iconService.getTransactionResult(this.transactionTxHash).execute();
+        const transactionResult = await this.iconService.getTransactionResult(this.transactionTxHash).execute();
         const status = transactionResult.status === 1 ? 'success' : 'failure';
         document.getElementById('D05-2').innerHTML = `<b>tx status</b>: ${status}`;
     }

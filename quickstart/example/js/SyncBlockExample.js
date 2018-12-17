@@ -4,6 +4,14 @@ import IconService, { IconConverter, HttpProvider } from 'icon-sdk-js';
 import MockData from '../../mockData/index.js';
 
 let syncBlockExample;
+let intervalFlag = false;
+
+const sleep = msec => new Promise(resolve => setTimeout(resolve, msec));
+const intervalGetLatestBlock = async (self, interval) => {
+  while (intervalFlag) {
+    await Promise.all([self.getLatestBlock(), sleep(interval)])
+  }
+}
 
 class SyncBlockExample {
 	constructor() {
@@ -20,52 +28,60 @@ class SyncBlockExample {
     addListener() {
         // 1. Sync Block
         const self = this;
-		document.getElementById('S01').addEventListener('click', () => {
+		document.getElementById('S01').addEventListener('click', async () => {
             document.getElementById('S01').disabled = true;
-            self.getLatestBlock();
-            self.timer = setInterval(() => { 
-                self.getLatestBlock();
-            }, 5000);
+            intervalFlag = true;
+            await intervalGetLatestBlock(self, 5000);
         });
 
         document.getElementById('S02').addEventListener('click', () => {
             document.getElementById('S01').disabled = false;
             this.prevHeight = null;
-            clearInterval(self.timer);
+            intervalFlag = false;
         });
     }
 
-    getLatestBlock() {
+    async getLatestBlock() {
         // Check the recent blocks
-        const block = this.iconService.getBlock('latest').execute();
+        console.log(this)
+        const block = await this.iconService.getBlock('latest').execute();
         const nextHeight = block.height;
         document.getElementById('S03-1').innerHTML = nextHeight;
         console.log(this.prevHeight, nextHeight)
         if (this.prevHeight === null || nextHeight - this.prevHeight > 0) {
             if (this.prevHeight === null) this.prevHeight = nextHeight - 1;
             // Print transaction list of block.
-            for (let a = this.prevHeight + 1; a - nextHeight < 0; a += 1) {
-                this.syncBlock(this.iconService.getBlock(IconConverter.toBigNumber(a)).execute());
+            var blockArr = [];
+            for (let a = this.prevHeight + 1; a - nextHeight < 0; a += 1) { 
+                blockArr.push(a);
             }
-            this.syncBlock(block);
+            Promise.all(
+                blockArr.map(async (block) => {
+                    var nextBlock = await this.iconService.getBlock(IconConverter.toBigNumber(a)).execute();
+                    await this.syncBlock(nextBlock);
+                })
+            );
+            await this.syncBlock(block);
         } else {
             // There is no block creation
             console.log(`Synced block height: ${this.prevHeight}`);
         }
     }
 
-    syncBlock(block) {
-            // the transaction list of blocks
-            console.log(block)
-            const txList = block.getTransactions();
-            for (let transaction of txList) {
-                const txResult = this.iconService.getTransactionResult(transaction.txHash).execute();
-    
+    async syncBlock(block) {
+        // the transaction list of blocks
+        console.log(block)
+        const txList = block.getTransactions();
+
+        Promise.all(
+            txList.map(async transaction => {
+                const txResult = await this.iconService.getTransactionResult(transaction.txHash).execute();
+
                 // Print icx transaction
                 if ((transaction.value !== undefined) && transaction.value > 0) {
                     document.getElementById("S03-2").innerHTML += `<li>${block.height} - [ICX] status: ${txResult.status === 1 ? 'success' : 'failure'}  |  amount: ${transaction.value}</li>`
                 }
-
+    
                 // Print token transaction
                 if (transaction.dataType !== undefined &&
                     transaction.dataType === "call") {
@@ -74,19 +90,21 @@ class SyncBlockExample {
                     if (method !== null && method === "transfer") {
                         const params = transaction.data.params;
                         const value = IconConverter.toBigNumber(params["_value"]); // value
-                        const toAddr = params["_to"]
-
-                        const tokenName = this.getTokenName(transaction.to);
-                        const symbol = this.getTokenSymbol(transaction.to);
+                        const toAddr = params["_to"];
+    
+                        const tokenName = await this.getTokenName(transaction.to);
+                        const symbol = await this.getTokenSymbol(transaction.to);
                         
                         document.getElementById("S03-2").innerHTML += `<li>${block.height} - [${tokenName} - ${symbol}] status: ${txResult.status === 1 ? 'success' : 'failure'}  |  amount: ${value}</li>`;
                     }
                 }
-            }
-            this.prevHeight = block.height;
+            })
+        )
+        
+        this.prevHeight = block.height;
     }
 
-    getTokenName(to) {
+    async getTokenName(to) {
         const { Builder } = this.iconService;
         const { CallBuilder } = Builder;
         const tokenAddress = to; // token address
@@ -95,11 +113,11 @@ class SyncBlockExample {
             .to(tokenAddress)
             .method("name")
             .build();
-        const result = this.iconService.call(call).execute();
+        const result = await this.iconService.call(call).execute();
         return result;
     }
 
-    getTokenSymbol(to) {
+    async getTokenSymbol(to) {
         const { Builder } = this.iconService;
         const { CallBuilder } = Builder;
         const tokenAddress = to; // token address
@@ -108,7 +126,7 @@ class SyncBlockExample {
             .to(tokenAddress)
             .method("symbol")
             .build();
-        const result = this.iconService.call(call).execute();
+        const result = await this.iconService.call(call).execute();
         return result;
     }
 }

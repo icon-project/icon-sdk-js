@@ -19,51 +19,57 @@ class IcxTransactionExample {
         this.txHash = '';
 
         this.addListener();
-        this.getWalletBalance();
+        (async () => {
+            try {
+              await this.getWalletBalance();
+            } catch(e) {
+              console.log(e);
+            }
+        })();
     }
 
     addListener() {
         // 1. Send ICX Transaction
-		document.getElementById('I01').addEventListener('click', () => {
+		document.getElementById('I01').addEventListener('click', async () => {
             document.getElementById('I03-2').innerHTML = '';
-			this.sendTransaction();
+			await this.sendTransaction();
         });
         
         // 2. Check Wallet Balance
-		document.getElementById('I02').addEventListener('click', () => {
-			this.getWalletBalance();
+		document.getElementById('I02').addEventListener('click', async () => {
+			await this.getWalletBalance();
         });
 
         // 3. Check TX Status
-		document.getElementById('I03').addEventListener('click', () => {
-			this.checkTxStatus();
+		document.getElementById('I03').addEventListener('click', async () => {
+			await this.checkTxStatus();
         });
     }
 
-    sendTransaction() {
+    async sendTransaction() {
         // Build raw transaction object
-        const transaction = this.buildICXTransaction();
+        const transaction = await this.buildICXTransaction();
         // Create signature of the transaction
         const signedTransaction = new SignedTransaction(transaction, this.wallet);
         // Read params to transfer to nodes
         const signedTransactionProperties = JSON.stringify(signedTransaction.getProperties()).split(",").join(", \n")
         document.getElementById('I01-1').innerHTML = `<b>Signed Transaction</b>: ${signedTransactionProperties}`;
         // Send transaction
-        this.txHash = this.iconService.sendTransaction(signedTransaction).execute();
+        this.txHash = await this.iconService.sendTransaction(signedTransaction).execute();
         console.log(this.txHash)
         document.getElementById('I03-1').innerHTML = this.txHash;
         // Print transaction hash
         document.getElementById('I01-2').innerHTML = `<b>Transfer Request Complete.</b> Tx hash is ${this.txHash}`;
     }
 
-    buildICXTransaction() {
+    async buildICXTransaction() {
         const { IcxTransactionBuilder } = IconBuilder;
 
         const walletAddress = this.wallet.getAddress();
         // 1 ICX -> 1000000000000000000 conversion
         const value = IconAmount.of(1, IconAmount.Unit.ICX).toLoop();
         // You can use "governance score apis" to get step costs.
-        const stepLimit = this.getDefaultStepCost();
+        const stepLimit = await this.getDefaultStepCost();
         // networkId of node 1:mainnet, 2~:etc
         const networkId = IconConverter.toBigNumber(3);
         const version = IconConverter.toBigNumber(3);
@@ -85,11 +91,11 @@ class IcxTransactionExample {
         return transaction;
     }
 
-    getDefaultStepCost() {
+    async getDefaultStepCost() {
         const { CallBuilder } = IconBuilder;
         
         // Get governance score api list
-        const governanceApi = this.iconService.getScoreApi(MockData.GOVERNANCE_ADDRESS).execute();
+        const governanceApi = await this.iconService.getScoreApi(MockData.GOVERNANCE_ADDRESS).execute();
         console.log(governanceApi)
         const methodName = 'getStepCosts';
         // Check input and output parameters of api if you need
@@ -104,22 +110,22 @@ class IcxTransactionExample {
             .to(MockData.GOVERNANCE_ADDRESS)
             .method(methodName)
             .build();
-        const stepCosts = this.iconService.call(call).execute();
+        const stepCosts = await this.iconService.call(call).execute();
         return stepCosts.default
     }
 
-    getWalletBalance() {
-        const balanceA = this.iconService.getBalance(MockData.WALLET_ADDRESS_1).execute();
-        const balanceB = this.iconService.getBalance(MockData.WALLET_ADDRESS_2).execute();
+    async getWalletBalance() {
+        const balanceA = await this.iconService.getBalance(MockData.WALLET_ADDRESS_1).execute();
+        const balanceB = await this.iconService.getBalance(MockData.WALLET_ADDRESS_2).execute();
         document.getElementById('I02-1').innerHTML = `<b>${IconAmount.of(balanceA, IconAmount.Unit.LOOP).convertUnit(IconAmount.Unit.ICX)}`;
         document.getElementById('I02-2').innerHTML = `<b>${IconAmount.of(balanceB, IconAmount.Unit.LOOP).convertUnit(IconAmount.Unit.ICX)}`;
     }
 
-    checkTxStatus() {
+    async checkTxStatus() {
         if (!this.txHash) {
             document.getElementById('I03-1').innerHTML = 'Make transaction first.';
         }
-        const transactionResult = this.iconService.getTransactionResult(this.txHash).execute();
+        const transactionResult = await this.iconService.getTransactionResult(this.txHash).execute();
         const status = transactionResult.status === 1 ? 'success' : 'failure';
         document.getElementById('I03-2').innerHTML = `<b>tx status</b>: ${status}`;
     }
