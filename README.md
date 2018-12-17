@@ -5,22 +5,56 @@ ICON supports SDK for 3rd party or user services development. You can integrate 
 
 ## Installation
 
-### Node.js
+### Usage in Node.js
+
+Install [icon-sdk-js] module using [npm].
+
 ```bash
 npm install --save icon-sdk-js
 ```
 
-### CDN
+Import [icon-sdk-js] module.
 
-`icon-sdk-js` is available over a CDN.
-```html
-<script src="https://cdn.jsdelivr.net/gh/icon-project/icon-sdk-js@latest/build/icon-sdk-js.min.js"></script>
+```javascript
+const IconService = require('icon-sdk-js');
 ```
 
+### Usage in browser
+
+Install [icon-sdk-js] module using [npm],
+
+```bash
+npm install --save icon-sdk-js
+```
+
+or using CDN.
+
+```html
+<script src="https://cdn.jsdelivr.net/gh/icon-project/icon-sdk-js@latest/build/icon-sdk-js.web.min.js"></script>
+```
+
+Then, import [icon-sdk-js] module.
+
+```javascript
+import IconService from 'icon-sdk-js';
+```
+
+### Usage in react-native environment
+
+Install [icon-sdk-js] module using [npm],
+
+```bash
+npm install --save icon-sdk-js
+```
+
+Then, import [icon-sdk-js/build/icon-sdk-js.web.min.js] module.
+```javascript
+import IconService from 'icon-sdk-js/build/icon-sdk-js.web.min.js';
+```
 
 ## Quick start
 
-Quickstart is an example project of Icon SDK JavaScript.
+Quickstart is an example project of ICON SDK JavaScript.
 Detail description is written in `readme` file in quickstart directory .
 
 
@@ -48,16 +82,13 @@ const iconService = new IconService(new HttpProvider("https://url"));
 
 All queries are requested by a `Request` object.
 
-Its requests are executed as **Synchronized** or **Asynchronized**.
+Its requests are executed as **Asynchronized** only. Synchronous request is not available.
 
 Once the request has been executed, the request can not be executed again.
 
 ```javascript
-// Synchronized request execution
-const balance = request.execute(false)
-
 // Asynchronized request execution
-const balanceAsync = await reqeust.execute(true)
+const balanceAsync = await reqeust.execute()
 ```
 
 The querying APIs are as follows.
@@ -169,7 +200,7 @@ const transaction = transactionBuilder
 
 `SignedTransaction` object signs a transaction using the wallet.
 
-And the request is executed as **Synchronized** or **Asynchronized** like a querying request.
+And the request is executed as **Asynchronized** like a querying request.
 
 Once the request has been executed, the request can not be executed again.
 
@@ -178,9 +209,6 @@ const signedTransaction = new SignedTransaction(transaction, wallet);
 
 const request = iconService.sendTransaction(signedTransaction);
 
-// Synchronized request execution
-const txHash = request.execute(false)
-
 // Asynchronized request execution
-const txHash = await reqeust.execute(true)
+const txHash = await reqeust.execute()
 ```

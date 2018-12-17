@@ -2,7 +2,7 @@
   "name": "icon-sdk-js",
   "version": "0.0.5",
   "description": "JavaScript SDK for ICON",
-  "main": "./build/icon-sdk-js.node.js",
+  "main": "./build/icon-sdk-js.node.min.js",
   "author": {
     "id": "iconfoundation",
     "name": "icon.foundation",
@@ -71,5 +71,5 @@
     "uuid": "^3.3.2",
     "xmlhttprequest": "^1.8.0"
   },
-  "browser": "./build/icon-sdk-js.web.js"
+  "browser": "./build/icon-sdk-js.web.min.js"
 }

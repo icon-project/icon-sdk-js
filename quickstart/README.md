@@ -168,15 +168,17 @@ console.log(value);
 You can get a step cost for transfering icx as follows.
 
 ```javascript
-getDefaultStepCost() {
+async getDefaultStepCost() {
     const { CallBuilder } = IconBuilder;
-    
-    // Get apis that provides Governance SCORE
-    const governanceApi = this.iconService.getScoreApi(MockData.GOVERNANCE_ADDRESS).execute();
+    // Get governance score api list
+    const governanceApi = await this.iconService.getScoreApi(MockData.GOVERNANCE_ADDRESS).execute();
+    console.log(governanceApi)
     const methodName = 'getStepCosts';
     // Check input and output parameters of api if you need
     const getStepCostsApi = governanceApi.getMethod(methodName);
-    console.log(`[getStepCosts]\n inputs: ${getStepCostsApi.inputs} \n outputs: ${getStepCostsApi.outputs}`);
+    const getStepCostsApiInputs = getStepCostsApi.inputs.length > 0 ? JSON.stringify(getStepCostsApi.inputs) : 'none';
+    const getStepCostsApiOutputs = getStepCostsApi.outputs.length > 0 ? JSON.stringify(getStepCostsApi.outputs) : 'none';
+    console.log(`[getStepCosts]\n inputs: ${getStepCostsApiInputs} \n outputs: ${getStepCostsApiOutputs}`);
 
     // Get step costs by iconService.call
     const callBuilder = new CallBuilder();
@@ -184,9 +186,8 @@ getDefaultStepCost() {
         .to(MockData.GOVERNANCE_ADDRESS)
         .method(methodName)
         .build();
-    const stepCosts = this.iconService.call(call).execute();
+    const stepCosts = await this.iconService.call(call).execute();
     return stepCosts.default
-    // Output: 0x186a0
 }
 ```
 
@@ -199,7 +200,7 @@ const version = new BigNumber("3"); // version
 
 // Recommended icx transfer step limit :
 // use 'default' step cost in the response of getStepCosts API
-const stepLimit = getDefaultStepCost(); // Please refer to the above description.
+const stepLimit = await this.getDefaultStepCost(); // Please refer to the above description.
 
 // Timestamp is used to prevent the identical transactions. Only current time is required (Standard unit : us)
 // If the timestamp is considerably different from the current time, the transaction will be rejected.
@@ -242,7 +243,7 @@ After calling sendTransaction from `IconService`, you can send transaction and c
 
 ```javascript
 // Send transaction
-const txHash = iconService.sendTransaction(signedTransaction).execute();
+const txHash = await iconService.sendTransaction(signedTransaction).execute();
 // Print transaction hash
 console.log(txHash);
 // Output
@@ -258,7 +259,7 @@ Checking the result is as follows:
 
 ```javascript
 // Check the result with the transaction hash
-const transactionResult = iconService.getTransactionResult(txHash).execute();
+const transactionResult = await iconService.getTransactionResult(txHash).execute();
 console.log("transaction status(1:success, 0:failure): "+transactionResult.status);
 // Output
 // transaction status(1:success, 0:failure): 1
@@ -290,24 +291,9 @@ ICX balance can be confirmed by calling getBalance function from `IconService`
 // create or load wallet
 const wallet = IconWallet.loadPrivateKey(MockData.PRIVATE_KEY_2);
 // Check the wallet balance
-const balance = iconService.getBalance(wallet.getAddress()).execute();
+const balance = await iconService.getBalance(wallet.getAddress()).execute();
 console.log(balance);
 
-// Output: 
-// 100432143214321432143
-```
-
-#### Execute functions asynchronously
-
-You can call `IconService` functions asynchronously by adding `true` in first parameter in `execute` function. 
-
-```javascript
-// Get the wallet balance asynchronously.
-// It returns Promise.
-const balancePromise = iconService.getBalance(wallet.getAddress()).execute(true);
-balancePromise.then((balance) => {
-    console.log(balance);
-})
 // Output: 
 // 100432143214321432143
 ```
@@ -353,10 +339,10 @@ You can get the maximum step limit value as follows.
 ```javascript
 // Get apis that provides Governance SCORE
 // GOVERNANCE_ADDRESS : cx0000000000000000000000000000000000000001
- getMaxStepLimit() {
+async getMaxStepLimit() {
     const { CallBuilder } = IconBuilder;
     
-    const governanceApi = this.iconService.getScoreApi(MockData.GOVERNANCE_ADDRESS).execute();
+    const governanceApi = await this.iconService.getScoreApi(MockData.GOVERNANCE_ADDRESS).execute();
     // "getMaxStepLimit" : the maximum step limit value that any SCORE execution should be bounded by.
     const methodName = 'getMaxStepLimit';
     // Check input and output parameters of api if you need
@@ -372,7 +358,7 @@ You can get the maximum step limit value as follows.
         .method(methodName)
         .params(params)
         .build();
-    const maxStepLimit = this.iconService.call(call).execute();
+    const maxStepLimit = await this.iconService.call(call).execute();
     return IconConverter.toBigNumber(maxStepLimit)
 }
 ```
@@ -380,46 +366,48 @@ You can get the maximum step limit value as follows.
 Generate transaction with the given values above.
 
 ```javascript
-const { DeployTransactionBuilder } = IconBuilder;
+async buildDeployTransaction() {
+    const { DeployTransactionBuilder } = IconBuilder;
 
-const initialSupply = IconConverter.toBigNumber("100000000000");
-const decimals = IconConverter.toBigNumber("18");
-const tokenName = "StandardToken";
-const tokenSymbol = "ST";
-const contentType = "application/zip";
-// Enter token information
-// key name ("initialSupply", "decimals", "name", "symbol")
-// You must enter the given values. Otherwise, your transaction will be rejected.
-const params = {
-    initialSupply: IconConverter.toHex(initialSupply),
-    decimals: IconConverter.toHex(decimals),
-    name: tokenName,
-    symbol: tokenSymbol
+    const initialSupply = IconConverter.toBigNumber("100000000000");
+    const decimals = IconConverter.toBigNumber("18");
+    const tokenName = "StandardToken";
+    const tokenSymbol = "ST";
+    const contentType = "application/zip";
+    // Enter token information
+    // key name ("initialSupply", "decimals", "name", "symbol")
+    // You must enter the given values. Otherwise, your transaction will be rejected.
+    const params = {
+        initialSupply: IconConverter.toHex(initialSupply),
+        decimals: IconConverter.toHex(decimals),
+        name: tokenName,
+        symbol: tokenSymbol
+    }
+    const installScore = MockData.SCORE_INSTALL_ADDRESS;
+    const stepLimit = await this.getMaxStepLimit();
+    const walletAddress = this.wallet.getAddress();
+    // networkId of node 1:mainnet, 2~:etc
+    const networkId = IconConverter.toBigNumber(3);
+    const version = IconConverter.toBigNumber(3);
+    // Timestamp is used to prevent the identical transactions. Only current time is required (Standard unit : us)
+    // If the timestamp is considerably different from the current time, the transaction will be rejected.
+    const timestamp = (new Date()).getTime() * 1000;
+
+    //Enter transaction information
+    const deployTransactionBuilder = new DeployTransactionBuilder();
+    const transaction = deployTransactionBuilder
+        .nid(networkId)
+        .from(walletAddress)
+        .to(installScore)
+        .stepLimit(stepLimit)
+        .timestamp(timestamp)
+        .contentType(contentType)
+        .content(`0x${this.content}`)
+        .params(params)
+        .version(version)
+        .build();        
+    return transaction; 
 }
-const installScore = MockData.SCORE_INSTALL_ADDRESS;
-const stepLimit = this.getMaxStepLimit();
-const walletAddress = this.wallet.getAddress();
-// networkId of node 1:mainnet, 2~:etc
-const networkId = IconConverter.toBigNumber(3);
-const version = IconConverter.toBigNumber(3);
-// Timestamp is used to prevent the identical transactions. Only current time is required (Standard unit : us)
-// If the timestamp is considerably different from the current time, the transaction will be rejected.
-const timestamp = (new Date()).getTime() * 1000;
-
-//Enter transaction information
-const deployTransactionBuilder = new DeployTransactionBuilder();
-const transaction = deployTransactionBuilder
-    .nid(networkId)
-    .from(walletAddress)
-    .to(installScore)
-    .stepLimit(stepLimit)
-    .timestamp(timestamp)
-    .contentType(contentType)
-    .content(`0x${this.content}`)
-    .params(params)
-    .version(version)
-    .build();        
-return transaction; 
 ```
 
 Generate SignedTransaction to add signature to the transaction.
@@ -434,7 +422,7 @@ const signedTransactionProperties = JSON.stringify(signedTransaction.getProperti
 You can check the transaction hash value by calling sendTransaction from ‘IconService`. Deployment is now completed.
 
 ```javascript
-this.deployTxHash = this.iconService.sendTransaction(signedTransaction).execute();
+this.deployTxHash = await this.iconService.sendTransaction(signedTransaction).execute();
 ```
 
 After transaction is sent, the result can be looked up with the returned hash value.
@@ -444,7 +432,7 @@ Checking the result is as follows:
 
 ```javascript
 // Check the result with the transaction hash
-const transactionResult = iconService.getTransactionResult(this.deployTxHash).execute();
+const transactionResult = await iconService.getTransactionResult(this.deployTxHash).execute();
 
 console.log("transaction status(1:success, 0:failure): "+transactionResult.status);
 console.log("Your score address: " + transactionResult.scoreAddress);
@@ -476,12 +464,12 @@ const value = IconAmount.of(1, IconAmount.Unit.ICX).toLoop();
 You can get a step cost to send token as follows.
 
 ```javascript
-getDefaultStepCost() {
+async getDefaultStepCost() {
     const { CallBuilder } = IconBuilder;
     
     // Get apis that provides Governance SCORE
     // GOVERNANCE_ADDRESS : cx0000000000000000000000000000000000000001
-    const governanceApi = this.iconService.getScoreApi(MockData.GOVERNANCE_ADDRESS).execute();
+    const governanceApi = await this.iconService.getScoreApi(MockData.GOVERNANCE_ADDRESS).execute();
     console.log(governanceApi)
     const methodName = 'getStepCosts';
 
@@ -491,7 +479,7 @@ getDefaultStepCost() {
         .to(MockData.GOVERNANCE_ADDRESS)
         .method(methodName)
         .build();
-    const stepCosts = this.iconService.call(call).execute();
+    const stepCosts = await this.iconService.call(call).execute();
     // For sending token, it is about twice the default value.
     return IconConverter.toBigNumber(stepCosts.default).times(2)
 }
@@ -500,40 +488,42 @@ getDefaultStepCost() {
 Generate Transaction with the given parameters above. You have to add receiving address and value to param object to send token.
 
 ```javascript
-const { CallTransactionBuilder } = IconBuilder;
+async buildTokenTransaction() {
+    const { CallTransactionBuilder } = IconBuilder;
 
-const walletAddress = this.wallet.getAddress();
-// You can use "governance score apis" to get step costs.
-const value = IconAmount.of(1, IconAmount.Unit.ICX).toLoop();
-const stepLimit = this.getDefaultStepCost();
-// networkId of node 1:mainnet, 2~:etc
-const networkId = IconConverter.toBigNumber(3);
-const version = IconConverter.toBigNumber(3);
-// Timestamp is used to prevent the identical transactions. Only current time is required (Standard unit : us)
-// If the timestamp is considerably different from the current time, the transaction will be rejected.
-const timestamp = (new Date()).getTime() * 1000;
-// SCORE name that send transaction is “transfer”.
-const methodName = "transfer";
-// Enter receiving address and the token value.
-// You must enter the given key name("_to", "_value"). Otherwise, the transaction will be rejected.
-const params = {
-    _to: MockData.WALLET_ADDRESS_2,
-    _value: IconConverter.toHex(value)
+    const walletAddress = this.wallet.getAddress();
+    // You can use "governance score apis" to get step costs.
+    const value = IconAmount.of(1, IconAmount.Unit.ICX).toLoop();
+    const stepLimit = await this.getDefaultStepCost();
+    // networkId of node 1:mainnet, 2~:etc
+    const networkId = IconConverter.toBigNumber(3);
+    const version = IconConverter.toBigNumber(3);
+    // Timestamp is used to prevent the identical transactions. Only current time is required (Standard unit : us)
+    // If the timestamp is considerably different from the current time, the transaction will be rejected.
+    const timestamp = (new Date()).getTime() * 1000;
+    // SCORE name that send transaction is “transfer”.
+    const methodName = "transfer";
+    // Enter receiving address and the token value.
+    // You must enter the given key name("_to", "_value"). Otherwise, the transaction will be rejected.
+    const params = {
+        _to: MockData.WALLET_ADDRESS_2,
+        _value: IconConverter.toHex(value)
+    }
+    
+    //Enter transaction information
+    const tokenTransactionBuilder = new CallTransactionBuilder();
+    const transaction = tokenTransactionBuilder
+        .nid(networkId)
+        .from(walletAddress)
+        .to(this.scoreAddress)
+        .stepLimit(stepLimit)
+        .timestamp(timestamp)
+        .method(methodName)
+        .params(params)
+        .version(version)
+        .build();        
+    return transaction;
 }
-
-//Enter transaction information
-const tokenTransactionBuilder = new CallTransactionBuilder();
-const transaction = tokenTransactionBuilder
-    .nid(networkId)
-    .from(walletAddress)
-    .to(this.scoreAddress)
-    .stepLimit(stepLimit)
-    .timestamp(timestamp)
-    .method(methodName)
-    .params(params)
-    .version(version)
-    .build();        
-return transaction;
 ```
 
 Generate SignedTransaction to add signature to your transaction.
@@ -549,7 +539,7 @@ console.log(signedTokenTransfer.getProperties());
 
 ```javascript
 // Send transaction
-this.transactionTxHash = iconService.sendTransaction(signedTokenTransfer).execute();
+this.transactionTxHash = await iconService.sendTransaction(signedTokenTransfer).execute();
 // Print transaction hash
 console.log(this.transactionTxHash);
 // Output
@@ -565,7 +555,7 @@ Checking the result is as follows:
 
 ```javascript
 // Check the result with the transaction hash
-const transactionResult = iconService.getTransactionResult(this.transactionTxHash).execute();
+const transactionResult = await iconService.getTransactionResult(this.transactionTxHash).execute();
 console.log("transaction status(1:success, 0:failure): "+transactionResult.status);
 // Output
 // transaction status(1:success, 0:failure):1
@@ -595,7 +585,7 @@ const call = callBuilder
     .params(params)
     .build();
 // Check the wallet balance
-const balance = this.iconService.call(call).execute();
+const balance = await this.iconService.call(call).execute();
 ```
 
 
@@ -618,7 +608,7 @@ by updating the transaction information for every block creation.
 
 ```javascript
 // Check the recent blocks
-const block = iconService.getBlock('latest').execute();
+const block = await iconService.getBlock('latest').execute();
 console.log(block.height);
 // Output
 // 237845
@@ -645,35 +635,39 @@ You can check the following information using the ConfirmedTransaction:
 #### Transaction Output
 
 ```javascript
-syncBlock(block) {
+async syncBlock(block) {
     // the transaction list of blocks
     console.log(block)
     const txList = block.getTransactions();
-    for (let transaction of txList) {
-        const txResult = this.iconService.getTransactionResult(transaction.txHash).execute();
 
-        // Print icx transaction
-        if ((transaction.value !== undefined) && transaction.value > 0) {
-            document.getElementById("S03-2").innerHTML += `<li>${block.height} - [ICX] status: ${txResult.status === 1 ? 'success' : 'failure'}  |  amount: ${transaction.value}</li>`
-        }
+    Promise.all(
+        txList.map(async transaction => {
+            const txResult = await this.iconService.getTransactionResult(transaction.txHash).execute();
 
-        // Print token transaction
-        if (transaction.dataType !== undefined &&
-            transaction.dataType === "call") {
-            const method = transaction.data.method;
-
-            if (method !== null && method === "transfer") {
-                const params = transaction.data.params;
-                const value = IconConverter.toBigNumber(params["_value"]); // value
-                const toAddr = params["_to"]
-
-                const tokenName = this.getTokenName(transaction.to);
-                const symbol = this.getTokenSymbol(transaction.to);
-                
-                document.getElementById("S03-2").innerHTML += `<li>${block.height} - [${tokenName} - ${symbol}] status: ${txResult.status === 1 ? 'success' : 'failure'}  |  amount: ${value}</li>`;
+            // Print icx transaction
+            if ((transaction.value !== undefined) && transaction.value > 0) {
+                document.getElementById("S03-2").innerHTML += `<li>${block.height} - [ICX] status: ${txResult.status === 1 ? 'success' : 'failure'}  |  amount: ${transaction.value}</li>`
             }
-        }
-    }
+
+            // Print token transaction
+            if (transaction.dataType !== undefined &&
+                transaction.dataType === "call") {
+                const method = transaction.data.method;
+
+                if (method !== null && method === "transfer") {
+                    const params = transaction.data.params;
+                    const value = IconConverter.toBigNumber(params["_value"]); // value
+                    const toAddr = params["_to"];
+
+                    const tokenName = await this.getTokenName(transaction.to);
+                    const symbol = await this.getTokenSymbol(transaction.to);
+                    
+                    document.getElementById("S03-2").innerHTML += `<li>${block.height} - [${tokenName} - ${symbol}] status: ${txResult.status === 1 ? 'success' : 'failure'}  |  amount: ${value}</li>`;
+                }
+            }
+        })
+    )
+    
     this.prevHeight = block.height;
 }
 
@@ -684,7 +678,7 @@ syncBlock(block) {
 You can check the token SCORE by calling the `name` and `symbol` functions.
 
 ```javascript
-getTokenName(to) {
+async getTokenName(to) {
     const { CallBuilder } = IconBuilder;
     const tokenAddress = to; // token address
     const callBuilder = new CallBuilder();
@@ -692,12 +686,12 @@ getTokenName(to) {
         .to(tokenAddress)
         .method("name")
         .build();
-    const result = this.iconService.call(call).execute();
+    const result = await this.iconService.call(call).execute();
     return result;
 }
 ```
 ```javascript
-getTokenSymbol(to) {
+async getTokenSymbol(to) {
     const { CallBuilder } = IconBuilder;
     const tokenAddress = to; // token address
     const callBuilder = new CallBuilder();
@@ -705,7 +699,7 @@ getTokenSymbol(to) {
         .to(tokenAddress)
         .method("symbol")
         .build();
-    const result = this.iconService.call(call).execute();
+    const result = await this.iconService.call(call).execute();
     return result;
 }
 ```
