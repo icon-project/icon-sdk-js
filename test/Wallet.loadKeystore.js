@@ -1,5 +1,5 @@
 import assert from 'assert';
-import IconService from '../build/icon-sdk-js.min';
+import IconService from '..';
 
 const { IconWallet } = IconService;
 

@@ -1,7 +1,7 @@
 import assert from 'assert';
 import IconService, {
 	HttpProvider, SignedTransaction, IconValidator, IconWallet, IconBuilder, IconConverter, IconAmount,
-} from '../build/icon-sdk-js.min';
+} from '..';
 
 const { DeployTransactionBuilder } = IconBuilder;
 

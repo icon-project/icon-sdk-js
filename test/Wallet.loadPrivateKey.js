@@ -1,5 +1,5 @@
 import assert from 'assert';
-import { IconWallet } from '../build/icon-sdk-js.min';
+import { IconWallet } from '..';
 
 const testPrivateKey = '38f792b95a5202ab431bfc799f7e1e5c74ec0b9ede5c6142ee7364f2c84d72f6';
 const testWallet = IconWallet.loadPrivateKey(testPrivateKey);
