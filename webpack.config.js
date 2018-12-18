@@ -79,15 +79,7 @@ const config = (target) => ({
 			},
 		})],
 	},
-	plugins: setPlugin(target),
-	externals: {
-		/*
-			Exclude node modules ('crypto, fs, child_process')
-		*/
-		crypto: 'crypto',
-		fs: 'fs',
-		child_process: 'child_process'
-	}
+	plugins: setPlugin(target)
 });
 
 
