@@ -1,5 +1,5 @@
 import assert from 'assert';
-import { IconAmount, IconConverter } from '..';
+import { IconAmount, IconConverter } from '../';
 
 const unitTests = [{
 	name: 'LOOP',

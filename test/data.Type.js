@@ -1,6 +1,6 @@
 import assert from 'assert';
 import BigNumber from 'bignumber.js';
-import { IconConverter } from '..';
+import { IconConverter } from '../';
 import * as Type from '../lib/data/Type';
 
 const tests = [

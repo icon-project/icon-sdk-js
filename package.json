@@ -1,6 +1,6 @@
 {
   "name": "icon-sdk-js",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "JavaScript SDK for ICON",
   "main": "./build/icon-sdk-js.node.min.js",
   "author": {
@@ -13,8 +13,8 @@
     "build:native": "NODE_PATH=./ webpack --env build && cd ../react-native-test && cp -rf ../icon-sdk-js/build ./ && expo start",
     "build": "NODE_PATH=./ webpack --env build",
     "dev": "NODE_PATH=./ webpack --progress --colors --watch --env dev",
-    "test": "NODE_PATH=./ mocha --require @babel/register --colors",
-    "test:watch": "NODE_PATH=./ mocha --require @babel/register --colors -w",
+    "test": "NODE_PATH=./ mocha --require @babel/register --colors --timeout 0",
+    "test:watch": "NODE_PATH=./ mocha --require @babel/register --colors -w --timeout 0",
     "quickstart:rebuild": "eslint --fix lib && NODE_PATH=./ webpack --env build && cd quickstart && npm install && mkdir ./node_modules/icon-sdk-js; cp -rf ../build ./node_modules/icon-sdk-js; cp -rf ../package.json ./node_modules/icon-sdk-js/package.json && npm start"
   },
   "repository": {

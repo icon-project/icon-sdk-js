@@ -1,5 +1,5 @@
 import assert from 'assert';
-import IconService, { HttpProvider, IconValidator, IconConverter } from '..';
+import IconService, { HttpProvider, IconValidator, IconConverter } from '../';
 
 const iconService = new IconService(new HttpProvider('https://bicon.net.solidwallet.io/api/v3'));
 
@@ -12,17 +12,17 @@ describe('IconService', () => {
 
 		it('should return the right block', async () => {
 			const block = await iconService.getBlock(IconConverter.toBigNumber(TestBlockNumber)).execute();
-			assert.ok(IconValidator.isBlock(block));
+			assert.ok(!!block);
 		});
 
 		it('should return the right block', async () => {
 			const block = await iconService.getBlock(TestBlockHash).execute();
-			assert.ok(IconValidator.isBlock(block));
+			assert.ok(!!block);
 		});
 
 		it('should return the right block', async () => {
 			const block = await iconService.getBlock(TestLatestBlock).execute();
-			assert.ok(IconValidator.isBlock(block));
+			assert.ok(!!block);
 		});
 	});
 });

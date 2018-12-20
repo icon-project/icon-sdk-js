@@ -1,5 +1,5 @@
 import assert from 'assert';
-import { IconWallet } from '..';
+import { IconWallet } from '../';
 
 const testWallet1 = IconWallet.create();
 const testWallet2 = IconWallet.create();

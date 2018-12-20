@@ -1,5 +1,5 @@
 import assert from 'assert';
-import IconService from '..';
+import IconService from '../';
 
 const {
 	SignedTransaction, IconWallet, IconBuilder, IconConverter,

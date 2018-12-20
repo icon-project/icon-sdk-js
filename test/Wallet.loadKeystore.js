@@ -1,17 +1,31 @@
+
 import assert from 'assert';
-import IconService from '..';
+import { IconWallet } from '../';
 
-const { IconWallet } = IconService;
+const tests = [{
+    keystore: { "version": 3, "id": "2fa947c7-92d3-4c01-896a-a96396221233", "address": "hx902ecb51c109183ace539f247b4ea1347fbf23b5", "crypto": { "ciphertext": "4fe98ce7ed98accc27389aac53bbd5031c43f42dd4cbe1f4e45c7f3c0608ee28", "cipherparams": { "iv": "fa8562176b411d5c1370eec9f69a348f" }, "cipher": "aes-128-ctr", "kdf": "scrypt", "kdfparams": { "dklen": 32, "salt": "9091d98b319f3cee97cf5b8bd1ef12e687c7aa12971777e277091302cbaecaab", "n": 16384, "r": 8, "p": 1 }, "mac": "8249910036b787a4bae39659646f37404bd5fb1da7e08c5ddda6d1924bef3b86" }, "coinType": "icx" },
+    password: 'qwer1234!',
+	address: 'hx902ecb51c109183ace539f247b4ea1347fbf23b5',
+	privateKey: '38f792b95a5202ab431bfc799f7e1e5c74ec0b9ede5c6142ee7364f2c84d72f6',
+	publicKey: 'f87740e3dce5b834b61b6d02f0c3c28dd02ba203cf57fd004eaeb92468d693de76772963c00d255f8371420f3e172444d106847b03b92fc5706a9531f2cf522e'
+}]
 
-// const testKeystore = { "version": 3, "id": "41fc1ddb-4faf-4c88-b494-8fe82a4bab63", "address": "hxd008c05cbc0e689f04a5bb729a66b42377a9a497", "crypto": { "ciphertext": "c4046f5a735403a963110d24f39120a102ad7bc462bf2a14ae334ba4a8c485f6", "cipherparams": { "iv": "441b5a5de3dd33de6f7838b6075702d2" }, "cipher": "aes-128-ctr", "kdf": "scrypt", "kdfparams": { "dklen": 32, "salt": "39d45ffead82d554e35a55efcc7a1f64afe73e9a8ab6b750d959f904e32294ba", "n": 16384, "r": 8, "p": 1 }, "mac": "9bca1f2e8750efb27b7357e1a6a727c596cb812f7a4c45792494a8b0890774d7" }, "coinType": "icx" }
-// const testPassword = 'qwer1234!'
-// const testWallet = IconWallet.loadKeystore(testKeystore, testPassword)
-// const expectedAddress = 'hx902ecb51c109183ace539f247b4ea1347fbf23b5'
+describe('Wallet', () => {
+	describe('loadKeystore()', () => {
+		tests.forEach(function(test) {
+			const wallet = IconWallet.loadKeystore(test.keystore, test.password);
+            
+            it('should be same', () => {
+				assert.strictEqual(wallet.getAddress(), test.address);
+			});	
 
-// describe('Wallet', function () {
-//     describe('loadKeystore()', function () {
-//         it(`should be same`, function () {
-//             assert.strictEqual(testWallet.getAddress(), expectedAddress)
-//         });
-//     });
-// });
+            it('should be same', () => {
+				assert.strictEqual(wallet.getPublicKey(), test.publicKey);
+			});	
+
+            it('should be same', () => {
+				assert.strictEqual(wallet.getPrivateKey(), test.privateKey);
+			});	
+		})
+	});
+});

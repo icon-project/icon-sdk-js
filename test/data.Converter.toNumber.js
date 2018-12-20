@@ -1,5 +1,5 @@
 import assert from 'assert';
-import { IconConverter } from '..';
+import { IconConverter } from '../';
 
 const tests = [
 	{ value: 77, expected: 77 },

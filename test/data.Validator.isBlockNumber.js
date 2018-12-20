@@ -1,6 +1,5 @@
 import assert from 'assert';
-import { IconValidator, IconConverter } from '..';
-import BigNumber from 'bignumber.js'
+import { IconValidator, IconConverter } from '../';
 
 const tests = [
 	{ value: -777, is: false },

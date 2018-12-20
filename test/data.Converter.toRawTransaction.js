@@ -1,5 +1,5 @@
 import assert from 'assert';
-import { IconConverter, IconAmount } from '..';
+import { IconConverter, IconAmount } from '../';
 
 const tests = [{
 	// Call Transaction

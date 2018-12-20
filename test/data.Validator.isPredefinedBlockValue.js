@@ -1,5 +1,5 @@
 import assert from 'assert';
-import { IconValidator, IconConverter } from '..';
+import { IconValidator, IconConverter } from '../';
 
 const tests = [
 	{ value: 'latest', is: true },

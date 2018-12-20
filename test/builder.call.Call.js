@@ -1,6 +1,5 @@
 import assert from 'assert';
-import { IconBuilder } from '..';
-
+import { IconBuilder } from '../';
 const { CallBuilder } = IconBuilder;
 
 const tests = [{
