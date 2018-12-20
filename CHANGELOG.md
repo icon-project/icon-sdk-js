@@ -4,7 +4,8 @@
 
 #### API Changes
   - Support Node and React-Native environment
-  - Seperate build file (icon-sdk-js.node, icon-sdk-js.web)
+  - Seperate build file (icon-sdk-js.node.min, icon-sdk-js.web.min)
+  - Remove synchronous call function
   - Fix string escaping bug in Util.serialize()
   - Update unit test code
 
