@@ -1,5 +1,11 @@
 # Changelog
 
+### Version 0.0.7 - December 21, 2018 ([NPM](https://www.npmjs.com/package/icon-sdk-js), [CDN](https://cdn.jsdelivr.net/gh/icon-project/icon-sdk-js@0.0.7/build/icon-sdk-js.web.min.js))
+
+#### Changes
+  - Fix build issue
+  - Update icon-sdk-js import path in unit test code
+
 ### Version 0.0.6 - December 20, 2018 ([NPM](https://www.npmjs.com/package/icon-sdk-js), [CDN](https://cdn.jsdelivr.net/gh/icon-project/icon-sdk-js@0.0.6/build/icon-sdk-js.web.min.js))
 
 #### API Changes
