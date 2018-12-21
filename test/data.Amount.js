@@ -1,5 +1,5 @@
 import assert from 'assert';
-import { IconAmount, IconConverter } from '../';
+import { IconAmount, IconConverter } from '../build/icon-sdk-js.node.min';
 
 const unitTests = [{
 	name: 'LOOP',

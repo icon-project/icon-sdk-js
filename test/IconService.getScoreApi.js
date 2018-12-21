@@ -1,5 +1,5 @@
 import assert from 'assert';
-import IconService, { HttpProvider } from '../';
+import IconService, { HttpProvider } from '../build/icon-sdk-js.node.min';
 
 const TestScoreAddress = 'cx0000000000000000000000000000000000000001';
 

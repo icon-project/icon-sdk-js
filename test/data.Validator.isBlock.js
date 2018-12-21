@@ -1,5 +1,5 @@
 import assert from 'assert';
-import { IconValidator } from '../';
+import { IconValidator } from '../build/icon-sdk-js.node.min';
 
 const tests = [{
 	value: {

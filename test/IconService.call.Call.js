@@ -1,5 +1,5 @@
 import assert from 'assert';
-import IconService, { HttpProvider, IconBuilder } from '../';
+import IconService, { HttpProvider, IconBuilder } from '../build/icon-sdk-js.node.min';
 import * as Type from '../lib/data/Type'
 const iconService = new IconService(new HttpProvider('https://bicon.net.solidwallet.io/api/v3'));
 const { CallBuilder } = IconBuilder;

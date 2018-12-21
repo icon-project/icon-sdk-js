@@ -1,5 +1,5 @@
 import assert from 'assert';
-import IconService, { HttpProvider, SignedTransaction, IconValidator, IconWallet, IconBuilder, IconConverter, IconAmount } from '../';
+import IconService, { HttpProvider, SignedTransaction, IconValidator, IconWallet, IconBuilder, IconConverter, IconAmount } from '../build/icon-sdk-js.node.min';
 const { CallTransactionBuilder } = IconBuilder;
 const iconService = new IconService(new HttpProvider('https://bicon.net.solidwallet.io/api/v3'));
 const wallet = IconWallet.loadPrivateKey('38f792b95a5202ab431bfc799f7e1e5c74ec0b9ede5c6142ee7364f2c84d72f6')
@@ -31,7 +31,7 @@ const tests = [
 		.params({
 			_from: 'hx0ac12c49979287e3e81550a1e5b5759c78c7325a',
 			_to: 'hx72f7f531dcd26c6f34f691ec54c0ea9a255d2508',
-			_formatted_json: [{ "type": "int", "value": "0x4" }, { "type": "int", "value": "0x3" }, { "type": "int", "value": "0x3" }, { "type": "int", "value": "0x4" }, { "type": "int", "value": "0x4" }, { "type": "int", "value": "0x4" }, { "type": "int", "value": "0x4" }, { "type": "int", "value": "0x4" }, { "type": "int", "value": "0x4" }, { "type": "int", "value": "0x4" }, { "type": "int", "value": "0x3" }, { "type": "int", "value": "0x4" }, { "type": "int", "value": "0x4" }, { "type": "int", "value": "0x3" }, { "type": "bool", "value": "0x1" }],
+			_formatted_json: '[{ "type": "int", "value": "0x4" }, { "type": "int", "value": "0x3" }, { "type": "int", "value": "0x3" }, { "type": "int", "value": "0x4" }, { "type": "int", "value": "0x4" }, { "type": "int", "value": "0x4" }, { "type": "int", "value": "0x4" }, { "type": "int", "value": "0x4" }, { "type": "int", "value": "0x4" }, { "type": "int", "value": "0x4" }, { "type": "int", "value": "0x3" }, { "type": "int", "value": "0x4" }, { "type": "int", "value": "0x4" }, { "type": "int", "value": "0x3" }, { "type": "bool", "value": "0x1" }]',
 			_message: "The Drug King"
 		})
 		.build()

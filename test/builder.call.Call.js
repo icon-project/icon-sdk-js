@@ -1,5 +1,5 @@
 import assert from 'assert';
-import { IconBuilder } from '../';
+import { IconBuilder } from '../build/icon-sdk-js.node.min';
 const { CallBuilder } = IconBuilder;
 
 const tests = [{

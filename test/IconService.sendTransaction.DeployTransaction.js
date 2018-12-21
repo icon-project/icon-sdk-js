@@ -1,5 +1,5 @@
 import assert from 'assert';
-import IconService, { HttpProvider, SignedTransaction, IconValidator, IconWallet, IconBuilder, IconConverter, IconAmount } from '../';
+import IconService, { HttpProvider, SignedTransaction, IconValidator, IconWallet, IconBuilder, IconConverter, IconAmount } from '../build/icon-sdk-js.node.min';
 import DeployContent from './mock/DeployContent.json'
 const { DeployTransactionBuilder } = IconBuilder;
 const iconService = new IconService(new HttpProvider('https://bicon.net.solidwallet.io/api/v3'));

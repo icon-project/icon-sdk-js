@@ -1,5 +1,5 @@
 import assert from 'assert';
-import { IconWallet } from '../';
+import { IconWallet } from '../build/icon-sdk-js.node.min';
 
 const testWallet1 = IconWallet.create();
 const testWallet2 = IconWallet.create();

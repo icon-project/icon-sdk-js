@@ -1,6 +1,6 @@
 import assert from 'assert';
 import BigNumber from 'bignumber.js';
-import { IconConverter } from '../';
+import { IconConverter } from '../build/icon-sdk-js.node.min';
 
 const tests = [
 	{ value: '0.00008', expected: new BigNumber(0.00008) },
