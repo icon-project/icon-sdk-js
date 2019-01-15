@@ -37,7 +37,7 @@ const config = (target) => ({
 	output: {
 		path: `${__dirname}/build`,
 		filename: setLibraryName(LIBRARY_NAME, target, mode),
-		library: setLibraryName(LIBRARY_NAME, target, mode),
+		library: LIBRARY_NAME,
 		libraryTarget: 'umd',
 		umdNamedDefine: true,
 		/*
