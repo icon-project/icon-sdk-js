@@ -12,7 +12,7 @@ module.exports = Merge(CommonConfig, {
 		publicPath: '/',
 		port: 3000,
 		contentBase: path.join(process.cwd(), 'dist'),
-		host: 'localhost',
+		host: '0.0.0.0',
 		historyApiFallback: true,
 		noInfo: false,
 		stats: 'minimal',
