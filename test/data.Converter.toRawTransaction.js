@@ -1,5 +1,5 @@
 import assert from 'assert';
-import { IconConverter, IconAmount } from '..';
+import { IconConverter, IconAmount } from '../build/icon-sdk-js.node.min';
 
 const tests = [{
 	// Call Transaction

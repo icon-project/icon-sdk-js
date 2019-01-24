@@ -1,5 +1,5 @@
 import assert from 'assert';
-import { IconHexadecimal } from '..';
+import { IconHexadecimal } from '../build/icon-sdk-js.node.min';
 
 const tests = [
 	'14d922b2350a876877571d1cf5db835a575be1cb',

@@ -1,5 +1,5 @@
 import assert from 'assert';
-import { IconConverter } from '..';
+import { IconConverter } from '../build/icon-sdk-js.node.min';
 
 const tests = [
 	{ value: 'Game of Thrones', expected: '0x47616d65206f66205468726f6e6573' },
