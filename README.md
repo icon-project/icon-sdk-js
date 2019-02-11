@@ -210,5 +210,5 @@ const signedTransaction = new SignedTransaction(transaction, wallet);
 const request = iconService.sendTransaction(signedTransaction);
 
 // Asynchronized request execution
-const txHash = await reqeust.execute()
+const txHash = await request.execute()
 ```
