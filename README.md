@@ -88,7 +88,7 @@ Once the request has been executed, the request can not be executed again.
 
 ```javascript
 // Asynchronized request execution
-const balanceAsync = await reqeust.execute()
+const balanceAsync = await request.execute()
 ```
 
 The querying APIs are as follows.
