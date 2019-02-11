@@ -56,8 +56,15 @@ module.exports = {
 	},
 	plugins: [
 		new CleanWebpackPlugin(['dist'], {root: process.cwd()}),
-		new webpack.optimize.CommonsChunkPlugin({
-			name: 'vendor',
-		}),
 	].concat(htmlPlugins),
+
+	optimization: {
+        splitChunks: {
+            cacheGroups: {
+                commons: {
+                    name: 'vendor'
+                }
+            }
+        }
+    },
 };
