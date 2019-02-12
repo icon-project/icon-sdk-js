@@ -1,6 +1,13 @@
 # Changelog
 
-### Version 0.0.8 - January 15, 2018 ([NPM](https://www.npmjs.com/package/icon-sdk-js), [CDN](https://cdn.jsdelivr.net/gh/icon-project/icon-sdk-js@0.0.8/build/icon-sdk-js.web.min.js))
+### Version 0.0.9 - February 11, 2019 ([NPM](https://www.npmjs.com/package/icon-sdk-js), [CDN](https://cdn.jsdelivr.net/gh/icon-project/icon-sdk-js@0.0.8/build/icon-sdk-js.web.min.js))
+
+#### Changes
+  - Add functions of getBlockByHeight(), getBlockHash() and getLastBlock() in IconService
+  - Add test cases related to getting block data
+  - Modify `npm run build` and `npm run test` script in package.json
+
+### Version 0.0.8 - January 15, 2019 ([NPM](https://www.npmjs.com/package/icon-sdk-js), [CDN](https://cdn.jsdelivr.net/gh/icon-project/icon-sdk-js@0.0.8/build/icon-sdk-js.web.min.js))
 
 #### Changes
   - Fix module name issue
@@ -28,6 +35,6 @@
 ### Version 0.0.4 - November 13, 2018 ([NPM](https://www.npmjs.com/package/icon-sdk-js), [CDN](https://cdn.jsdelivr.net/gh/icon-project/icon-sdk-js@0.0.4/build/icon-sdk-js.min.js))
 
 #### API Changes
-  - Add function of makeTxHash(rawTransaction) in data/Util.
-  - Add IconService.IconUtil property.
-  - Modify `npm run quickstart:rebuild` script to fix destination path when build file is copied to node_modules in quickstart.
+  - Add function of makeTxHash(rawTransaction) in data/Util
+  - Add IconService.IconUtil property
+  - Modify `npm run quickstart:rebuild` script to fix destination path when build file is copied to node_modules in quickstart
