@@ -1,7 +1,6 @@
 # ICON SDK for JavaScript
 
-ICON supports SDK for 3rd party or user services development. You can integrate ICON SDK for your project and utilize ICON’s functionality. Currently, ICON SDK works only in a browser environment. Node.js will be supported soon.
-
+ICON supports SDK for 3rd party or user services development. You can integrate ICON SDK for your project and utilize ICON’s functionality.
 
 ## Installation
 
