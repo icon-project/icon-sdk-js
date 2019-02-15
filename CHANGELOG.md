@@ -1,6 +1,12 @@
 # Changelog
 
-### Version 0.0.9 - February 11, 2019 ([NPM](https://www.npmjs.com/package/icon-sdk-js), [CDN](https://cdn.jsdelivr.net/gh/icon-project/icon-sdk-js@0.0.8/build/icon-sdk-js.web.min.js))
+### Version 0.0.10 - February 15, 2019 ([NPM](https://www.npmjs.com/package/icon-sdk-js), [CDN](https://cdn.jsdelivr.net/gh/icon-project/icon-sdk-js@0.0.10/build/icon-sdk-js.web.min.js))
+
+#### Changes
+  - Add exception type for network error
+  - Support for searching v2 block
+
+### Version 0.0.9 - February 11, 2019 ([NPM](https://www.npmjs.com/package/icon-sdk-js), [CDN](https://cdn.jsdelivr.net/gh/icon-project/icon-sdk-js@0.0.9/build/icon-sdk-js.web.min.js))
 
 #### Changes
   - Add functions of getBlockByHeight(), getBlockHash() and getLastBlock() in IconService
