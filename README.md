@@ -1237,7 +1237,7 @@ const pk = wallet.getAddress()
 | [MessageTransactionBuilder] | Builder class for `MessageTransaction` instance, which is for sending message data. Extends `IcxTransactionBuilder` class. |
 | [DeployTransactionBuilder] | Builder class for `DeployTransaction` instance, which is for deploying SCORE. Extends `IcxTransactionBuilder` class.  |
 | [CallTransactionBuilder] | Builder class for `CallTransaction` instance, which is for invoking a *state-transition* function of SCORE. Extends `IcxTransactionBuilder` class. |
-| [CallBuilder] | Builder class for `Call` instance, which is for invoking a *read-only* function of SCORE. Extends `IcxTransactionBuilder` class. |
+| [CallBuilder] | Builder class for `Call` instance, which is for invoking a *read-only* function of SCORE. |
 
 ### IconService.IconBuilder.IcxTransactionBuilder
 
@@ -1480,12 +1480,14 @@ const txObj = new IcxTransactionBuilder()
 
 ### IconService.IconBuilder.MessageTransactionBuilder
 
-Builder class for `MessageTransaction` instance. `MessageTransaction` is a object representing a transaction object used for sending message data. It extends `IcxTransaction` class. Parameters are mostly identical to `IcxTransaction` class, except for the following:
+Builder class for `MessageTransaction` instance. `MessageTransaction` is a object representing a transaction object used for sending message data. It extends `IcxTransaction` class, so instance parameters and methods of builder class are mostly identical to `IcxTransaction` class, except for the following:
 
 | Parameter       | Description |
 | ------------- | ----------- |
 | `data` | A message data. Data type of the data should be **lowercase hex string prefixed with '0x'.** |
 | `dataType` | Data type of `data`. Fixed string `message` is in value. |
+
+For details of extended parameters and methods, see [IcxTransactionBuilder] section.
 
 #### Constructor
 
@@ -1498,213 +1500,688 @@ new MessageTransactionBuilder()
 
 None
 
-#### to()
+#### data()
 
-Check details of [IcxTransactionBuilder.to()][]
+Setter method of 'data' property.
 
 ```javascript
-.to(to: string) => IcxTransactionBuilder
+.data(data: string) => MessageTransactionBuilder
 ```
 ##### Parameters
 
 | Parameter       | Type | Description |
 | ------------- | ----------- | ----------- |
-| to | `string` | The EOA or SCORE address. |
+| data | `string` | The data (hex string) to send. |
 
 ##### Returns
-`IcxTransactionBuilder` - Returns an instance of itself
+`MessageTransactionBuilder` - Returns an instance of itself
 
 ##### Example
 ```javascript
-// Set `to` property.
-const txObj = new IcxTransactionBuilder()
-    .to('hx87a90bfe8ed49e1a25184ce77fa0d9c4b0484d6a')
-```
-
-#### from()
-
-Setter method of 'from' property.
-
-```javascript
-.from(from: string) => IcxTransactionBuilder
-```
-##### Parameters
-
-| Parameter       | Type | Description |
-| ------------- | ----------- | ----------- |
-| from | `string` | An EOA address. |
-
-##### Returns
-`IcxTransactionBuilder` - Returns an instance of itself
-
-##### Example
-```javascript
-// Set `from` property.
-const txObj = new IcxTransactionBuilder()
-    .from('hx46293d558d3bd489c3715e7e3648de0e35086bfd')
-```
-
-#### value()
-
-Setter method of 'value' property.
-
-```javascript
-.value(value: string|BigNumber|number) => IcxTransactionBuilder
-```
-##### Parameters
-
-| Parameter       | Type | Description |
-| ------------- | ----------- | ----------- |
-| value | `string|BigNumber|number` | The sending amount of ICX in loop unit. |
-
-##### Returns
-`IcxTransactionBuilder` - Returns an instance of itself
-
-##### Example
-```javascript
-// Set `value` property.
-const txObj = new IcxTransactionBuilder()
-    .value(IconAmount.of(1, IconAmount.Unit.ICX).toLoop())
-```
-
-#### stepLimit()
-
-Setter method of 'stepLimit' property.
-
-```javascript
-.stepLimit(stepLimit: string|BigNumber|number) => IcxTransactionBuilder
-```
-##### Parameters
-
-| Parameter       | Type | Description |
-| ------------- | ----------- | ----------- |
-| stepLimit | `string|BigNumber|number` | The amount of step limit. |
-
-##### Returns
-`IcxTransactionBuilder` - Returns an instance of itself
-
-##### Example
-```javascript
-// Set `value` property.
-const txObj = new IcxTransactionBuilder()
-    .stepLimit(IconConverter.toBigNumber(100000))
-```
-
-#### nid()
-
-Setter method of 'nid' property.
-
-```javascript
-.nid(nid: string|BigNumber|number) => IcxTransactionBuilder
-```
-##### Parameters
-
-| Parameter       | Type | Description |
-| ------------- | ----------- | ----------- |
-| nid | `string|BigNumber|number` | A network ID. |
-
-##### Returns
-`IcxTransactionBuilder` - Returns an instance of itself
-
-##### Example
-```javascript
-// Set `nid` property.
-const txObj = new IcxTransactionBuilder()
-    .nid(IconConverter.toBigNumber(1))
-```
-
-#### nonce()
-
-Setter method of 'nonce' property.
-
-```javascript
-.nonce(nonce: string|BigNumber|number) => IcxTransactionBuilder
-```
-##### Parameters
-
-| Parameter       | Type | Description |
-| ------------- | ----------- | ----------- |
-| nonce | `string|BigNumber|number` | A nonce value. |
-
-##### Returns
-`IcxTransactionBuilder` - Returns an instance of itself
-
-##### Example
-```javascript
-// Set `nonce` property.
-const txObj = new IcxTransactionBuilder()
-    .nonce(IconConverter.toBigNumber(1))
-```
-
-#### version()
-
-Setter method of 'version' property.
-
-```javascript
-.version(version: string|BigNumber|number) => IcxTransactionBuilder
-```
-##### Parameters
-
-| Parameter       | Type | Description |
-| ------------- | ----------- | ----------- |
-| version | `string|BigNumber|number` | A version value. |
-
-##### Returns
-`IcxTransactionBuilder` - Returns an instance of itself
-
-##### Example
-```javascript
-// Set `version` property.
-const txObj = new IcxTransactionBuilder()
-    .version(IconConverter.toBigNumber(3))
-```
-
-#### timestamp()
-
-Setter method of 'timestamp' property.
-
-```javascript
-.timestamp(version: string|BigNumber|number) => IcxTransactionBuilder
-```
-##### Parameters
-
-| Parameter       | Type | Description |
-| ------------- | ----------- | ----------- |
-| timestamp | `string|BigNumber|number` | A timestamp value. (microsecond) |
-
-##### Returns
-`IcxTransactionBuilder` - Returns an instance of itself
-
-##### Example
-```javascript
-// Set `timestamp` property.
-const txObj = new IcxTransactionBuilder()
-    .timestamp(1544596599371000)
+// Set `data` property.
+const txObj = new MessageTransactionBuilder()
+		.data(IconConverter.fromUtf8('Hello'))
 ```
 
 #### build()
 
-Returns an `IcxTransaction` instance which contains parameter you set.
+Returns an `MessageTransaction` instance which contains parameter you set.
 
 ```javascript
-.build() => IcxTransaction
+.build() => MessageTransaction
+```
+##### Parameters
+
+None
+
+##### Returns
+`MessageTransaction` - Returns an `MessageTransaction` instance.
+
+##### Example
+```javascript
+// Build `MessageTransaction` instance.
+const txObj = new MessageTransactionBuilder()
+    .from('hx46293d558d3bd489c3715e7e3648de0e35086bfd')
+    .to('hx87a90bfe8ed49e1a25184ce77fa0d9c4b0484d6a')
+    .stepLimit(IconConverter.toBigNumber(100000))
+    .nid(IconConverter.toBigNumber(3))
+    .nonce(IconConverter.toBigNumber(1))
+    .version(IconConverter.toBigNumber(3))
+    .timestamp(1544596599371000)
+    .data(IconConverter.fromUtf8('Hello'))
+    .build()
+```
+
+### IconService.IconBuilder.DeployTransactionBuilder
+
+Builder class for `DeployTransaction` instance. `DeployTransaction` is a object representing a transaction object used for deploying SCORE. It extends `IcxTransaction` class, so instance parameters and methods of builder class are mostly identical to `IcxTransaction` class, except for the following:
+
+| Parameter       | Description |
+| ------------- | ----------- |
+| `data` | A deploy object data. It contains 3 parameters: 1) `contentType` - Mime-type of the content. 2) `content` - Compressed SCORE data. 3) `params` (optional) - Function parameters delivered to on_install() or on_update() |
+| `dataType` | Data type of `data`. Fixed string `deploy` is in value. |
+
+For details of extended parameters and methods, see [IcxTransactionBuilder] section.
+
+#### Constructor
+
+Creates an instance of `DeployTransactionBuilder` class.
+
+```javascript
+new DeployTransactionBuilder()
+```
+##### Parameters
+
+None
+
+#### contentType()
+
+Setter method of 'contentType' property in 'data'.
+
+```javascript
+.contentType(contentType: string) => DeployTransactionBuilder
+```
+##### Parameters
+
+| Parameter       | Type | Description |
+| ------------- | ----------- | ----------- |
+| contentType | `string` | The content type of content |
+
+##### Returns
+`DeployTransactionBuilder` - Returns an instance of itself
+
+##### Example
+```javascript
+// Set `contentType` property.
+const txObj = new DeployTransactionBuilder()
+    .contentType('application/zip')
+```
+
+#### content()
+
+Setter method of 'content' property in 'data'.
+
+```javascript
+.content(content: string) => DeployTransactionBuilder
+```
+##### Parameters
+
+| Parameter       | Type | Description |
+| ------------- | ----------- | ----------- |
+| content | `string` | The content to deploy. |
+
+##### Returns
+`DeployTransactionBuilder` - Returns an instance of itself
+
+##### Example
+```javascript
+// Set `content` property.
+const txObj = new DeployTransactionBuilder()
+    .content('0x504b03040a0000000000d3a68e4d000000000000000...')
+```
+
+#### params()
+
+Setter method of 'params' property in 'data'.
+
+```javascript
+.params(params: object) => DeployTransactionBuilder
+```
+##### Parameters
+
+| Parameter       | Type | Description |
+| ------------- | ----------- | ----------- |
+| params | `object` | Function parameters delivered to on_install() or on_update(). |
+
+##### Returns
+`DeployTransactionBuilder` - Returns an instance of itself
+
+##### Example
+```javascript
+// Set `params` property.
+const txObj = new DeployTransactionBuilder()
+    .params({
+        initialSupply: IconConverter.toHex('100000000000'),
+        decimals: IconConverter.toHex(18),
+        name: 'StandardToken',
+        symbol: 'ST',
+	})
+```
+
+#### build()
+
+Returns an `DeployTransaction` instance which contains parameter you set.
+
+```javascript
+.build() => DeployTransaction
+```
+##### Parameters
+
+None
+
+##### Returns
+`DeployTransaction` - Returns an `DeployTransaction` instance.
+
+##### Example
+```javascript
+// Build `DeployTransaction` instance.
+const txObj = new DeployTransactionBuilder()
+		.from('hx46293d558d3bd489c3715e7e3648de0e35086bfd')
+		.to('cx0000000000000000000000000000000000000000')
+		.stepLimit(IconConverter.toBigNumber(2500000))
+		.nid(IconConverter.toBigNumber(3))
+		.nonce(IconConverter.toBigNumber(1))
+		.version(IconConverter.toBigNumber(3))
+		.timestamp(1544596599371000)
+		.contentType('application/zip')
+		.content('0x504b03040a0000000000d3a68e4d000000000000000...')
+		.params({
+			initialSupply: IconConverter.toHex('100000000000'),
+			decimals: IconConverter.toHex(18),
+			name: 'StandardToken',
+			symbol: 'ST',
+		})
+		.build()
+```
+
+
+### IconService.IconBuilder.CallTransactionBuilder
+
+Builder class for `CallTransaction` instance. `CallTransaction` is a object representing a transaction object used for invoking a *state-transition* function of SCORE. It extends `IcxTransaction` class, so instance parameters and methods are mostly identical to `IcxTransaction` class, except for the following:
+
+| Parameter       | Description |
+| ------------- | ----------- |
+| `data` | A object data for calling method. It contains 2 parameters: 1) `method` - The method name of SCORE API. 2) `params` (optional) - The input params for method |
+| `dataType` | Data type of `data`. Fixed string `call` is in value. |
+
+For details of extended parameters and methods, see [IcxTransactionBuilder] section.
+
+#### Constructor
+
+Creates an instance of `CallTransactionBuilder` class.
+
+```javascript
+new CallTransactionBuilder()
 ```
 ##### Parameters
 
 None
 
 
-### IconService.IconBuilder.DeployTransactionBuilder
 
-### IconService.IconBuilder.CallTransactionBuilder
+#### method()
+
+Setter method of 'method' property in 'data'.
+
+```javascript
+.method(method: string) => CallTransactionBuilder
+```
+##### Parameters
+
+| Parameter       | Type | Description |
+| ------------- | ----------- | ----------- |
+| method | `string` | The method name of SCORE API. |
+
+##### Returns
+`CallTransactionBuilder` - Returns an instance of itself
+
+##### Example
+```javascript
+// Set `method` property.
+const txObj = new CallTransactionBuilder()
+		.method('transfer')
+```
+
+
+#### params()
+
+Setter method of 'params' property in 'data'.
+
+```javascript
+.params(params: object) => CallTransactionBuilder
+```
+##### Parameters
+
+| Parameter       | Type | Description |
+| ------------- | ----------- | ----------- |
+| params | `object` | The input params for method. |
+
+##### Returns
+`CallTransactionBuilder` - Returns an instance of itself
+
+##### Example
+```javascript
+// Set `params` property.
+const txObj = new CallTransactionBuilder()
+    .params({
+        _to: 'hxd008c05cbc0e689f04a5bb729a66b42377a9a497',
+        _value: IconConverter.toHex(IconAmount.of(1, IconAmount.Unit.ICX).toLoop()),
+    })
+```
+
+
+#### build()
+
+Returns an `CallTransaction` instance which contains parameter you set.
+
+```javascript
+.build() => CallTransaction
+```
+##### Parameters
+
+None
+
+##### Returns
+`CallTransaction` - Returns an `CallTransaction` instance.
+
+##### Example
+```javascript
+// Build `CallTransaction` instance.
+const txObj = new CallTransactionBuilder()
+		.from('hx902ecb51c109183ace539f247b4ea1347fbf23b5')
+		.to('cx3502b4dadbfcd654d26d53d8463f2929c2c3948d')
+		.stepLimit(IconConverter.toBigNumber('2000000'))
+		.nid(IconConverter.toBigNumber('3'))
+		.nonce(IconConverter.toBigNumber('1'))
+		.version(IconConverter.toBigNumber('3'))
+		.timestamp((new Date()).getTime() * 1000)
+		.method('transfer')
+		.params({
+			_to: 'hxd008c05cbc0e689f04a5bb729a66b42377a9a497',
+			_value: IconConverter.toHex(IconAmount.of(1, IconAmount.Unit.ICX).toLoop()),
+		})
+		.build()
+```
+
 
 ### IconService.IconBuilder.CallBuilder
 
+Builder class for `Call` instance. `Call` is a object representing a transaction object used for invoking a *read-only* function of SCORE. The parameter details are as follows:
+
+| Parameter       | Description |
+| ------------- | ----------- |
+| `to` | A SCORE address to execute the call. |
+| `data` | A object data for calling method. It contains 2 parameters: 1) `method` - The method name of SCORE API. 2) `params` (optional) - The input params for method |
+| `dataType` | Data type of `data`. Fixed string `call` is in value. |
+
+#### Constructor
+
+Creates an instance of `CallBuilder` class.
+
+```javascript
+new CallBuilder()
+```
+##### Parameters
+
+None
+
+#### to()
+
+Setter method of 'to' property.
+
+```javascript
+.to(to: string) => CallBuilder
+```
+##### Parameters
+
+| Parameter       | Type | Description |
+| ------------- | ----------- | ----------- |
+| to | `string` | SCORE address. |
+
+##### Returns
+`CallBuilder` - Returns an instance of itself
+
+##### Example
+```javascript
+// Set `to` property.
+const txObj = new CallBuilder()
+    .to('cxc248ee72f58f7ec0e9a382379d67399f45b596c7')
+```
+
+
+#### method()
+
+Setter method of 'method' property in 'data'.
+
+```javascript
+.method(method: string) => CallBuilder
+```
+##### Parameters
+
+| Parameter       | Type | Description |
+| ------------- | ----------- | ----------- |
+| method | `string` | The method name of SCORE API. |
+
+##### Returns
+`CallBuilder` - Returns an instance of itself
+
+##### Example
+```javascript
+// Set `method` property.
+const txObj = new CallBuilder()
+		.method('balanceOf')
+```
+
+
+#### params()
+
+Setter method of 'params' property in 'data'.
+
+```javascript
+.params(params: object) => CallBuilder
+```
+##### Parameters
+
+| Parameter       | Type | Description |
+| ------------- | ----------- | ----------- |
+| params | `object` | The input params for method. |
+
+##### Returns
+`CallBuilder` - Returns an instance of itself
+
+##### Example
+```javascript
+// Set `params` property.
+const txObj = new CallBuilder()
+    .params({ 
+        _owner: 'hx87a90bfe8ed49e1a25184ce77fa0d9c4b0484d6a' 
+    })
+```
+
+
+#### build()
+
+Returns an `Call` instance which contains parameter you set.
+
+```javascript
+.build() => Call
+```
+##### Parameters
+
+None
+
+##### Returns
+`Call` - Returns an `Call` instance.
+
+##### Example
+```javascript
+// Build `Call` instance.
+const txObj = new CallBuilder()
+    .to('cxc248ee72f58f7ec0e9a382379d67399f45b596c7')
+    .method('balanceOf')
+    .params({ _owner: 'hx87a90bfe8ed49e1a25184ce77fa0d9c4b0484d6a' })
+    .build()
+```
+
+
 ### IconService.SignedTransaction
+
+`SignedTransaction` is a class for signing transaction object. It enables you to make signature, and signed transaction object by calling instance methods. Also, by passing `SignedTransaction` instance to [sendTransaction()], it will automatically generate transaction object including signature, and send to ICON node.
+
+#### Constructor
+
+Creates an instance of `SignedTransaction` class.
+
+```javascript
+new SignedTransaction(transaction: IcxTransaction|MessageTransaction|CallTransaction|DeployTransaction, wallet: Wallet)
+```
+
+##### Parameters
+
+| Parameter       | Type | Description |
+| ------------- | ----------- | ----------- |
+| transaction | `IcxTransaction|MessageTransaction|CallTransaction|DeployTransaction` | A transaction object. |
+| wallet | `Wallet` | wallet instance used for signing. |
+
+#### getSignature()
+
+Get signature string.
+
+```javascript
+.getSignature() => string
+```
+
+##### Parameters
+
+None
+
+##### Returns
+
+`string` - The signature string.
+
+##### Example
+```javascript
+/* Returns the signature */
+const signature = new SignedTransaction(icxTransaction, wallet).getSignature() 
+// 'YV3eNgVjLFwXS65Bk...+lC90KgRBh7FtwE='
+```
+
+#### getProperties()
+
+Get raw signed transaction object.
+
+```javascript
+.getProperties() => object
+```
+
+##### Parameters
+
+None
+
+##### Returns
+
+`object` - The raw signed transaction object.
+
+##### Example
+```javascript
+/* Returns the raw signed transaction object */
+const signature = new SignedTransaction(icxTransaction, wallet).getProperties()
+// {
+// 	to: 'hx87a90bfe8ed49e1a25184ce77fa0d9c4b0484d6a',
+// 	from: 'hx46293d558d3bd489c3715e7e3648de0e35086bfd',
+// 	stepLimit: '0x186a0',
+// 	nid: '0x3',
+// 	version: '0x3',
+// 	timestamp: '0x57ccd6ba074f8',
+// 	value: '0x7',
+// 	nonce: '0x1',
+// 	signature: 'YV3eNgVjLFwXS65Bk...+lC90KgRBh7FtwE=',
+// };
+```
+
+
+#### getRawTransaction()
+
+Get raw transaction object of `transaction` property.
+
+```javascript
+.getRawTransaction() => object
+```
+
+##### Parameters
+
+None
+
+##### Returns
+
+`object` - The raw transaction object of `transaction` property.
+
+##### Example
+```javascript
+/* Returns the signed transaction object */
+const signature = new SignedTransaction(icxTransaction, wallet).getRawTransaction()
+// {
+// 	to: 'hx87a90bfe8ed49e1a25184ce77fa0d9c4b0484d6a',
+// 	from: 'hx46293d558d3bd489c3715e7e3648de0e35086bfd',
+// 	stepLimit: '0x186a0',
+// 	nid: '0x3',
+// 	version: '0x3',
+// 	timestamp: '0x57ccd6ba074f8',
+// 	value: '0x7',
+// 	nonce: '0x1'
+// };
+```
+
 
 ### IconService.HttpProvider
 
+`HttpProvider` is a class representing HTTP-based provider. It is commonly used for setting provider url of `IconService` instance. For details of network and node url, see [ICON Networks] document.
+
+
+#### Constructor
+
+Creates an instance of `HttpProvider` class.
+
+```javascript
+new HttpProvider(url: string)
+```
+
+##### Parameters
+
+| Parameter       | Type | Description |
+| ------------- | ----------- | ----------- |
+| url | `string` | ICON node url |
+
+
 ### IconService.IconAmount
+
+`IconAmount` is a class representing BigNumber value and unit data. It also provides unit conversion static functions. It enables you to manage different type of numeric data easily.
+
+(`IconAmount` contains static class property called `Unit`, which has constant `number` value of different type of unit digit. `IconAmount.Unit.LOOP` is `0`, and `IconAmount.Unit.ICX` is `18`.)
+
+#### Constructor
+
+Creates an instance of `IconAmount` class.
+
+```javascript
+new IconAmount(value: string|BigNumber|number, digit: string|BigNumber|number)
+```
+
+##### Parameters
+
+| Parameter       | Type | Description |
+| ------------- | ----------- | ----------- |
+| value | `string|BigNumber|number` | the value of amount. |
+| digit | `string|BigNumber|number` | the digit of unit. |
+
+> Note: According to official document of [BigNumber.js](https://mikemcl.github.io/bignumber.js/#bignumber), it is recommended to create BigNumbers from `string` values rather than `number` values to avoid a potential loss of precision.
+
+#### static of()
+
+Creates an instance of `IconAmount` class.
+
+```javascript
+IconAmount.of(value: string|BigNumber|number, digit: string|BigNumber|number) => IconAmount
+
+```
+##### Parameters
+
+| Parameter       | Type | Description |
+| ------------- | ----------- | ----------- |
+| value | `string|BigNumber|number` | the value of amount. |
+| digit | `string|BigNumber|number` | the digit of unit. |
+
+> Note: According to official document of [BigNumber.js](https://mikemcl.github.io/bignumber.js/#bignumber), it is recommended to create BigNumbers from `string` values rather than `number` values to avoid a potential loss of precision.
+
+##### Returns
+`IconAmount` - IconAmount instance.
+
+##### Example
+```javascript
+// Returns IconAmount instance
+const iconAmount = IconAmount.of('2', IconAmount.Unit.ICX);
+```
+
+
+#### toString()
+
+Converts value property into string
+
+```javascript
+.toString() => string
+
+```
+##### Parameters
+
+None
+
+##### Returns
+`string` - The stringified value property of IconAmount instance.
+
+##### Example
+```javascript
+// Returns stringified value property
+const value = IconAmount.of('2', IconAmount.Unit.ICX).toString();
+```
+
+
+#### getDigit()
+
+Get digit property.
+
+```javascript
+.getDigit() => number
+
+```
+##### Parameters
+
+None
+
+##### Returns
+`number` - The digit property of IconAmount instance.
+
+##### Example
+```javascript
+// Returns digit property
+const digit = IconAmount.of('2', IconAmount.Unit.ICX).getDigit();
+```
+
+
+#### toLoop()
+
+Get value property converted into loop unit.
+
+```javascript
+.toLoop() => BigNumber
+
+```
+##### Parameters
+
+None
+
+##### Returns
+`BigNumber` - The value property converted into loop unit.
+
+##### Example
+```javascript
+// Returns value property converted into loop unit.
+const value = IconAmount.of('2', IconAmount.Unit.ICX).toLoop();
+```
+
+
+#### convertUnit()
+
+Converts value property into custom digit
+
+```javascript
+.convertUnit(digit: string|BigNumber|number) => IconAmount
+
+```
+##### Parameters
+
+| Parameter       | Type | Description |
+| ------------- | ----------- | ----------- |
+| digit | `string|BigNumber|number` | the digit of unit. |
+
+##### Returns
+`IconAmount` - The IconAmount instance converted into custom digit.
+
+##### Example
+```javascript
+// Returns IconAmount instance converted into custom digit.
+const value = IconAmount.of('2', IconAmount.Unit.ICX).convertUnit(IconAmount.Unit.LOOP);
+```
+
 
 ### IconService.IconConverter
 
@@ -1742,6 +2219,9 @@ Link:
 
 [icx_getTransactionResult]: https://icondev.readme.io/docs/json-rpc-specification#section-icx_gettransactionresult
 
+[ICON Networks]: https://icondev.readme.io/docs/icon-networks
+
+[sendTransaction()]: #sendtransaction()
 [IconWallet]: #iconservice.iconwallet-(wallet)
 [IconBuilder]: #iconservice.iconbuilder
 [IcxTransactionBuilder]: #iconservice.iconbuilder.icxtransactionbuilder
