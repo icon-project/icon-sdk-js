@@ -3,22 +3,12 @@ title: "ICON SDK for JavaScript"
 excerpt: ""
 ---
 
-# ICON SDK for JavaScript
-
 ICON supports SDK for 3rd party or user services development. You can integrate ICON SDK for your project and utilize ICON’s functionality.
-
----
 
 ## Table of Contents
 1. [Installation](#installation)
-2. [Quick Start Guide](#quick-start-guide)
-    * [Get Started](#get-started)
-    * [WalletExample](#walletexample)
-    * [IcxTransactionExample](#icxtransactionexample)
-    * [DeployAndTransferTokenExample](#deployandtransafertokenexample)
-    * [SyncBlockExample](#syncblockexample)
-    * [Reference](#reference)
-3. [API Specification](#api-specification)
+2. [API Specification](#api-specification)
+    * [IconService][IconService]
     * [IconService.IconWallet][IconWallet]
     * [IconService.IconBuilder][IconBuilder]
     * [IconService.IconBuilder.IcxTransactionBuilder][IcxTransactionBuilder]
@@ -32,8 +22,7 @@ ICON supports SDK for 3rd party or user services development. You can integrate 
     * [IconService.IconConverter][IconConverter]
     * [IconService.IconHexadecimal][IconHexadecimal]
     * [IconService.IconValidator][IconValidator]
-
----
+    * [References][References]
 
 ## Installation
 
@@ -83,702 +72,6 @@ Then, import `icon-sdk-js/build/icon-sdk-js.web.min.js` module.
 ```javascript
 import IconService from 'icon-sdk-js/build/icon-sdk-js.web.min.js';
 ```
-
----
-
-## Quick Start Guide
-
-This is an example project of Icon SDK JavaScript.
-
-In this project, the examples are implemented as below.
-
-| Example       | Description |
-| ------------- | ----------- |
-| WalletExample | An example of creating and loading a wallet. |
-| IcxTransactionExample | An example of transferring ICX and confirming the result. |
-| DeployAndTransferTokenExample | An example of deploying IRC token and transferring deployed token. |
-| SyncBlockExample | An example of checking block confirmation and printing the ICX and token transfer information. |
-
-### Get Started
-
-#### Install Dependency
-
-Please go to `quickstart` directory and install dependency to use `icon-sdk-js`.
-
-npm
-```
-npm install   // install dependencies for executing the quickstart project (including icon-sdk-js package)
-```
-
-#### Run example file
-Run example file.
-```
-npm start   // open http://localhost:3000/ in browser
-```
-
-If you want to rebuild icon-sdk-js library and run quickstart project, go to icon-sdk-js root directory and run `npm run quickstart:rebuild` command.
-```
-npm run quickstart:rebuild   // open http://localhost:3000/ in browser
-```
-
-#### Set Node URL
-
-If you want to use custom ICON node url, change the value of `NODE_URL` variable in `./mockData/index.js`. Default value of `NODE_URL` is `https://bicon.net.solidwallet.io/api/v3`
-
-*For more information on the testnet, see [the documentation](https://github.com/icon-project/icon-project.github.io/blob/master/docs/icon_network.md) for the ICON network.*
-
-```javascript
-const NODE_URL = 'https://bicon.net.solidwallet.io/api/v3'; 
-```
-
-
-#### IconService
-
-Generate `IconService` to communicate with the nodes.
-
-`IconService` allows you to send transaction, check the result and block information, etc.
-
-`HttpProvider` is set as default to communicate with http.
-
-```javascript
-// HttpProvider is used to communicate with http.
-const provider = new HttpProvider(MockData.NODE_URL);
-// Create IconService instance
-const iconService = new IconService(provider);
-```
-
-### WalletExample
-
-This example shows how to create a new `Wallet` and load wallet with privateKey or Keystore file.
-
-
-#### Create Wallet
-
-Create new EOA by calling `create` function. After creation, the address and private Key can be looked up.
-
-```javascript
-const wallet = IconWallet.create(); //Wallet Creation
-console.log("Address: " + wallet.getAddress()); // Address Check
-console.log("PrivateKey: " + wallet.getPrivateKey()); // PrivateKey Check
-
-// Output
-Address: hx4d37a7013c14bedeedbe131c72e97ab337aea159
-PrivateKey: 00e1d6541bfd8be7d88be0d24516556a34ab477788022fa07b4a6c1d862c4de516
-```
-
-#### Load Wallet
-
-You can call existing EOA by calling `loadKeystore` and `loadPrivateKey` function.
-
-After creation, address and private Key can be looked up.
-
-```javascript
-// Load Wallet with private key
-const walletLoadedByPrivateKey = IconWallet.loadPrivateKey('38f792b95a5202ab431bfc799f7e1e5c74ec0b9ede5c6142ee7364f2c84d72f6');
-console.log(walletLoadedByPrivateKey.getAddress());
-// Output: hx902ecb51c109183ace539f247b4ea1347fbf23b5
-console.log(walletLoadedByPrivateKey.getPrivateKey());
-// Output: 38f792b95a5202ab431bfc799f7e1e5c74ec0b9ede5c6142ee7364f2c84d72f6);
-
-// Get keystore object from wallet
-const keystoreFile = walletLoadedByPrivateKey.store('qwer1234!');
-// Load wallet with keystore file
-const walletLoadedByKeyStore = IconWallet.loadKeystore(keystoreFile, 'qwer1234!');
-console.log(walletLoadedByKeyStore.getAddress());
-// Output: hx902ecb51c109183ace539f247b4ea1347fbf23b5
-console.log(walletLoadedByKeyStore.getPrivateKey());
-// Output: 38f792b95a5202ab431bfc799f7e1e5c74ec0b9ede5c6142ee7364f2c84d72f6);
-```
-
-#### Store Wallet
-
-After `Wallet` object creation, Keystore file can be stored by calling `store` function.
-
-After calling `store`, Keystore json object can be looked up with the returned value.
-
-```javascript
-const privateKey = '38f792b95a5202ab431bfc799f7e1e5c74ec0b9ede5c6142ee7364f2c84d72f6'
-const wallet = IconWallet.loadPrivateKey(privateKey);
-console.log(wallet.store('qwer1234!'));
-// Output: 
-// {
-// 	"version": 3,
-// 	"id": "e00e113c-1e45-47e4-b732-10f3d1903d75",
-// 	"address": "hx7d3d4c743bb82b927ea8a0551a3b9288e722ac84",
-// 	"crypto": {
-// 		"ciphertext": "d5df37230528bbfc0015e93c61e60041a31fb63266f61ffec60a31f474d4d7d0",
-// 		"cipherparams": {
-// 			"iv": "feaf0cc19678e4b78369904a99ba411e"
-// 		},
-// 		"cipher": "aes-128-ctr",
-// 		"kdf": "scrypt",
-// 		"kdfparams": {
-// 			"dklen": 32,
-// 			"salt": "e2e3666919161044f7b369d6ad4296380d4a13b9b5e844301c64a502ea3da240",
-// 			"n": 16384,
-// 			"r": 8,
-// 			"p": 1
-// 		},
-// 		"mac": "43789e78de4744d06c14cf966b9609fadbcd815b5380caf3f778797f9824d9d7"
-// 	}
-// }
-```
-
-### IcxTransactionExample
-
-This example shows how to transfer ICX and check the result.
-
-*For the Wallet and IconService creation, please refer to the information above.*
-
-#### ICX Transfer
-
-In this example, you can create Wallet with `MockData.PRIVATE_KEY_1` and transfer 1 ICX to `MockData.WALLET_ADDRESS_2`.
-
-```javascript
-const wallet = IconWallet.loadPrivateKey(MockData.PRIVATE_KEY_1);
-const walletAddress = wallet.getAddress();
-// 1 ICX -> 1000000000000000000 conversion
-const value = IconAmount.of(1, IconAmount.Unit.ICX).toLoop();
-console.log(value);
-// Output: BigNumber {s: 1, e: 18, c: Array(1)}
-```
-
-You can get a step cost for transfering icx as follows.
-
-```javascript
-async getDefaultStepCost() {
-    const { CallBuilder } = IconBuilder;
-    // Get governance score api list
-    const governanceApi = await this.iconService.getScoreApi(MockData.GOVERNANCE_ADDRESS).execute();
-    console.log(governanceApi)
-    const methodName = 'getStepCosts';
-    // Check input and output parameters of api if you need
-    const getStepCostsApi = governanceApi.getMethod(methodName);
-    const getStepCostsApiInputs = getStepCostsApi.inputs.length > 0 ? JSON.stringify(getStepCostsApi.inputs) : 'none';
-    const getStepCostsApiOutputs = getStepCostsApi.outputs.length > 0 ? JSON.stringify(getStepCostsApi.outputs) : 'none';
-    console.log(`[getStepCosts]\n inputs: ${getStepCostsApiInputs} \n outputs: ${getStepCostsApiOutputs}`);
-
-    // Get step costs by iconService.call
-    const callBuilder = new CallBuilder();
-    const call = callBuilder
-        .to(MockData.GOVERNANCE_ADDRESS)
-        .method(methodName)
-        .build();
-    const stepCosts = await this.iconService.call(call).execute();
-    return stepCosts.default
-}
-```
-
-Generate transaction using the values above.
-
-```javascript
-// networkId of node 1:mainnet, 2~:etc
-const networkId = new BigNumber("3"); // input node’s networkld
-const version = new BigNumber("3"); // version
-
-// Recommended icx transfer step limit :
-// use 'default' step cost in the response of getStepCosts API
-const stepLimit = await this.getDefaultStepCost(); // Please refer to the above description.
-
-// Timestamp is used to prevent the identical transactions. Only current time is required (Standard unit : us)
-// If the timestamp is considerably different from the current time, the transaction will be rejected.
-const timestamp = (new Date()).getTime() * 1000;
-
-//Enter transaction information
-const icxTransactionBuilder = new IcxTransactionBuilder();
-const transaction = icxTransactionBuilder
-      .nid(networkId)
-      .from(walletAddress)
-      .to(MockData.WALLET_ADDRESS_2)
-      .value(value)
-      .version(version)
-      .stepLimit(stepLimit)
-      .timestamp(timestamp)
-      .build();
-```
-Generate SignedTransaction to add signature of the transaction.
-
-```javascript
-// Create signature of the transaction
-const signedTransaction = new SignedTransaction(transaction, wallet);
-// Read params to transfer to nodes
-console.log(signedTransaction.getProperties());
-// Output: 
-// {
-//     from: "hx902ecb51c109183ace539f247b4ea1347fbf23b5",
-//     nid: "0x3",
-//     nonce: "0x1",
-//     signature: "OE/yJbKn+3kXiC/5x1mvOCpdbTiCAvdlZDgSH31//alTe4kTEVRCETXsQx+Jkbfwa6Qel1PUddoowdkQJDLPrgE=",
-//     stepLimit: "0x186a0",
-//     timestamp: "0x578ed370a3780",
-//     to: "hxd008c05cbc0e689f04a5bb729a66b42377a9a497",
-//     value: "0xde0b6b3a7640000",
-//     version: "0x3",
-// }
-```
-
-After calling sendTransaction from `IconService`, you can send transaction and check the transaction’s hash value. ICX transfer is now sent.
-
-```javascript
-// Send transaction
-const txHash = await iconService.sendTransaction(signedTransaction).execute();
-// Print transaction hash
-console.log(txHash);
-// Output
-// 0x69c07ff23e2eafb068ec026f1a116082f0d869b3964531e43088f6638bcfe0f7
-```
-
-#### Check the Transaction Result
-
-After transaction is sent, the result can be looked up with the returned hash value.
-
-In this example, you can check your transaction result in every 2 seconds because of the block confirmation time.
-Checking the result is as follows:
-
-```javascript
-// Check the result with the transaction hash
-const transactionResult = await iconService.getTransactionResult(txHash).execute();
-console.log("transaction status(1:success, 0:failure): "+transactionResult.status);
-// Output
-// transaction status(1:success, 0:failure): 1
-```
-
-You can check the following information using the TransactionResult.
-
-- status : 1 (success), 0 (failure)
-- to : transaction’s receiving address
-- failure : Only exists if status is 0(failure). code(str), message(str) property included
-- txHash : transaction hash
-- txIndex : transaction index in a block
-- blockHeight : Block height of the transaction
-- blockHash : Block hash of the transaction
-- cumulativeStepUsed : Accumulated amount of consumed step’s until the transaction is executed in block
-- stepUsed : Consumed step amount to send the transaction
-- stepPrice : Consumed step price to send the transaction
-- scoreAddress : SCORE address if the transaction generated SCORE (optional)
-- eventLogs :  Occurred EventLog’s list during execution of the transaction.
-- logsBloom : Indexed Data’s Bloom Filter value from the occurred Eventlog’s Data
-
-#### Check the Balance
-
-In this example, you can check the ICX balance by looking up the transaction before and after the transaction.
-
-ICX balance can be confirmed by calling getBalance function from `IconService`
-
-```javascript
-// create or load wallet
-const wallet = IconWallet.loadPrivateKey(MockData.PRIVATE_KEY_2);
-// Check the wallet balance
-const balance = await iconService.getBalance(wallet.getAddress()).execute();
-console.log(balance);
-
-// Output: 
-// 100432143214321432143
-```
-
-### DeployAndTransferTokenExample
-
-This example shows how to deploy IRC token and transfer deployed token.
-
-*For the Wallet and IconService generation, please refer to the information above.*
-
-#### Token Deploy
-
-You need the SCORE Project to deploy token.
-
-In this example, you will use ‘test.zi’ from the ‘resources’ folder.
-
-*test.zi : SampleToken SCORE Project Zip file.
-
-Generate wallet using `MockData.PRIVATE_KEY_1`, then read the binary data from ‘test.zi’
-
-```javascript
-const { Wallet } = this.iconService;
-this.wallet = IconWallet.loadPrivateKey(MockData.PRIVATE_KEY_1);
-
-this.content = '';
-// Read test.zi from ‘resources’ folder.
-```
-
-Enter the basic information of the token you want to deploy.
-
-```javascript
-const initialSupply = IconConverter.toBigNumber("100000000000");
-const decimals = IconConverter.toBigNumber("18");
-const tokenName = "StandardToken";
-const tokenSymbol = "ST";
-```
-
-You can get the maximum step limit value as follows.
-
-```javascript
-// Get apis that provides Governance SCORE
-// GOVERNANCE_ADDRESS : cx0000000000000000000000000000000000000001
-async getMaxStepLimit() {
-    const { CallBuilder } = IconBuilder;
-    
-    const governanceApi = await this.iconService.getScoreApi(MockData.GOVERNANCE_ADDRESS).execute();
-    // "getMaxStepLimit" : the maximum step limit value that any SCORE execution should be bounded by.
-    const methodName = 'getMaxStepLimit';
-    // Check input and output parameters of api if you need
-    const getMaxStepLimitApi = governanceApi.getMethod(methodName);
-
-    const params = {};
-    params[getMaxStepLimitApi.inputs[0].name] = 'invoke';
-
-    // Get max step limit by iconService.call
-    const callBuilder = new CallBuilder();
-    const call = callBuilder
-        .to(MockData.GOVERNANCE_ADDRESS)
-        .method(methodName)
-        .params(params)
-        .build();
-    const maxStepLimit = await this.iconService.call(call).execute();
-    return IconConverter.toBigNumber(maxStepLimit)
-}
-```
-
-Generate transaction with the given values above.
-
-```javascript
-async buildDeployTransaction() {
-    const { DeployTransactionBuilder } = IconBuilder;
-
-    const initialSupply = IconConverter.toBigNumber("100000000000");
-    const decimals = IconConverter.toBigNumber("18");
-    const tokenName = "StandardToken";
-    const tokenSymbol = "ST";
-    const contentType = "application/zip";
-    // Enter token information
-    // key name ("initialSupply", "decimals", "name", "symbol")
-    // You must enter the given values. Otherwise, your transaction will be rejected.
-    const params = {
-        initialSupply: IconConverter.toHex(initialSupply),
-        decimals: IconConverter.toHex(decimals),
-        name: tokenName,
-        symbol: tokenSymbol
-    }
-    const installScore = MockData.SCORE_INSTALL_ADDRESS;
-    const stepLimit = await this.getMaxStepLimit();
-    const walletAddress = this.wallet.getAddress();
-    // networkId of node 1:mainnet, 2~:etc
-    const networkId = IconConverter.toBigNumber(3);
-    const version = IconConverter.toBigNumber(3);
-    // Timestamp is used to prevent the identical transactions. Only current time is required (Standard unit : us)
-    // If the timestamp is considerably different from the current time, the transaction will be rejected.
-    const timestamp = (new Date()).getTime() * 1000;
-
-    //Enter transaction information
-    const deployTransactionBuilder = new DeployTransactionBuilder();
-    const transaction = deployTransactionBuilder
-        .nid(networkId)
-        .from(walletAddress)
-        .to(installScore)
-        .stepLimit(stepLimit)
-        .timestamp(timestamp)
-        .contentType(contentType)
-        .content(`0x${this.content}`)
-        .params(params)
-        .version(version)
-        .build();        
-    return transaction; 
-}
-```
-
-Generate SignedTransaction to add signature to the transaction.
-
-```javascript
-// Create signature of the transaction
-const signedTransaction = new SignedTransaction(transaction, this.wallet);
-// Read params to transfer to nodes
-const signedTransactionProperties = JSON.stringify(signedTransaction.getProperties()).split(",").join(", \n");
-```
-
-You can check the transaction hash value by calling sendTransaction from ‘IconService`. Deployment is now completed.
-
-```javascript
-this.deployTxHash = await this.iconService.sendTransaction(signedTransaction).execute();
-```
-
-After transaction is sent, the result can be looked up with the returned hash value.
-You can also check the ST Token score address that you deployed.
-
-Checking the result is as follows:
-
-```javascript
-// Check the result with the transaction hash
-const transactionResult = await iconService.getTransactionResult(this.deployTxHash).execute();
-
-console.log("transaction status(1:success, 0:failure): "+transactionResult.status);
-console.log("Your score address: " + transactionResult.scoreAddress);
-
-// Output
-// transaction status(1:success, 0:failure): 1
-// Your score address: cx19584dcfacd0d7cc5e0562a53959069213d7adca
-```
-
-*For the 'TransactionResult', please refer to the `IcxTransactionExample`.*
-
-#### Token Transfer
-
-You can send the ST token that you deployed right before.
-
-You can generate Wallet using `MockData.PRIVATE_KEY_1` just like in the case of `IcxTransactionExample`, then send 1 ST Token to `MockData.WALLET_ADDRESS_2`
-
-You need token address to send your token.
-
-```javascript
-const wallet = IconWallet.loadPrivateKey(MockData.PRIVATE_KEY_1);
-const toAddress = MockData.WALLET_ADDRESS_2;
-const tokenAddress = this.scoreAddress; //ST Token Address that you deployed
-const tokenDecimals = 18; // token decimal
-// 1 ICX -> 1000000000000000000 conversion
-const value = IconAmount.of(1, IconAmount.Unit.ICX).toLoop();
-```
-
-You can get a step cost to send token as follows.
-
-```javascript
-async getDefaultStepCost() {
-    const { CallBuilder } = IconBuilder;
-    
-    // Get apis that provides Governance SCORE
-    // GOVERNANCE_ADDRESS : cx0000000000000000000000000000000000000001
-    const governanceApi = await this.iconService.getScoreApi(MockData.GOVERNANCE_ADDRESS).execute();
-    console.log(governanceApi)
-    const methodName = 'getStepCosts';
-
-    // Get step costs by iconService.call
-    const callBuilder = new CallBuilder();
-    const call = callBuilder
-        .to(MockData.GOVERNANCE_ADDRESS)
-        .method(methodName)
-        .build();
-    const stepCosts = await this.iconService.call(call).execute();
-    // For sending token, it is about twice the default value.
-    return IconConverter.toBigNumber(stepCosts.default).times(2)
-}
-```
-
-Generate Transaction with the given parameters above. You have to add receiving address and value to param object to send token.
-
-```javascript
-async buildTokenTransaction() {
-    const { CallTransactionBuilder } = IconBuilder;
-
-    const walletAddress = this.wallet.getAddress();
-    // You can use "governance score apis" to get step costs.
-    const value = IconAmount.of(1, IconAmount.Unit.ICX).toLoop();
-    const stepLimit = await this.getDefaultStepCost();
-    // networkId of node 1:mainnet, 2~:etc
-    const networkId = IconConverter.toBigNumber(3);
-    const version = IconConverter.toBigNumber(3);
-    // Timestamp is used to prevent the identical transactions. Only current time is required (Standard unit : us)
-    // If the timestamp is considerably different from the current time, the transaction will be rejected.
-    const timestamp = (new Date()).getTime() * 1000;
-    // SCORE name that send transaction is “transfer”.
-    const methodName = "transfer";
-    // Enter receiving address and the token value.
-    // You must enter the given key name("_to", "_value"). Otherwise, the transaction will be rejected.
-    const params = {
-        _to: MockData.WALLET_ADDRESS_2,
-        _value: IconConverter.toHex(value)
-    }
-    
-    //Enter transaction information
-    const tokenTransactionBuilder = new CallTransactionBuilder();
-    const transaction = tokenTransactionBuilder
-        .nid(networkId)
-        .from(walletAddress)
-        .to(this.scoreAddress)
-        .stepLimit(stepLimit)
-        .timestamp(timestamp)
-        .method(methodName)
-        .params(params)
-        .version(version)
-        .build();        
-    return transaction;
-}
-```
-
-Generate SignedTransaction to add signature to your transaction.
-
-```javascript
-// Generate transaction signature.
-const signedTokenTransfer = new SignedTransaction(transaction, wallet);
-// Read params to send to nodes.
-console.log(signedTokenTransfer.getProperties());
-```
-
- Call sendTransaction from ‘IconService’ to check the transaction hash. Token transaction is now sent.
-
-```javascript
-// Send transaction
-this.transactionTxHash = await iconService.sendTransaction(signedTokenTransfer).execute();
-// Print transaction hash
-console.log(this.transactionTxHash);
-// Output
-// 0x6b17886de346655d96373f2e0de494cb8d7f36ce9086cb15a57d3dcf24523c8f
-```
-
-#### Check the Result
-
-You can check the result with the returned hash value of your transaction.
-
-In this example, you can check your transaction result in every 2 seconds because of the block confirmation time.
-Checking the result is as follows:
-
-```javascript
-// Check the result with the transaction hash
-const transactionResult = await iconService.getTransactionResult(this.transactionTxHash).execute();
-console.log("transaction status(1:success, 0:failure): "+transactionResult.status);
-// Output
-// transaction status(1:success, 0:failure):1
-```
-
-*For the TransactionResult, please refer to the `IcxTransactionExample`.*
-
-#### Check the Token Balance
-
-In this example, you can check the token balance before and after the transaction.
-
-You can check the token balance by calling ‘balanceOf’ from the token SCORE.
-
-```javascript
-const { CallBuilder } = IconBuilder;
-const tokenAddress = this.scoreAddress;
-// Method name to check the balance
-const methodName = "balanceOf";
-// You must enter the given key name (“_owner”).
-const params = {
-    _owner: address
-}
-const callBuilder = new CallBuilder();
-const call = callBuilder
-    .to(tokenAddress)
-    .method(methodName)
-    .params(params)
-    .build();
-// Check the wallet balance
-const balance = await this.iconService.call(call).execute();
-```
-
-### SyncBlockExample
-
-This example shows how to read block information and print the transaction result for every block creation.
-
-*Please refer to above for Wallet and IconService creation.*
-
-#### Read Block Information
-
-In this example, 'getLastBlock' is called periodically in order to check the new blocks,
-
-by updating the transaction information for every block creation.
-
-```javascript
-// Check the recent blocks
-const block = await iconService.getBlock('latest').execute();
-console.log(block.height);
-// Output
-// 237845
-```
-
-If a new block has been created, get the transaction list.
-
-```javascript
-const txList = block.getTransactions();
-```
-
-You can check the following information using the ConfirmedTransaction:
-
-- version : json rpc server version
-- to : Receiving address of transaction
-- value: The amount of ICX coins to transfer to the address. If omitted, the value is assumed to be 0
-- timestamp: timestamp of the transmitting transaction (unit: microseconds)
-- nid : network ID
-- signature: digital signature data of the transaction
-- txHash : transaction hash
-- dataType: A value indicating the type of the data item (call, deploy, message)
-- data: Various types of data are included according to dataType.
-
-#### Transaction Output
-
-```javascript
-async syncBlock(block) {
-    // the transaction list of blocks
-    console.log(block)
-    const txList = block.getTransactions();
-
-    Promise.all(
-        txList.map(async transaction => {
-            const txResult = await this.iconService.getTransactionResult(transaction.txHash).execute();
-
-            // Print icx transaction
-            if ((transaction.value !== undefined) && transaction.value > 0) {
-                document.getElementById("S03-2").innerHTML += `<li>${block.height} - [ICX] status: ${txResult.status === 1 ? 'success' : 'failure'}  |  amount: ${transaction.value}</li>`
-            }
-
-            // Print token transaction
-            if (transaction.dataType !== undefined &&
-                transaction.dataType === "call") {
-                const method = transaction.data.method;
-
-                if (method !== null && method === "transfer") {
-                    const params = transaction.data.params;
-                    const value = IconConverter.toBigNumber(params["_value"]); // value
-                    const toAddr = params["_to"];
-
-                    const tokenName = await this.getTokenName(transaction.to);
-                    const symbol = await this.getTokenSymbol(transaction.to);
-                    
-                    document.getElementById("S03-2").innerHTML += `<li>${block.height} - [${tokenName} - ${symbol}] status: ${txResult.status === 1 ? 'success' : 'failure'}  |  amount: ${value}</li>`;
-                }
-            }
-        })
-    )
-    
-    this.prevHeight = block.height;
-}
-
-```
-
-#### Check the Token Name & Symbol
-
-You can check the token SCORE by calling the `name` and `symbol` functions.
-
-```javascript
-async getTokenName(to) {
-    const { CallBuilder } = IconBuilder;
-    const tokenAddress = to; // token address
-    const callBuilder = new CallBuilder();
-    const call = callBuilder
-        .to(tokenAddress)
-        .method("name")
-        .build();
-    const result = await this.iconService.call(call).execute();
-    return result;
-}
-```
-```javascript
-async getTokenSymbol(to) {
-    const { CallBuilder } = IconBuilder;
-    const tokenAddress = to; // token address
-    const callBuilder = new CallBuilder();
-    const call = callBuilder
-        .to(tokenAddress)
-        .method("symbol")
-        .build();
-    const result = await this.iconService.call(call).execute();
-    return result;
-}
-```
-
-### References
-
-- [ICON JSON-RPC API v3](https://icondev.readme.io/docs/json-rpc-specification) 
-- [IRC2 Specification](https://github.com/icon-project/IIPs/blob/master/IIPS/iip-2.md)
-
----
 
 ## API Specification
 
@@ -866,17 +159,18 @@ const balance = await iconService.getBalance('hx9d8a8376e7db9f00478feb9a46f44f0d
 
 #### getBlock()
 
-Get the block information.
+Get the block information. 
+> Since this API is an old version, we recommend to use [getBlockByHeight()], [getBlockByHash()], [getLastBlock()] API.
 
 ```javascript
-.getBlock(value: string|BigNumber) => HttpCall // .execute() => object
+.getBlock(value: string|number|BigNumber) => HttpCall // .execute() => object
 ```
 
 ##### Parameters
 
 | Parameter       | Type | Description |
 | ------------- | ----------- | ----------- |
-| value | `string|BigNumber` | The height or hash value of block.
+| value | `string`, `number`, `BigNumber` | The height or hash value of block.
 
 Depending on the type of input value, there are different ways to get block information.
 
@@ -901,6 +195,74 @@ const block2 = await iconService.getBlock("0xdb310dd653b2573fd673ccc7489477a0b69
 // Returns latest block information
 const block2 = await iconService.getBlock("latest").execute(); 
 ```
+
+#### getBlockByHeight()
+
+Get the block information by block height. 
+
+```javascript
+.getBlockByHeight(value: number|BigNumber) => HttpCall // .execute() => object
+```
+
+##### Parameters
+
+| Parameter       | Type | Description |
+| ------------- | ----------- | ----------- |
+| value | `number`, `BigNumber` | The height value of block.
+
+##### Returns
+`HttpCall` - The HttpCall instance for `icx_getBlockByHeight` JSON-RPC API request. If `execute()` successfully, it returns a block `object`.
+
+##### Example
+```javascript
+// Returns block information
+const block = await iconService.getBlockByHeight(1000).execute();
+```
+
+#### getBlockByHash()
+
+Get the block information by block hash. 
+
+```javascript
+.getBlockByHash(value: string) => HttpCall // .execute() => object
+```
+
+##### Parameters
+
+| Parameter       | Type | Description |
+| ------------- | ----------- | ----------- |
+| value | `string` | a block hash.
+
+##### Returns
+`HttpCall` - The HttpCall instance for `icx_getBlockByHash` JSON-RPC API request. If `execute()` successfully, it returns a block `object`.
+
+##### Example
+```javascript
+// Returns block information
+const block = await iconService.getBlockByHash('0xdb310dd653b2573fd673ccc7489477a0b697333f77b3cb34a940db67b994fd95').execute();
+```
+
+#### getLastBlock()
+
+Get the latest block information. 
+
+```javascript
+.getLastBlock() => HttpCall // .execute() => object
+```
+
+##### Parameters
+
+None
+
+##### Returns
+`HttpCall` - The HttpCall instance for `icx_getLastBlock` JSON-RPC API request. If `execute()` successfully, it returns a block `object`.
+
+##### Example
+```javascript
+// Returns block information
+const block = await iconService.getLastBlock().execute();
+```
+
 
 #### getScoreApi()
 
@@ -1101,7 +463,7 @@ IconWallet.loadKeystore(keystore: object|string, password: string, nonStrict?: b
 
 | Parameter       | Type | Description |
 | ------------- | ----------- | ----------- |
-| keystore | `object|string` | The keystore object (or stringified object.) |
+| keystore | `object`, `string` | The keystore object (or stringified object.) |
 | password | `string` | The password of keystore object. |
 | nonStrict (optional) | `boolean` | Set whether checking keystore file case-insensitive or not. _(affects when `keystore` param is string.)_ |
 
@@ -1322,7 +684,7 @@ Setter method of 'value' property.
 
 | Parameter       | Type | Description |
 | ------------- | ----------- | ----------- |
-| value | `string|BigNumber|number` | The sending amount of ICX in loop unit. |
+| value | `string`, `BigNumber`, `number` | The sending amount of ICX in loop unit. |
 
 ##### Returns
 `IcxTransactionBuilder` - Returns an instance of itself
@@ -1345,7 +707,7 @@ Setter method of 'stepLimit' property.
 
 | Parameter       | Type | Description |
 | ------------- | ----------- | ----------- |
-| stepLimit | `string|BigNumber|number` | The amount of step limit. |
+| stepLimit | `string`, `BigNumber`, `number` | The amount of step limit. |
 
 ##### Returns
 `IcxTransactionBuilder` - Returns an instance of itself
@@ -1368,7 +730,7 @@ Setter method of 'nid' property.
 
 | Parameter       | Type | Description |
 | ------------- | ----------- | ----------- |
-| nid | `string|BigNumber|number` | A network ID. |
+| nid | `string`, `BigNumber`, `number` | A network ID. |
 
 ##### Returns
 `IcxTransactionBuilder` - Returns an instance of itself
@@ -1391,7 +753,7 @@ Setter method of 'nonce' property.
 
 | Parameter       | Type | Description |
 | ------------- | ----------- | ----------- |
-| nonce | `string|BigNumber|number` | A nonce value. |
+| nonce | `string`, `BigNumber`, `number` | A nonce value. |
 
 ##### Returns
 `IcxTransactionBuilder` - Returns an instance of itself
@@ -1414,7 +776,7 @@ Setter method of 'version' property.
 
 | Parameter       | Type | Description |
 | ------------- | ----------- | ----------- |
-| version | `string|BigNumber|number` | A version value. |
+| version | `string`, `BigNumber`, `number` | A version value. |
 
 ##### Returns
 `IcxTransactionBuilder` - Returns an instance of itself
@@ -1437,7 +799,7 @@ Setter method of 'timestamp' property.
 
 | Parameter       | Type | Description |
 | ------------- | ----------- | ----------- |
-| timestamp | `string|BigNumber|number` | A timestamp value. (microsecond) |
+| timestamp | `string`, `BigNumber`, `number` | A timestamp value. (microsecond) |
 
 ##### Returns
 `IcxTransactionBuilder` - Returns an instance of itself
@@ -1520,7 +882,7 @@ Setter method of 'data' property.
 ```javascript
 // Set `data` property.
 const txObj = new MessageTransactionBuilder()
-		.data(IconConverter.fromUtf8('Hello'))
+    .data(IconConverter.fromUtf8('Hello'))
 ```
 
 #### build()
@@ -1645,7 +1007,7 @@ const txObj = new DeployTransactionBuilder()
         decimals: IconConverter.toHex(18),
         name: 'StandardToken',
         symbol: 'ST',
-	})
+    })
 ```
 
 #### build()
@@ -1666,22 +1028,22 @@ None
 ```javascript
 // Build `DeployTransaction` instance.
 const txObj = new DeployTransactionBuilder()
-		.from('hx46293d558d3bd489c3715e7e3648de0e35086bfd')
-		.to('cx0000000000000000000000000000000000000000')
-		.stepLimit(IconConverter.toBigNumber(2500000))
-		.nid(IconConverter.toBigNumber(3))
-		.nonce(IconConverter.toBigNumber(1))
-		.version(IconConverter.toBigNumber(3))
-		.timestamp(1544596599371000)
-		.contentType('application/zip')
-		.content('0x504b03040a0000000000d3a68e4d000000000000000...')
-		.params({
-			initialSupply: IconConverter.toHex('100000000000'),
-			decimals: IconConverter.toHex(18),
-			name: 'StandardToken',
-			symbol: 'ST',
-		})
-		.build()
+    .from('hx46293d558d3bd489c3715e7e3648de0e35086bfd')
+    .to('cx0000000000000000000000000000000000000000')
+    .stepLimit(IconConverter.toBigNumber(2500000))
+    .nid(IconConverter.toBigNumber(3))
+    .nonce(IconConverter.toBigNumber(1))
+    .version(IconConverter.toBigNumber(3))
+    .timestamp(1544596599371000)
+    .contentType('application/zip')
+    .content('0x504b03040a0000000000d3a68e4d000000000000000...')
+    .params({
+        initialSupply: IconConverter.toHex('100000000000'),
+        decimals: IconConverter.toHex(18),
+        name: 'StandardToken',
+        symbol: 'ST',
+    })
+    .build()
 ```
 
 
@@ -1729,7 +1091,7 @@ Setter method of 'method' property in 'data'.
 ```javascript
 // Set `method` property.
 const txObj = new CallTransactionBuilder()
-		.method('transfer')
+    .method('transfer')
 ```
 
 
@@ -1778,19 +1140,19 @@ None
 ```javascript
 // Build `CallTransaction` instance.
 const txObj = new CallTransactionBuilder()
-		.from('hx902ecb51c109183ace539f247b4ea1347fbf23b5')
-		.to('cx3502b4dadbfcd654d26d53d8463f2929c2c3948d')
-		.stepLimit(IconConverter.toBigNumber('2000000'))
-		.nid(IconConverter.toBigNumber('3'))
-		.nonce(IconConverter.toBigNumber('1'))
-		.version(IconConverter.toBigNumber('3'))
-		.timestamp((new Date()).getTime() * 1000)
-		.method('transfer')
-		.params({
-			_to: 'hxd008c05cbc0e689f04a5bb729a66b42377a9a497',
-			_value: IconConverter.toHex(IconAmount.of(1, IconAmount.Unit.ICX).toLoop()),
-		})
-		.build()
+    .from('hx902ecb51c109183ace539f247b4ea1347fbf23b5')
+    .to('cx3502b4dadbfcd654d26d53d8463f2929c2c3948d')
+    .stepLimit(IconConverter.toBigNumber('2000000'))
+    .nid(IconConverter.toBigNumber('3'))
+    .nonce(IconConverter.toBigNumber('1'))
+    .version(IconConverter.toBigNumber('3'))
+    .timestamp((new Date()).getTime() * 1000)
+    .method('transfer')
+    .params({
+        _to: 'hxd008c05cbc0e689f04a5bb729a66b42377a9a497',
+        _value: IconConverter.toHex(IconAmount.of(1, IconAmount.Unit.ICX).toLoop()),
+    })
+    .build()
 ```
 
 
@@ -1859,7 +1221,7 @@ Setter method of 'method' property in 'data'.
 ```javascript
 // Set `method` property.
 const txObj = new CallBuilder()
-		.method('balanceOf')
+    .method('balanceOf')
 ```
 
 
@@ -1930,7 +1292,7 @@ new SignedTransaction(transaction: IcxTransaction|MessageTransaction|CallTransac
 
 | Parameter       | Type | Description |
 | ------------- | ----------- | ----------- |
-| transaction | `IcxTransaction|MessageTransaction|CallTransaction|DeployTransaction` | A transaction object. |
+| transaction | `IcxTransaction`, `MessageTransaction`, `CallTransaction`, `DeployTransaction` | A transaction object. |
 | wallet | `Wallet` | wallet instance used for signing. |
 
 #### getSignature()
@@ -2061,8 +1423,8 @@ new IconAmount(value: string|BigNumber|number, digit: string|BigNumber|number)
 
 | Parameter       | Type | Description |
 | ------------- | ----------- | ----------- |
-| value | `string|BigNumber|number` | the value of amount. |
-| digit | `string|BigNumber|number` | the digit of unit. |
+| value | `string`, `BigNumber`, `number` | the value of amount. |
+| digit | `string`, `BigNumber`, `number` | the digit of unit. |
 
 > Note: According to official document of [BigNumber.js](https://mikemcl.github.io/bignumber.js/#bignumber), it is recommended to create BigNumbers from `string` values rather than `number` values to avoid a potential loss of precision.
 
@@ -2078,8 +1440,8 @@ IconAmount.of(value: string|BigNumber|number, digit: string|BigNumber|number) =>
 
 | Parameter       | Type | Description |
 | ------------- | ----------- | ----------- |
-| value | `string|BigNumber|number` | the value of amount. |
-| digit | `string|BigNumber|number` | the digit of unit. |
+| value | `string`, `BigNumber`, `number` | the value of amount. |
+| digit | `string`, `BigNumber`, `number` | the digit of unit. |
 
 > Note: According to official document of [BigNumber.js](https://mikemcl.github.io/bignumber.js/#bignumber), it is recommended to create BigNumbers from `string` values rather than `number` values to avoid a potential loss of precision.
 
@@ -2171,7 +1533,7 @@ Converts value property into custom digit
 
 | Parameter       | Type | Description |
 | ------------- | ----------- | ----------- |
-| digit | `string|BigNumber|number` | the digit of unit. |
+| digit | `string`, `BigNumber`, `number` | the digit of unit. |
 
 ##### Returns
 `IconAmount` - The IconAmount instance converted into custom digit.
@@ -2182,58 +1544,504 @@ Converts value property into custom digit
 const value = IconAmount.of('2', IconAmount.Unit.ICX).convertUnit(IconAmount.Unit.LOOP);
 ```
 
-
 ### IconService.IconConverter
+
+`IconConverter` is a utility module which contains conversion functions.
+
+#### static fromUtf8()
+
+Converts UTF-8 text to hex string with '0x' prefix.
+
+```javascript
+IconConverter.fromUtf8(value: string) => string
+
+```
+##### Parameters
+
+| Parameter       | Type | Description |
+| ------------- | ----------- | ----------- |
+| value | `string` | a UTF-8 text string. |
+
+##### Returns
+`string` - a hex string with '0x' prefix
+
+##### Example
+```javascript
+// Returns hex string
+const value = IconConverter.fromUtf8('hello')
+```
+
+
+#### static toNumber()
+
+Converts string, hex string or BigNumber value to number.
+
+```javascript
+IconConverter.toNumber(value: string|BigNumber) => number
+
+```
+##### Parameters
+
+| Parameter       | Type | Description |
+| ------------- | ----------- | ----------- |
+| value | `string`, `BigNumber` | a string, hex string or BigNumber type value |
+
+##### Returns
+`number` - a value converted to number type.
+
+##### Example
+```javascript
+// Returns number value
+const value = IconConverter.toNumber('123')
+```
+
+#### static toBigNumber()
+
+Converts string, hex string or number value to BigNumber.
+
+```javascript
+IconConverter.toBigNumber(value: string|number) => BigNumber
+
+```
+##### Parameters
+
+| Parameter       | Type | Description |
+| ------------- | ----------- | ----------- |
+| value | `string`, `number` | a string, hex string or number type value |
+
+##### Returns
+`BigNumber` - a value converted to BigNumber type.
+
+##### Example
+```javascript
+// Returns BigNumber value
+const value = IconConverter.toBigNumber('123')
+```
+
+#### static toHex()
+
+Converts string, number or BigNumber value to hex string.
+
+```javascript
+IconConverter.toHex(value: string|number|BigNumber) => string
+
+```
+##### Parameters
+
+| Parameter       | Type | Description |
+| ------------- | ----------- | ----------- |
+| value | `string`, `number`, `BigNumber` | a string, number or BigNumber type value |
+
+##### Returns
+`string` - a value converted to hex string with '0x' prefix.
+
+##### Example
+```javascript
+// Returns hex string
+const value = IconConverter.toHex('123')
+```
+
+#### static toRawTransaction()
+
+Converts transaction object to raw transaction object.
+
+```javascript
+IconConverter.toRawTransaction(transaction: IcxTransaction|MessageTransaction|CallTransaction|DeployTransaction) => object
+
+```
+##### Parameters
+
+| Parameter       | Type | Description |
+| ------------- | ----------- | ----------- |
+| transaction | `IcxTransaction`, `MessageTransaction`, `CallTransaction`, `DeployTransaction` | a transaction object |
+
+##### Returns
+`object` - a raw transaction object.
+
+##### Example
+```javascript
+const txObj = new IcxTransactionBuilder()
+    .from('hx46293d558d3bd489c3715e7e3648de0e35086bfd')
+    .to('hx87a90bfe8ed49e1a25184ce77fa0d9c4b0484d6a')
+    .value(IconAmount.of(7, IconAmount.Unit.ICX).toLoop())
+    .stepLimit(IconConverter.toBigNumber(100000))
+    .nid(IconConverter.toBigNumber(3))
+    .nonce(IconConverter.toBigNumber(1))
+    .version(IconConverter.toBigNumber(3))
+    .timestamp(1544596599371000)
+    .build()
+// Returns raw transaction object
+const rawTxObj = IconConverter.toRawTransaction(txObj)
+```
+
 
 ### IconService.IconHexadecimal
 
+`IconHexadecimal` is a utility module which contains functions related to hex prefix.
+
+#### static is0xPrefix()
+
+Check whether string starts with '0x' prefix.
+
+```javascript
+IconHexadecimal.is0xPrefix(str: string) => boolean
+
+```
+##### Parameters
+
+| Parameter       | Type | Description |
+| ------------- | ----------- | ----------- |
+| str | `string` | a string |
+
+##### Returns
+`boolean` - returns true if string starts with '0x' prefix.
+
+##### Example
+```javascript
+// Returns true if string starts with '0x' prefix
+const value = IconHexadecimal.is0xPrefix('0x61')
+```
+
+#### static isHxPrefix()
+
+Check whether string starts with 'hx' prefix.
+
+```javascript
+IconHexadecimal.isHxPrefix(str: string) => boolean
+
+```
+##### Parameters
+
+| Parameter       | Type | Description |
+| ------------- | ----------- | ----------- |
+| str | `string` | a string |
+
+##### Returns
+`boolean` - returns true if string starts with 'hx' prefix.
+
+##### Example
+```javascript
+// Returns true if string starts with 'hx' prefix
+const value = IconHexadecimal.isHxPrefix('hx902ecb51c109183ace539f247b4ea1347fbf23b5')
+```
+
+#### static isCxPrefix()
+
+Check whether string starts with 'cx' prefix.
+
+```javascript
+IconHexadecimal.isCxPrefix(str: string) => boolean
+
+```
+##### Parameters
+
+| Parameter       | Type | Description |
+| ------------- | ----------- | ----------- |
+| str | `string` | a string |
+
+##### Returns
+`boolean` - returns true if string starts with 'cx' prefix.
+
+##### Example
+```javascript
+// Returns true if string starts with 'cx' prefix
+const value = IconHexadecimal.isCxPrefix('cxc248ee72f58f7ec0e9a382379d67399f45b596c7')
+```
+
+#### static add0xPrefix()
+
+Add '0x' prefix to string.
+
+```javascript
+IconHexadecimal.add0xPrefix(str: string) => string
+```
+##### Parameters
+
+| Parameter       | Type | Description |
+| ------------- | ----------- | ----------- |
+| str | `string` | a string |
+
+##### Returns
+`string` - a string with '0x' prefix.
+
+##### Example
+```javascript
+// Returns a string with '0x' prefix.
+const value = IconHexadecimal.add0xPrefix('1234')
+```
+
+#### static addHxPrefix()
+
+Add 'hx' prefix to string.
+
+```javascript
+IconHexadecimal.addHxPrefix(str: string) => string
+```
+##### Parameters
+
+| Parameter       | Type | Description |
+| ------------- | ----------- | ----------- |
+| str | `string` | a string |
+
+##### Returns
+`string` - a string with 'hx' prefix.
+
+##### Example
+```javascript
+// Returns a string with 'hx' prefix.
+const value = IconHexadecimal.addHxPrefix('902ecb51c109183ace539f247b4ea1347fbf23b5')
+```
+
+#### static addCxPrefix()
+
+Add 'cx' prefix to string.
+
+```javascript
+IconHexadecimal.addCxPrefix(str: string) => string
+```
+##### Parameters
+
+| Parameter       | Type | Description |
+| ------------- | ----------- | ----------- |
+| str | `string` | a string |
+
+##### Returns
+`string` - a string with 'cx' prefix.
+
+##### Example
+```javascript
+// Returns a string with 'cx' prefix.
+const value = IconHexadecimal.addCxPrefix('c248ee72f58f7ec0e9a382379d67399f45b596c7')
+```
+
+#### static remove0xPrefix()
+
+Remove '0x' prefix from string.
+
+```javascript
+IconHexadecimal.remove0xPrefix(str: string) => string
+```
+##### Parameters
+
+| Parameter       | Type | Description |
+| ------------- | ----------- | ----------- |
+| str | `string` | a string |
+
+##### Returns
+`string` - a string without '0x' prefix.
+
+##### Example
+```javascript
+// Returns a string without '0x' prefix.
+const value = IconHexadecimal.remove0xPrefix('0x61')
+```
+
+#### static removeHxPrefix()
+
+Remove 'hx' prefix from string.
+
+```javascript
+IconHexadecimal.removeHxPrefix(str: string) => string
+```
+##### Parameters
+
+| Parameter       | Type | Description |
+| ------------- | ----------- | ----------- |
+| str | `string` | a string |
+
+##### Returns
+`string` - a string without 'hx' prefix.
+
+##### Example
+```javascript
+// Returns a string without 'hx' prefix.
+const value = IconHexadecimal.removeHxPrefix('hx902ecb51c109183ace539f247b4ea1347fbf23b5')
+```
+
+#### static removeCxPrefix()
+
+Remove 'cx' prefix from string.
+
+```javascript
+IconHexadecimal.removeCxPrefix(str: string) => string
+```
+##### Parameters
+
+| Parameter       | Type | Description |
+| ------------- | ----------- | ----------- |
+| str | `string` | a string |
+
+##### Returns
+`string` - a string without 'cx' prefix.
+
+##### Example
+```javascript
+// Returns a string without 'cx' prefix.
+const value = IconHexadecimal.removeCxPrefix('cxc248ee72f58f7ec0e9a382379d67399f45b596c7')
+```
+
 ### IconService.IconValidator
+
+`IconValidator` is a utility module which contains validation functions.
+
+#### static isPrivateKey()
+
+Check if input value is a private key type string.
+
+```javascript
+IconValidator.isPrivateKey(privKey: any) => boolean
+```
+##### Parameters
+
+| Parameter       | Type | Description |
+| ------------- | ----------- | ----------- |
+| privKey | `any` | a input value |
+
+##### Returns
+`boolean` - Returns true if the input value is a private key type string.
+
+##### Example
+```javascript
+// Returns true if the input value is a private key type string.
+const isPrivateKey = IconValidator.isPrivateKey('7abca1...20a9f1')
+```
+
+#### static isPublicKey()
+
+Check if input value is a public key type string.
+
+```javascript
+IconValidator.isPublicKey(pubKey: any) => boolean
+```
+##### Parameters
+
+| Parameter       | Type | Description |
+| ------------- | ----------- | ----------- |
+| public | `any` | a input value |
+
+##### Returns
+`boolean` - Returns true if the input value is a public key type string.
+
+##### Example
+```javascript
+// Returns true if the input value is a public key type string.
+const isPublicKey = IconValidator.isPublicKey('7abca1...20a9f1')
+```
+
+#### static isEoaAddress()
+
+Check if input value is a EOA address type string.
+
+```javascript
+IconValidator.isEoaAddress(address: any) => boolean
+```
+##### Parameters
+
+| Parameter       | Type | Description |
+| ------------- | ----------- | ----------- |
+| address | `any` | a input value |
+
+##### Returns
+`boolean` - Returns true if the input value is a EOA address type string.
+
+##### Example
+```javascript
+// Returns true if the input value is a EOA address type string.
+const isEoaAddress = IconValidator.isEoaAddress('hxca12a...209f1')
+```
+
+#### static isScoreAddress()
+
+Check if input value is a SCORE address type string.
+
+```javascript
+IconValidator.isScoreAddress(address: any) => boolean
+```
+##### Parameters
+
+| Parameter       | Type | Description |
+| ------------- | ----------- | ----------- |
+| address | `any` | a input value |
+
+##### Returns
+`boolean` - Returns true if the input value is a SCORE address type string.
+
+##### Example
+```javascript
+// Returns true if the input value is a SCORE address type string.
+const isScoreAddress = IconValidator.isScoreAddress('cx1b32a...99f01')
+```
+
+#### static isAddress()
+
+Check if input value is a EOA or SCORE address type string.
+
+```javascript
+IconValidator.isAddress(address: any) => boolean
+```
+##### Parameters
+
+| Parameter       | Type | Description |
+| ------------- | ----------- | ----------- |
+| address | `any` | a input value |
+
+##### Returns
+`boolean` - Returns true if the input value is a EOA or SCORE address type string.
+
+##### Example
+```javascript
+// Returns true if the input value is a EOA or SCORE address type string.
+const isAddress = IconValidator.isAddress('cx1b32a...99f01')
+```
 
 ### Error cases
 
+There is 5 types of error cases. Details are as below:
 
+| Error code       | Description |
+| ------------- | ----------- |
+| `DATA ERROR` | Exception class relate to data type. |
+| `FORMAT ERROR` | Exception class relate to data format. |
+| `WALLET ERROR` | Exception class relate to wallet errors.   |
+| `RPC ERROR` | Exception class relate to network errors. |
+| `SCORE ERROR` | Exception class relate to SCORE call error. |
 
+### References
 
-
-
-
-
-
-
-
+- [ICON JSON-RPC API v3](https://icondev.readme.io/docs/json-rpc-specification) 
+- [IRC2 Specification](https://github.com/icon-project/IIPs/blob/master/IIPS/iip-2.md)
 
 
 <!-- 
 Link: 
 -->
 
+[getBlockByHeight()]: #getblockbyheight()
+[getBlockByHash()]: #getblockbyhash()
+[getLastBlock()]: #getlastblock()
+[sendTransaction()]: #sendtransaction()
+
 [icx_getBlockByHeight]: https://icondev.readme.io/docs/json-rpc-specification#section-icx_getblockbyheight
-
 [icx_getBlockByHash]: https://icondev.readme.io/docs/json-rpc-specification#section-icx_getblockbyhash
-
 [icx_getLastBlock]: https://icondev.readme.io/docs/json-rpc-specification#section-icx_getlastblock
-
 [icx_getScoreApi]: https://icondev.readme.io/docs/json-rpc-specification#section-icx_getscoreapi
-
 [icx_getTransactionByHash]: https://icondev.readme.io/docs/json-rpc-specification#section-icx_gettransactionbyhash
-
 [icx_getTransactionResult]: https://icondev.readme.io/docs/json-rpc-specification#section-icx_gettransactionresult
-
 [ICON Networks]: https://icondev.readme.io/docs/icon-networks
 
-[sendTransaction()]: #sendtransaction()
-[IconWallet]: #iconservice.iconwallet-(wallet)
-[IconBuilder]: #iconservice.iconbuilder
-[IcxTransactionBuilder]: #iconservice.iconbuilder.icxtransactionbuilder
-[MessageTransactionBuilder]: #iconservice.iconbuilder.messagetransactionbuilder
-[DeployTransactionBuilder]: #iconservice.iconbuilder.deploytransactionbuilder
-[CallTransactionBuilder]: #iconservice.iconbuilder.calltransactionbuilder
-[CallBuilder]: #iconservice.iconbuilder.callbuilder
-[SignedTransaction]: #iconservice.signedtransaction
-[HttpProvider]: #iconservice.httpprovider
-[IconAmount]: #iconservice.iconamount
-[IconConverter]: #iconservice.iconconverter
-[IconHexadecimal]: #iconservice.iconhexadecimal
-[IconValidator]: #iconservice.iconvalidator
+[IconService]: #iconservice
+[IconWallet]: #iconserviceiconwallet-(wallet)
+[IconBuilder]: #iconserviceiconbuilder
+[IcxTransactionBuilder]: #iconserviceiconbuildericxtransactionbuilder
+[MessageTransactionBuilder]: #iconserviceiconbuildermessagetransactionbuilder
+[DeployTransactionBuilder]: #iconserviceiconbuilderdeploytransactionbuilder
+[CallTransactionBuilder]: #iconserviceiconbuildercalltransactionbuilder
+[CallBuilder]: #iconserviceiconbuildercallbuilder
+[SignedTransaction]: #iconservicesignedtransaction
+[HttpProvider]: #iconservicehttpprovider
+[IconAmount]: #iconserviceiconamount
+[IconConverter]: #iconserviceiconconverter
+[IconHexadecimal]: #iconserviceiconhexadecimal
+[IconValidator]: #iconserviceiconvalidator
 
-
+[References]: #references
