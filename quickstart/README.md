@@ -1,19 +1,34 @@
-# ICON SDK JavaScript Quickstart
+---
+title: "How to interact with ICON network using icon-sdk-js"
+excerpt: ""
+---
 
-This is an example project of Icon SDK JavaScript.
+This is an example project of ICON SDK JavaScript. This document provides you information on how to interact with ICON network using `icon-sdk-js`.
+
+
+## Intended Audience
+
+This example document is focused on serving the following groups.
+
+- Web Developer using JavaScript as main language
+- Web Developer who wants to make dApp using ICON Network
+
+This document is focused on how to use `icon-sdk-js` properly. If you would like to know about details of `icon-sdk-js` API, see official `icon-sdk-js` API Reference document.
+
+## Purpose
 
 In this project, the examples are implemented as below.
 
 | Example       | Description |
 | ------------- | ----------- |
-| WalletExample | An example of creating and loading a wallet. |
-| IcxTransactionExample | An example of transferring ICX and confirming the result. |
-| DeployAndTransferTokenExample | An example of deploying IRC token and transferring deployed token. |
-| SyncBlockExample | An example of checking block confirmation and printing the ICX and token transfer information. |
+| [WalletExample](#walletexample) | An example of creating and loading a wallet. |
+| [IcxTransactionExample](#icxtransactionexample) | An example of transferring ICX and confirming the result. |
+| [DeployAndTransferTokenExample](#deployandtransfertokenexample) | An example of deploying IRC token and transferring deployed token. |
+| [SyncBlockExample](#syncblockexample) | An example of checking block confirmation and printing the ICX and token transfer information. |
 
-### Get Started
+## Get Started
 
-#### Install Dependency
+### Install Dependency
 
 Please go to `quickstart` directory and install dependency to use `icon-sdk-js`.
 
@@ -22,7 +37,7 @@ npm
 npm install   // install dependencies for executing the quickstart project (including icon-sdk-js package)
 ```
 
-#### Run example file
+### Run example file
 Run example file.
 ```
 npm start   // open http://localhost:3000/ in browser
@@ -33,7 +48,7 @@ If you want to rebuild icon-sdk-js library and run quickstart project, go to ico
 npm run quickstart:rebuild   // open http://localhost:3000/ in browser
 ```
 
-#### Set Node URL
+### Set Node URL
 
 If you want to use custom ICON node url, change the value of `NODE_URL` variable in `./mockData/index.js`. Default value of `NODE_URL` is `https://bicon.net.solidwallet.io/api/v3`
 
@@ -44,7 +59,7 @@ const NODE_URL = 'https://bicon.net.solidwallet.io/api/v3';
 ```
 
 
-### IconService
+### Generate IconService
 
 Generate `IconService` to communicate with the nodes.
 
@@ -59,16 +74,12 @@ const provider = new HttpProvider(MockData.NODE_URL);
 const iconService = new IconService(provider);
 ```
 
-
----
-
-
-
-### WalletExample
+## WalletExample
 
 This example shows how to create a new `Wallet` and load wallet with privateKey or Keystore file.
 
-#### Create
+
+### Create Wallet
 
 Create new EOA by calling `create` function. After creation, the address and private Key can be looked up.
 
@@ -82,7 +93,7 @@ Address: hx4d37a7013c14bedeedbe131c72e97ab337aea159
 PrivateKey: 00e1d6541bfd8be7d88be0d24516556a34ab477788022fa07b4a6c1d862c4de516
 ```
 
-#### Load
+### Load Wallet
 
 You can call existing EOA by calling `loadKeystore` and `loadPrivateKey` function.
 
@@ -106,7 +117,7 @@ console.log(walletLoadedByKeyStore.getPrivateKey());
 // Output: 38f792b95a5202ab431bfc799f7e1e5c74ec0b9ede5c6142ee7364f2c84d72f6);
 ```
 
-#### Store
+### Store Wallet
 
 After `Wallet` object creation, Keystore file can be stored by calling `store` function.
 
@@ -140,19 +151,13 @@ console.log(wallet.store('qwer1234!'));
 // }
 ```
 
-
-
----
-
-
-
-### IcxTransactionExample
+## IcxTransactionExample
 
 This example shows how to transfer ICX and check the result.
 
 *For the Wallet and IconService creation, please refer to the information above.*
 
-#### ICX Transfer
+### ICX Transfer
 
 In this example, you can create Wallet with `MockData.PRIVATE_KEY_1` and transfer 1 ICX to `MockData.WALLET_ADDRESS_2`.
 
@@ -250,7 +255,7 @@ console.log(txHash);
 // 0x69c07ff23e2eafb068ec026f1a116082f0d869b3964531e43088f6638bcfe0f7
 ```
 
-#### Check the Transaction Result
+### Check the Transaction Result
 
 After transaction is sent, the result can be looked up with the returned hash value.
 
@@ -281,7 +286,7 @@ You can check the following information using the TransactionResult.
 - eventLogs :  Occurred EventLog’s list during execution of the transaction.
 - logsBloom : Indexed Data’s Bloom Filter value from the occurred Eventlog’s Data
 
-#### Check the Balance
+### Check the Balance
 
 In this example, you can check the ICX balance by looking up the transaction before and after the transaction.
 
@@ -298,16 +303,13 @@ console.log(balance);
 // 100432143214321432143
 ```
 
----
-
-
-### DeployAndTransferTokenExample
+## DeployAndTransferTokenExample
 
 This example shows how to deploy IRC token and transfer deployed token.
 
 *For the Wallet and IconService generation, please refer to the information above.*
 
-#### Token Deploy
+### Token Deploy
 
 You need the SCORE Project to deploy token.
 
@@ -444,7 +446,7 @@ console.log("Your score address: " + transactionResult.scoreAddress);
 
 *For the 'TransactionResult', please refer to the `IcxTransactionExample`.*
 
-#### Token Transfer
+### Token Transfer
 
 You can send the ST token that you deployed right before.
 
@@ -546,7 +548,7 @@ console.log(this.transactionTxHash);
 // 0x6b17886de346655d96373f2e0de494cb8d7f36ce9086cb15a57d3dcf24523c8f
 ```
 
-#### Check the Result
+### Check the Result
 
 You can check the result with the returned hash value of your transaction.
 
@@ -563,7 +565,7 @@ console.log("transaction status(1:success, 0:failure): "+transactionResult.statu
 
 *For the TransactionResult, please refer to the `IcxTransactionExample`.*
 
-#### Check the Token Balance
+### Check the Token Balance
 
 In this example, you can check the token balance before and after the transaction.
 
@@ -588,19 +590,13 @@ const call = callBuilder
 const balance = await this.iconService.call(call).execute();
 ```
 
-
-
----
-
-
-
-### SyncBlockExample
+## SyncBlockExample
 
 This example shows how to read block information and print the transaction result for every block creation.
 
 *Please refer to above for Wallet and IconService creation.*
 
-#### Read Block Information
+### Read Block Information
 
 In this example, 'getLastBlock' is called periodically in order to check the new blocks,
 
@@ -608,7 +604,7 @@ by updating the transaction information for every block creation.
 
 ```javascript
 // Check the recent blocks
-const block = await iconService.getBlock('latest').execute();
+const block = await iconService.getLastBlock().execute();
 console.log(block.height);
 // Output
 // 237845
@@ -632,7 +628,7 @@ You can check the following information using the ConfirmedTransaction:
 - dataType: A value indicating the type of the data item (call, deploy, message)
 - data: Various types of data are included according to dataType.
 
-#### Transaction Output
+### Transaction Output
 
 ```javascript
 async syncBlock(block) {
@@ -673,7 +669,7 @@ async syncBlock(block) {
 
 ```
 
-#### Check the Token Name & Symbol
+### Check the Token Name & Symbol
 
 You can check the token SCORE by calling the `name` and `symbol` functions.
 
@@ -704,33 +700,7 @@ async getTokenSymbol(to) {
 }
 ```
 
+## References
 
-
-----------
-
-
-
-### References
-
-- [ICON JSON-RPC API v3](https://github.com/icon-project/icon-rpc-server/blob/master/docs/icon-json-rpc-v3.md) 
-
-
-
-### Q&A
-
-1. What is Wallet?
-- A class that manages EOA's private / public key pair.
-- Transaction message signing function.
-- Keystore creation and import / export function.
-2. What is keyStore file?
-- Text / file that is encrypted with a private key.
-3. What is stepLimit for?
--  Since transaction fee is required to send transaction, you can set the maximum fee limit. If your actual transaction fee exceeds the stepLimit that you have set, the transaction will fail but still your transaction fee(stepLimit) will be consumed.
-4. What is networId?
-- 1 for mainNet, etc
-5. Why sendTransaction method is named as ‘transfer’, when transferring token?
-- Transfer as a methodName means to transfer token
-- [Refer to IRC2 Specification](https://github.com/icon-project/IIPs/blob/master/IIPS/iip-2.md)
-6. What is httpProvider?
-- Class that supports node and jsonRpc communication.
-
+- [ICON JSON-RPC API v3](https://icondev.readme.io/docs/json-rpc-specification) 
+- [IRC2 Specification](https://github.com/icon-project/IIPs/blob/master/IIPS/iip-2.md)

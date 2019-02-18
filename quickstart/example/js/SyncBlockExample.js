@@ -44,7 +44,7 @@ class SyncBlockExample {
     async getLatestBlock() {
         // Check the recent blocks
         console.log(this)
-        const block = await this.iconService.getBlock('latest').execute();
+        const block = await this.iconService.getLastBlock().execute();
         const nextHeight = block.height;
         document.getElementById('S03-1').innerHTML = nextHeight;
         console.log(this.prevHeight, nextHeight)
@@ -57,7 +57,7 @@ class SyncBlockExample {
             }
             Promise.all(
                 blockArr.map(async (block) => {
-                    var nextBlock = await this.iconService.getBlock(IconConverter.toBigNumber(a)).execute();
+                    var nextBlock = await this.iconService.getBlockByHeight(IconConverter.toBigNumber(a)).execute();
                     await this.syncBlock(nextBlock);
                 })
             );
