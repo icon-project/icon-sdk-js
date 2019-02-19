@@ -3,7 +3,7 @@ title: "How to interact with ICON network using icon-sdk-js"
 excerpt: ""
 ---
 
-This is an example project of ICON SDK JavaScript. This document provides you information on how to interact with ICON network using `icon-sdk-js`.
+This is an example project of ICON SDK JavaScript. This document provides you with information on how to interact with ICON network using `icon-sdk-js`.
 
 
 ## Intended Audience
@@ -259,7 +259,7 @@ console.log(txHash);
 
 After transaction is sent, the result can be looked up with the returned hash value.
 
-In this example, you can check your transaction result in every 2 seconds because of the block confirmation time.
+In this example, you can check your transaction result every 2 seconds because of the block confirmation time.
 Checking the result is as follows:
 
 ```javascript

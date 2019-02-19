@@ -3,7 +3,7 @@ title: "ICON SDK for JavaScript"
 excerpt: ""
 ---
 
-ICON supports JavaScript SDK for 3rd party or user services development. You can integrate ICON JavaScript SDK for your project and utilize ICON’s functionality. This document provides you an information of installation and API specification.
+ICON supports JavaScript SDK for 3rd party or user services development. You can integrate ICON JavaScript SDK into your project and utilize ICON’s functionality. This document provides you with an information of installation and API specification.
 
 ## Table of Contents
 * [Installation](#installation)
@@ -105,7 +105,7 @@ new IconService(provider: HttpProvider)
 
 | Parameter       | Type | Description |
 | ------------- | ----------- | ----------- |
-| provider | `HttpProvider` | The [HttpProvider] instance. |
+| provider | `HttpProvider` | [HttpProvider] instance. |
 
 #### Example
 ```javascript
@@ -148,7 +148,7 @@ Get the balance of the address.
 
 | Parameter       | Type | Description |
 | ------------- | ----------- | ----------- |
-| address | `string` | An EOA address. |
+| address | `string` | an EOA address. |
 
 #### Returns
 `HttpCall` - The HttpCall instance for `icx_getBalance` JSON-RPC API request. If `execute()` successfully, it returns a `BigNumber` value of ICX balance.
@@ -172,7 +172,7 @@ Get the block information.
 
 | Parameter       | Type | Description |
 | ------------- | ----------- | ----------- |
-| value | `string`, `number`, `BigNumber` | The height or hash value of block.
+| value | `string`, `number`, `BigNumber` | the height or hash value of block.
 
 Depending on the type of input value, there are different ways to get block information.
 
@@ -210,7 +210,7 @@ Get the block information by block height.
 
 | Parameter       | Type | Description |
 | ------------- | ----------- | ----------- |
-| value | `number`, `BigNumber` | The height value of block.
+| value | `number`, `BigNumber` | the height value of block.
 
 #### Returns
 `HttpCall` - The HttpCall instance for `icx_getBlockByHeight` JSON-RPC API request. If `execute()` successfully, it returns a block `object`.
@@ -278,7 +278,7 @@ Get the SCORE API list.
 
 | Parameter       | Type | Description |
 | ------------- | ----------- | ----------- |
-| address | `string` | A SCORE address. |
+| address | `string` | a SCORE address. |
 
 #### Returns
 `HttpCall` - The HttpCall instance for `icx_getScoreApi` JSON-RPC API request. If `execute()` successfully, it returns a `ScoreApiList` instance, the API list of SCORE address. 
@@ -314,7 +314,7 @@ Get the transaction information.
 
 | Parameter       | Type | Description |
 | ------------- | ----------- | ----------- |
-| hash | `string` | The transaction hash. |
+| hash | `string` | a transaction hash. |
 
 #### Returns
 `HttpCall` - The HttpCall instance for `icx_getTransactionByHash` JSON-RPC API request. If `execute()` successfully, it returns a transaction `object`. For details of returned object, see [here][icx_getTransactionByHash].
@@ -337,7 +337,7 @@ Get the result of transaction by transaction hash.
 
 | Parameter       | Type | Description |
 | ------------- | ----------- | ----------- |
-| hash | `string` | The transaction hash. |
+| hash | `string` | a transaction hash. |
 
 #### Returns
 `HttpCall` - The HttpCall instance for `icx_getTransactionResult` JSON-RPC API request. If `execute()` successfully, it returns a transaction result `object`. For details of returned object, see [here][icx_getTransactionResult].
@@ -360,7 +360,7 @@ Send a transaction that changes the states of address.
 
 | Parameter       | Type | Description |
 | ------------- | ----------- | ----------- |
-| signedTransaction | `SignedTransaction` | The instance of [SignedTransaction] class. |
+| signedTransaction | `SignedTransaction` | an instance of [SignedTransaction] class. |
 
 #### Returns
 `HttpCall` - The HttpCall instance for `icx_sendTransaction` JSON-RPC API request. If `execute()` successfully, it returns a `string` value of transaction hash.
@@ -383,7 +383,7 @@ Calls external function of SCORE.
 
 | Parameter       | Type | Description |
 | ------------- | ----------- | ----------- |
-| call | `Call` | The instance of Call class builded by [CallBuilder]. |
+| call | `Call` | an instance of Call class builded by [CallBuilder]. |
 
 #### Returns
 `HttpCall` - The HttpCall instance for `icx_call` JSON-RPC API request. If `execute()` successfully, it returns a `any` type of value returned by the executed SCORE function.
@@ -409,8 +409,8 @@ new Wallet(privKey: string, pubKey: string)
 
 | Parameter       | Type | Description |
 | ------------- | ----------- | ----------- |
-| privKey | `string` | A private key. |
-| pubKey | `string` | A public key. |
+| privKey | `string` | a private key. |
+| pubKey | `string` | a public key. |
 
 ### static create()
 
@@ -424,7 +424,7 @@ IconWallet.create() => Wallet
 None
 
 #### Returns
-`Wallet` - A Wallet instance. It contains a public key and a private key randomly generated by `create()` function.
+`Wallet` - Wallet instance. It contains a public key and a private key randomly generated by `create()` function.
 
 #### Example
 ```javascript
@@ -443,10 +443,10 @@ IconWallet.loadPrivateKey(privKey: string) => Wallet
 
 | Parameter       | Type | Description |
 | ------------- | ----------- | ----------- |
-| privKey | `string` | A private key. |
+| privKey | `string` | a private key. |
 
 #### Returns
-`Wallet` - A Wallet instance.
+`Wallet` - a Wallet instance.
 
 #### Example
 ```javascript
@@ -465,12 +465,12 @@ IconWallet.loadKeystore(keystore: object|string, password: string, nonStrict?: b
 
 | Parameter       | Type | Description |
 | ------------- | ----------- | ----------- |
-| keystore | `object`, `string` | The keystore object (or stringified object.) |
-| password | `string` | The password of keystore object. |
-| nonStrict (optional) | `boolean` | Set whether checking keystore file case-insensitive or not. _(affects when `keystore` param is string.)_ |
+| keystore | `object`, `string` | the keystore object (or stringified object.) |
+| password | `string` | the password of keystore object. |
+| nonStrict (optional) | `boolean` | set whether checking keystore file case-insensitive or not. _(affects when `keystore` param is string.)_ |
 
 #### Returns
-`Wallet` - A Wallet instance.
+`Wallet` - a Wallet instance.
 
 #### Example
 ```javascript
@@ -492,11 +492,11 @@ Get keystore object of an instance of a `Wallet` class.
 
 | Parameter       | Type | Description |
 | ------------- | ----------- | ----------- |
-| password | `string` | The new password for encryption. |
-| opts (optional) | `object` | The custom options for encryption. |
+| password | `string` | a new password for encryption. |
+| opts (optional) | `object` | the custom options for encryption. |
 
 #### Returns
-`object` - A keystore object.
+`object` - a keystore object.
 
 #### Example
 ```javascript
@@ -516,10 +516,10 @@ Generate signature string by signing transaction object.
 
 | Parameter       | Type | Description |
 | ------------- | ----------- | ----------- |
-| data | `Buffer` | The serialized transaction object. |
+| data | `Buffer` | the serialized transaction object. |
 
 #### Returns
-`string` - A signature string.
+`string` - a signature string.
 
 #### Example
 ```javascript
@@ -530,7 +530,7 @@ const signature = wallet.sign('ba4···f64')
 
 ### getPrivateKey()
 
-Get private key of `Wallet` instance.
+Get a private key of `Wallet` instance.
 
 ```javascript
 .getPrivateKey() => string
@@ -540,7 +540,7 @@ Get private key of `Wallet` instance.
 None
 
 #### Returns
-`string` - A private key.
+`string` - a private key.
 
 #### Example
 ```javascript
@@ -551,7 +551,7 @@ const pk = wallet.getPrivateKey()
 
 ### getPublicKey()
 
-Get public key of `Wallet` instance.
+Get a public key of `Wallet` instance.
 
 ```javascript
 .getPublicKey() => string
@@ -561,7 +561,7 @@ Get public key of `Wallet` instance.
 None
 
 #### Returns
-`string` - A public key.
+`string` - a public key.
 
 #### Example
 ```javascript
@@ -572,7 +572,7 @@ const pk = wallet.getPublicKey()
 
 ### getAddress()
 
-Get address of `Wallet` instance.
+Get an address of `Wallet` instance.
 
 ```javascript
 .getAddress() => string
@@ -582,7 +582,7 @@ Get address of `Wallet` instance.
 None
 
 #### Returns
-`string` - A EOA address.
+`string` - an EOA address.
 
 #### Example
 ```javascript
@@ -593,7 +593,7 @@ const pk = wallet.getAddress()
 
 ## IconService.IconBuilder
 
-`IconBuilder` is a object contains builder class for transaction object. Builder class enables you to make transaction object easily. There are 5 types of builder class as follow:
+`IconBuilder` is an object containing builder class for transaction object. Builder class enables you to make transaction object easily. There are 5 types of builder class as follows:
 
 | Module       | Description |
 | ------------- | ----------- |
@@ -605,7 +605,7 @@ const pk = wallet.getAddress()
 
 ## IconService.IconBuilder.IcxTransactionBuilder
 
-Builder class for `IcxTransaction` instance. `IcxTransaction` is a object representing a transaction object used for sending ICX. The parameter details are as follows:
+Builder class for `IcxTransaction` instance. `IcxTransaction` is an object representing a transaction object used for sending ICX. The parameter details are as follows:
 
 | Parameter       | Description |
 | ------------- | ----------- |
@@ -640,7 +640,7 @@ Setter method of 'to' property.
 
 | Parameter       | Type | Description |
 | ------------- | ----------- | ----------- |
-| to | `string` | The EOA or SCORE address. |
+| to | `string` | an EOA or SCORE address. |
 
 #### Returns
 `IcxTransactionBuilder` - Returns an instance of itself
@@ -663,7 +663,7 @@ Setter method of 'from' property.
 
 | Parameter       | Type | Description |
 | ------------- | ----------- | ----------- |
-| from | `string` | An EOA address. |
+| from | `string` | an EOA address. |
 
 #### Returns
 `IcxTransactionBuilder` - Returns an instance of itself
@@ -686,7 +686,7 @@ Setter method of 'value' property.
 
 | Parameter       | Type | Description |
 | ------------- | ----------- | ----------- |
-| value | `string`, `BigNumber`, `number` | The sending amount of ICX in loop unit. |
+| value | `string`, `BigNumber`, `number` | the sending amount of ICX in loop unit. |
 
 #### Returns
 `IcxTransactionBuilder` - Returns an instance of itself
@@ -709,7 +709,7 @@ Setter method of 'stepLimit' property.
 
 | Parameter       | Type | Description |
 | ------------- | ----------- | ----------- |
-| stepLimit | `string`, `BigNumber`, `number` | The amount of step limit. |
+| stepLimit | `string`, `BigNumber`, `number` | the amount of step limit. |
 
 #### Returns
 `IcxTransactionBuilder` - Returns an instance of itself
@@ -732,7 +732,7 @@ Setter method of 'nid' property.
 
 | Parameter       | Type | Description |
 | ------------- | ----------- | ----------- |
-| nid | `string`, `BigNumber`, `number` | A network ID. |
+| nid | `string`, `BigNumber`, `number` | a network ID. |
 
 #### Returns
 `IcxTransactionBuilder` - Returns an instance of itself
@@ -755,7 +755,7 @@ Setter method of 'nonce' property.
 
 | Parameter       | Type | Description |
 | ------------- | ----------- | ----------- |
-| nonce | `string`, `BigNumber`, `number` | A nonce value. |
+| nonce | `string`, `BigNumber`, `number` | a nonce value. |
 
 #### Returns
 `IcxTransactionBuilder` - Returns an instance of itself
@@ -778,7 +778,7 @@ Setter method of 'version' property.
 
 | Parameter       | Type | Description |
 | ------------- | ----------- | ----------- |
-| version | `string`, `BigNumber`, `number` | A version value. |
+| version | `string`, `BigNumber`, `number` | the version value. |
 
 #### Returns
 `IcxTransactionBuilder` - Returns an instance of itself
@@ -801,7 +801,7 @@ Setter method of 'timestamp' property.
 
 | Parameter       | Type | Description |
 | ------------- | ----------- | ----------- |
-| timestamp | `string`, `BigNumber`, `number` | A timestamp value. (microsecond) |
+| timestamp | `string`, `BigNumber`, `number` | timestamp value. (microsecond) |
 
 #### Returns
 `IcxTransactionBuilder` - Returns an instance of itself
@@ -844,7 +844,7 @@ const txObj = new IcxTransactionBuilder()
 
 ## IconService.IconBuilder.MessageTransactionBuilder
 
-Builder class for `MessageTransaction` instance. `MessageTransaction` is a object representing a transaction object used for sending message data. It extends `IcxTransaction` class, so instance parameters and methods of builder class are mostly identical to `IcxTransaction` class, except for the following:
+Builder class for `MessageTransaction` instance. `MessageTransaction` is an object representing a transaction object used for sending message data. It extends `IcxTransaction` class, so instance parameters and methods of builder class are mostly identical to `IcxTransaction` class, except for the following:
 
 | Parameter       | Description |
 | ------------- | ----------- |
@@ -875,7 +875,7 @@ Setter method of 'data' property.
 
 | Parameter       | Type | Description |
 | ------------- | ----------- | ----------- |
-| data | `string` | The data (hex string) to send. |
+| data | `string` | the data (hex string) to send. |
 
 #### Returns
 `MessageTransactionBuilder` - Returns an instance of itself
@@ -918,7 +918,7 @@ const txObj = new MessageTransactionBuilder()
 
 ## IconService.IconBuilder.DeployTransactionBuilder
 
-Builder class for `DeployTransaction` instance. `DeployTransaction` is a object representing a transaction object used for deploying SCORE. It extends `IcxTransaction` class, so instance parameters and methods of builder class are mostly identical to `IcxTransaction` class, except for the following:
+Builder class for `DeployTransaction` instance. `DeployTransaction` is an object representing a transaction object used for deploying SCORE. It extends `IcxTransaction` class, so instance parameters and methods of builder class are mostly identical to `IcxTransaction` class, except for the following:
 
 | Parameter       | Description |
 | ------------- | ----------- |
@@ -949,7 +949,7 @@ Setter method of 'contentType' property in 'data'.
 
 | Parameter       | Type | Description |
 | ------------- | ----------- | ----------- |
-| contentType | `string` | The content type of content |
+| contentType | `string` | the content type of content |
 
 #### Returns
 `DeployTransactionBuilder` - Returns an instance of itself
@@ -972,7 +972,7 @@ Setter method of 'content' property in 'data'.
 
 | Parameter       | Type | Description |
 | ------------- | ----------- | ----------- |
-| content | `string` | The content to deploy. |
+| content | `string` | the content to deploy. |
 
 #### Returns
 `DeployTransactionBuilder` - Returns an instance of itself
@@ -1051,11 +1051,11 @@ const txObj = new DeployTransactionBuilder()
 
 ## IconService.IconBuilder.CallTransactionBuilder
 
-Builder class for `CallTransaction` instance. `CallTransaction` is a object representing a transaction object used for invoking a *state-transition* function of SCORE. It extends `IcxTransaction` class, so instance parameters and methods are mostly identical to `IcxTransaction` class, except for the following:
+Builder class for `CallTransaction` instance. `CallTransaction` is an object representing a transaction object used for invoking a *state-transition* function of SCORE. It extends `IcxTransaction` class, so instance parameters and methods are mostly identical to `IcxTransaction` class, except for the following:
 
 | Parameter       | Description |
 | ------------- | ----------- |
-| `data` | A object data for calling method. It contains 2 parameters: 1) `method` - The method name of SCORE API. 2) `params` (optional) - The input params for method |
+| `data` | An object data for calling method. It contains 2 parameters: 1) `method` - The method name of SCORE API. 2) `params` (optional) - The input params for method |
 | `dataType` | Data type of `data`. Fixed string `call` is in value. |
 
 For details of extended parameters and methods, see [IcxTransactionBuilder] section.
@@ -1084,7 +1084,7 @@ Setter method of 'method' property in 'data'.
 
 | Parameter       | Type | Description |
 | ------------- | ----------- | ----------- |
-| method | `string` | The method name of SCORE API. |
+| method | `string` | the method name of SCORE API. |
 
 #### Returns
 `CallTransactionBuilder` - Returns an instance of itself
@@ -1108,7 +1108,7 @@ Setter method of 'params' property in 'data'.
 
 | Parameter       | Type | Description |
 | ------------- | ----------- | ----------- |
-| params | `object` | The input params for method. |
+| params | `object` | the input params for method. |
 
 #### Returns
 `CallTransactionBuilder` - Returns an instance of itself
@@ -1160,12 +1160,12 @@ const txObj = new CallTransactionBuilder()
 
 ## IconService.IconBuilder.CallBuilder
 
-Builder class for `Call` instance. `Call` is a object representing a transaction object used for invoking a *read-only* function of SCORE. The parameter details are as follows:
+Builder class for `Call` instance. `Call` is an object representing a transaction object used for invoking a *read-only* function of SCORE. The parameter details are as follows:
 
 | Parameter       | Description |
 | ------------- | ----------- |
-| `to` | A SCORE address to execute the call. |
-| `data` | A object data for calling method. It contains 2 parameters: 1) `method` - The method name of SCORE API. 2) `params` (optional) - The input params for method |
+| `to` | a SCORE address to execute the call. |
+| `data` | an object data for calling method. It contains 2 parameters: 1) `method` - The method name of SCORE API. 2) `params` (optional) - The input params for method |
 | `dataType` | Data type of `data`. Fixed string `call` is in value. |
 
 ### Constructor
@@ -1190,7 +1190,7 @@ Setter method of 'to' property.
 
 | Parameter       | Type | Description |
 | ------------- | ----------- | ----------- |
-| to | `string` | SCORE address. |
+| to | `string` | a SCORE address. |
 
 #### Returns
 `CallBuilder` - Returns an instance of itself
@@ -1214,7 +1214,7 @@ Setter method of 'method' property in 'data'.
 
 | Parameter       | Type | Description |
 | ------------- | ----------- | ----------- |
-| method | `string` | The method name of SCORE API. |
+| method | `string` | the method name of SCORE API. |
 
 #### Returns
 `CallBuilder` - Returns an instance of itself
@@ -1238,7 +1238,7 @@ Setter method of 'params' property in 'data'.
 
 | Parameter       | Type | Description |
 | ------------- | ----------- | ----------- |
-| params | `object` | The input params for method. |
+| params | `object` | the input params for method. |
 
 #### Returns
 `CallBuilder` - Returns an instance of itself
@@ -1294,12 +1294,12 @@ new SignedTransaction(transaction: IcxTransaction|MessageTransaction|CallTransac
 
 | Parameter       | Type | Description |
 | ------------- | ----------- | ----------- |
-| transaction | `IcxTransaction`, `MessageTransaction`, `CallTransaction`, `DeployTransaction` | A transaction object. |
+| transaction | `IcxTransaction`, `MessageTransaction`, `CallTransaction`, `DeployTransaction` | a transaction object. |
 | wallet | `Wallet` | wallet instance used for signing. |
 
 ### getSignature()
 
-Get signature string.
+Get a signature string.
 
 ```javascript
 .getSignature() => string
@@ -1311,7 +1311,7 @@ None
 
 #### Returns
 
-`string` - The signature string.
+`string` - a signature string.
 
 #### Example
 ```javascript
@@ -1322,7 +1322,7 @@ const signature = new SignedTransaction(icxTransaction, wallet).getSignature()
 
 ### getProperties()
 
-Get raw signed transaction object.
+Get a raw signed transaction object.
 
 ```javascript
 .getProperties() => object
@@ -1334,7 +1334,7 @@ None
 
 #### Returns
 
-`object` - The raw signed transaction object.
+`object` - the raw signed transaction object.
 
 #### Example
 ```javascript
@@ -1356,7 +1356,7 @@ const signature = new SignedTransaction(icxTransaction, wallet).getProperties()
 
 ### getRawTransaction()
 
-Get raw transaction object of `transaction` property.
+Get a raw transaction object of `transaction` property.
 
 ```javascript
 .getRawTransaction() => object
@@ -1368,7 +1368,7 @@ None
 
 #### Returns
 
-`object` - The raw transaction object of `transaction` property.
+`object` - the raw transaction object of `transaction` property.
 
 #### Example
 ```javascript
@@ -1409,9 +1409,9 @@ new HttpProvider(url: string)
 
 ## IconService.IconAmount
 
-`IconAmount` is a class representing BigNumber value and unit data. It also provides unit conversion static functions. It enables you to manage different type of numeric data easily.
+`IconAmount` is a class representing BigNumber value and unit data. It also provides unit conversion static functions. It enables you to manage different types of numeric data easily.
 
-(`IconAmount` contains static class property called `Unit`, which has constant `number` value of different type of unit digit. `IconAmount.Unit.LOOP` is `0`, and `IconAmount.Unit.ICX` is `18`.)
+(`IconAmount` contains static class property called `Unit`, which has constant `number` value of different types of unit digit. `IconAmount.Unit.LOOP` is `0`, and `IconAmount.Unit.ICX` is `18`.)
 
 ### Constructor
 
@@ -1556,7 +1556,7 @@ IconConverter.fromUtf8(value: string) => string
 
 | Parameter       | Type | Description |
 | ------------- | ----------- | ----------- |
-| value | `string` | a UTF-8 text string. |
+| value | `string` | an UTF-8 text string. |
 
 #### Returns
 `string` - a hex string with '0x' prefix
@@ -1887,7 +1887,7 @@ IconValidator.isPrivateKey(privKey: any) => boolean
 
 | Parameter       | Type | Description |
 | ------------- | ----------- | ----------- |
-| privKey | `any` | a input value |
+| privKey | `any` | an input value |
 
 #### Returns
 `boolean` - Returns true if the input value is a private key type string.
@@ -1909,7 +1909,7 @@ IconValidator.isPublicKey(pubKey: any) => boolean
 
 | Parameter       | Type | Description |
 | ------------- | ----------- | ----------- |
-| public | `any` | a input value |
+| public | `any` | an input value |
 
 #### Returns
 `boolean` - Returns true if the input value is a public key type string.
@@ -1931,7 +1931,7 @@ IconValidator.isEoaAddress(address: any) => boolean
 
 | Parameter       | Type | Description |
 | ------------- | ----------- | ----------- |
-| address | `any` | a input value |
+| address | `any` | an input value |
 
 #### Returns
 `boolean` - Returns true if the input value is a EOA address type string.
@@ -1975,7 +1975,7 @@ IconValidator.isAddress(address: any) => boolean
 
 | Parameter       | Type | Description |
 | ------------- | ----------- | ----------- |
-| address | `any` | a input value |
+| address | `any` | an input value |
 
 #### Returns
 `boolean` - Returns true if the input value is a EOA or SCORE address type string.
@@ -1988,15 +1988,16 @@ const isAddress = IconValidator.isAddress('cx1b32a...99f01')
 
 ## Error cases
 
-There is 5 types of error cases. Details are as below:
+There are 6 types of error cases. Details are as below:
 
 | Error code       | Description |
 | ------------- | ----------- |
-| `DATA ERROR` | Exception class relate to data type. |
-| `FORMAT ERROR` | Exception class relate to data format. |
-| `WALLET ERROR` | Exception class relate to wallet errors.   |
-| `RPC ERROR` | Exception class relate to network errors. |
-| `SCORE ERROR` | Exception class relate to SCORE call error. |
+| `DATA ERROR` | Exception class related to data type. |
+| `FORMAT ERROR` | Exception class related to data format. |
+| `WALLET ERROR` | Exception class related to wallet errors.   |
+| `RPC ERROR` | Exception class related to network errors. |
+| `SCORE ERROR` | Exception class related to SCORE call error. |
+| `NETWORK ERROR` | Exception class related to network errors. |
 
 ## References
 
