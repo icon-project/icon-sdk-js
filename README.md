@@ -2008,10 +2008,10 @@ There is 5 types of error cases. Details are as below:
 Link: 
 -->
 
-[getBlockByHeight()]: #getblockbyheight()
-[getBlockByHash()]: #getblockbyhash()
-[getLastBlock()]: #getlastblock()
-[sendTransaction()]: #sendtransaction()
+[getBlockByHeight()]: #getblockbyheight
+[getBlockByHash()]: #getblockbyhash
+[getLastBlock()]: #getlastblock
+[sendTransaction()]: #sendtransaction
 
 [icx_getBlockByHeight]: https://icondev.readme.io/docs/json-rpc-specification#section-icx_getblockbyheight
 [icx_getBlockByHash]: https://icondev.readme.io/docs/json-rpc-specification#section-icx_getblockbyhash
@@ -2022,8 +2022,8 @@ Link:
 [ICON Networks]: https://icondev.readme.io/docs/icon-networks
 
 [IconService]: #iconservice
-[IconService.IconWallet]: #iconserviceiconwallet-(wallet)
-[IconWallet]: #iconserviceiconwallet-(wallet)
+[IconService.IconWallet]: #iconserviceiconwallet-wallet
+[IconWallet]: #iconserviceiconwallet-wallet
 [IconService.IconBuilder]: #iconserviceiconbuilder
 [IconBuilder]: #iconserviceiconbuilder
 [IcxTransactionBuilder]: #iconserviceiconbuildericxtransactionbuilder
