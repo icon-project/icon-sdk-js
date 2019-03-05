@@ -1,5 +1,11 @@
 # Changelog
 
+### Version 0.0.11 - March 5, 2019 ([NPM](https://www.npmjs.com/package/icon-sdk-js), [CDN](https://cdn.jsdelivr.net/gh/icon-project/icon-sdk-js@0.0.11/build/icon-sdk-js.web.min.js))
+
+#### Changes
+  - Add unit of GLOOP to IconAmount
+  - Add function of toUtf8() in IconConverter
+
 ### Version 0.0.10 - February 15, 2019 ([NPM](https://www.npmjs.com/package/icon-sdk-js), [CDN](https://cdn.jsdelivr.net/gh/icon-project/icon-sdk-js@0.0.10/build/icon-sdk-js.web.min.js))
 
 #### Changes
