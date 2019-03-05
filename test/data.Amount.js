@@ -5,6 +5,9 @@ const unitTests = [{
 	name: 'LOOP',
 	value: 0,
 }, {
+	name: 'GLOOP',
+	value: 9,
+}, {
 	name: 'ICX',
 	value: 18,
 }];
