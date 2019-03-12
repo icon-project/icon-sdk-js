@@ -1,5 +1,10 @@
 # Changelog
 
+### Version 0.0.12 - March 12, 2019 ([NPM](https://www.npmjs.com/package/icon-sdk-js), [CDN](https://cdn.jsdelivr.net/gh/icon-project/icon-sdk-js@0.0.12/build/icon-sdk-js.web.min.js))
+
+#### Changes
+  - Fix 'coinType' field in the 'Wallet.store' method
+
 ### Version 0.0.11 - March 5, 2019 ([NPM](https://www.npmjs.com/package/icon-sdk-js), [CDN](https://cdn.jsdelivr.net/gh/icon-project/icon-sdk-js@0.0.11/build/icon-sdk-js.web.min.js))
 
 #### Changes
