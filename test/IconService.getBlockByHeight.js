@@ -18,7 +18,6 @@ describe('IconService', () => {
             tests.forEach(test => {
                 it('should return the right block', async () => {
                     const block = await iconService.getBlockByHeight(test).execute();
-                    console.log(block)
                     assert.ok(!!block);
                 });
             });
