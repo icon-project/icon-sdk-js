@@ -1,8 +1,9 @@
 import assert from 'assert';
-import { IconValidator } from '../build/icon-sdk-js.node.min';
+import { IconValidator, IconWallet, SignedTransaction } from '../build/icon-sdk-js.node.min';
+const wallet = IconWallet.loadPrivateKey('38f792b95a5202ab431bfc799f7e1e5c74ec0b9ede5c6142ee7364f2c84d72f6')
 
 const tests = [{
-	value: {
+	value: new SignedTransaction({
 		to: 'hxd008c05cbc0e689f04a5bb729a66b42377a9a497',
 		from: 'hx902ecb51c109183ace539f247b4ea1347fbf23b5',
 		value: '0xde0b6b3a7640000',
@@ -10,8 +11,7 @@ const tests = [{
 		nid: '0x3',
 		version: '0x3',
 		timestamp: '0x57cde1eb6c258',
-		signature: 'mR6OQKAF2vX9A32M/yRrV5gTC3TzpopFPR8sky4peTNThLYKBJsyFvUCDvMNgng49FDz+W+zOOHj4cCGML+HFAA=',
-	},
+	}, wallet),
 	is: true,
 }];
 

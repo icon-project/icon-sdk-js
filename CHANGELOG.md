@@ -1,5 +1,13 @@
 # Changelog
 
+### Version 0.0.13 - March 22, 2019 ([NPM](https://www.npmjs.com/package/icon-sdk-js), [CDN](https://cdn.jsdelivr.net/gh/icon-project/icon-sdk-js@0.0.13/build/icon-sdk-js.web.min.js))
+
+#### Changes
+  - Allow only lower case letter in address and various hex value
+  - Add toHexNumber() in IconConverter
+  - Refactor formatter for block and validator for signed transaction
+  - Add test cases
+
 ### Version 0.0.12 - March 12, 2019 ([NPM](https://www.npmjs.com/package/icon-sdk-js), [CDN](https://cdn.jsdelivr.net/gh/icon-project/icon-sdk-js@0.0.12/build/icon-sdk-js.web.min.js))
 
 #### Changes
