@@ -1,5 +1,10 @@
 # Changelog
 
+### Version 0.0.15 - April 2, 2019 ([NPM](https://www.npmjs.com/package/icon-sdk-js), [CDN](https://cdn.jsdelivr.net/gh/icon-project/icon-sdk-js@0.0.15/build/icon-sdk-js.web.min.js))
+
+#### Changes
+  - Fix bug that getTransaction() always returns the format error
+
 ### Version 0.0.14 - March 26, 2019 ([NPM](https://www.npmjs.com/package/icon-sdk-js), [CDN](https://cdn.jsdelivr.net/gh/icon-project/icon-sdk-js@0.0.14/build/icon-sdk-js.web.min.js))
 
 #### Changes
