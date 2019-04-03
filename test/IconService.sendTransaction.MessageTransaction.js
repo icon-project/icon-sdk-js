@@ -4,30 +4,48 @@ const { MessageTransactionBuilder } = IconBuilder;
 const iconService = new IconService(new HttpProvider('https://bicon.net.solidwallet.io/api/v3'));
 const wallet = IconWallet.loadPrivateKey('38f792b95a5202ab431bfc799f7e1e5c74ec0b9ede5c6142ee7364f2c84d72f6')
 
-const from = 'hx902ecb51c109183ace539f247b4ea1347fbf23b5';
-const to = 'hxd008c05cbc0e689f04a5bb729a66b42377a9a497';
-const stepLimit = IconConverter.toBigNumber(200000);
-const nid = IconConverter.toBigNumber(3);
-const nonce = IconConverter.toBigNumber(1);
-const version = IconConverter.toBigNumber(3);
-const timestamp = (new Date()).getTime() * 1000;
-const data = IconConverter.toHex('Aqua Man');
-const transaction = new MessageTransactionBuilder()
-	.from(from)
-	.to(to)
-	.stepLimit(stepLimit)
-	.nid(nid)
-	.nonce(nonce)
-	.version(version)
-	.timestamp(timestamp)
-	.data(data)
-	.build();
+const tests = [
+	new MessageTransactionBuilder()
+		.from('hx902ecb51c109183ace539f247b4ea1347fbf23b5')
+		.to('hxd008c05cbc0e689f04a5bb729a66b42377a9a497')
+		.stepLimit(IconConverter.toBigNumber(200000))
+		.nid(IconConverter.toBigNumber(3))
+		.nonce(IconConverter.toBigNumber(1))
+		.version(IconConverter.toBigNumber(3))
+		.timestamp((new Date()).getTime() * 1000)
+		.data(IconConverter.toHex('Aqua Man'))
+		.build()
+	,
+	new MessageTransactionBuilder()
+		.from('hx902ecb51c109183ace539f247b4ea1347fbf23b5')
+		.to('hxd008c05cbc0e689f04a5bb729a66b42377a9a497')
+		.stepLimit(IconConverter.toBigNumber(200000))
+		.nid(IconConverter.toBigNumber(3))
+		.nonce(IconConverter.toBigNumber(1))
+		.version(IconConverter.toBigNumber(3))
+		.timestamp((new Date()).getTime() * 1000)
+		.data(IconConverter.toHex(''))
+		.build()
+	,
+	new MessageTransactionBuilder()
+		.from('hx902ecb51c109183ace539f247b4ea1347fbf23b5')
+		.to('hxd008c05cbc0e689f04a5bb729a66b42377a9a497')
+		.stepLimit(IconConverter.toBigNumber(200000))
+		.nid(IconConverter.toBigNumber(3))
+		.nonce(IconConverter.toBigNumber(1))
+		.version(IconConverter.toBigNumber(3))
+		.timestamp((new Date()).getTime() * 1000)
+		.data('0x0')
+		.build()
+]
 
 describe('IconService', () => {
 	describe('sendTransaction() - MessageTransaction', () => {
-		it('should return the tx hash', async () => {
-			const txHash = await iconService.sendTransaction(new SignedTransaction(transaction, wallet)).execute();
-			assert.ok(IconValidator.isTransactionHash(txHash));
-		});
+		tests.forEach(test => {
+			it('should return the tx hash', async () => {
+				const txHash = await iconService.sendTransaction(new SignedTransaction(test, wallet)).execute();
+				assert.ok(IconValidator.isTransactionHash(txHash));
+			});
+		})
 	});
 });
