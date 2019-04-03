@@ -1,5 +1,12 @@
 # Changelog
 
+### Version 0.0.16 - April 3, 2019 ([NPM](https://www.npmjs.com/package/icon-sdk-js), [CDN](https://cdn.jsdelivr.net/gh/icon-project/icon-sdk-js@0.0.16/build/icon-sdk-js.web.min.js))
+
+#### Changes
+  - Handle exception in case of the number that is not an integer in toHex()
+  - Accept string only in fromUtf8() and hex string only in toUtf8()
+  - Add test cases for message transaction
+  
 ### Version 0.0.15 - April 2, 2019 ([NPM](https://www.npmjs.com/package/icon-sdk-js), [CDN](https://cdn.jsdelivr.net/gh/icon-project/icon-sdk-js@0.0.15/build/icon-sdk-js.web.min.js))
 
 #### Changes
