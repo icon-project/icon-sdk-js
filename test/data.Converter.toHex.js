@@ -11,6 +11,11 @@ const tests = [
 	{ value: IconConverter.toBigNumber(0x77), expected: '0x77' },
 	{ value: IconConverter.toBigNumber('0x77'), expected: '0x77' },
 	{ value: 'Modern Family', expected: '0x4d6f6465726e2046616d696c79' },
+	{ value: '0.1', expected: '0x302e31' },
+	{ value: '0x0', expected: '0x0' },
+	{ value: '', expected: '0x0' },
+	{ value: null, expected: '0x0' },
+	{ value: undefined, expected: '0x0' },
 ];
 
 describe('data/Converter', () => {
