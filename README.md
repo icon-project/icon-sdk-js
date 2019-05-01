@@ -611,7 +611,7 @@ Builder class for `IcxTransaction` instance. `IcxTransaction` is an object repre
 | ------------- | ----------- |
 | `to` | An EOA address to receive coins, or SCORE address to execute the transaction. |
 | `from` | An EOA address that created the transaction |
-| `value` (optional) | Amount of ICX coins in loop to transfer. When ommitted, assumes 0. (1 icx = 1 ^ 18 loop) |
+| `value` (optional) | Amount of ICX coins in loop to transfer. When ommitted, assumes 0. (1 icx = 10 ^ 18 loop) |
 | `stepLimit` | Maximum step allowance that can be used by the transaction. |
 | `nid` | Network ID ("0x1" for Mainnet, "0x2" for Testnet, etc) |
 | `nonce` | An arbitrary number used to prevent transaction hash collision. |
