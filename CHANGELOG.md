@@ -1,5 +1,11 @@
 # Changelog
 
+### Version 0.0.17 - November 15, 2019 ([NPM](https://www.npmjs.com/package/icon-sdk-js), [CDN](https://cdn.jsdelivr.net/gh/icon-project/icon-sdk-js@0.0.17/build/icon-sdk-js.web.min.js))
+
+#### Changes
+  - Fix getBlockByHeight bug returning undefined txHash
+  - Fix transaction signing for transactions with empty arrays
+
 ### Version 0.0.16 - April 3, 2019 ([NPM](https://www.npmjs.com/package/icon-sdk-js), [CDN](https://cdn.jsdelivr.net/gh/icon-project/icon-sdk-js@0.0.16/build/icon-sdk-js.web.min.js))
 
 #### Changes

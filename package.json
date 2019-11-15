@@ -1,6 +1,6 @@
 {
   "name": "icon-sdk-js",
-  "version": "0.0.16",
+  "version": "0.0.17",
   "description": "JavaScript SDK for ICON",
   "main": "./build/icon-sdk-js.node.min.js",
   "author": {
