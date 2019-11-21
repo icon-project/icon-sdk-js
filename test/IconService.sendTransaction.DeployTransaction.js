@@ -59,7 +59,7 @@ describe('IconService', () => {
 				const txHashToUpdate = await iconService.sendTransaction(new SignedTransaction(transactionToUpdate, wallet)).execute();
 				assert.ok(IconValidator.isTransactionHash(txHashToUpdate));
 				done();
-			}, 2000)
+			}, 5000);
 		});
 	});
 });

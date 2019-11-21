@@ -1,46 +1,43 @@
 import assert from 'assert';
 import IconService, { HttpProvider, IconConverter } from '../build/icon-sdk-js.node.min';
 
-const providers = [
-	'https://bicon.net.solidwallet.io/api/v3',
-	'https://test-ctz.solidwallet.io/api/v3',
-	'https://ctz.solidwallet.io/api/v3',
-];
-
-const tests = [
-	10,
-	777,
-	IconConverter.toBigNumber('777'),
-];
+const tests = [{
+	iconService: new IconService(new HttpProvider('https://ctz.solidwallet.io/api/v3')),
+	blockList: [
+		0,
+		1,
+		10,
+		777,
+		IconConverter.toBigNumber('777'),
+		9217169,
+		10000000,
+		11280559,
+	],
+}, {
+	iconService: new IconService(new HttpProvider('https://bicon.net.solidwallet.io/api/v3')),
+	blockList: [
+		0,
+		1,
+		2,
+		10,
+		777,
+		IconConverter.toBigNumber('777'),
+	],
+}];
 
 describe('IconService', () => {
 	describe('getBlockByHeight()', () => {
-		providers.forEach((provider) => {
-			const iconService = new IconService(new HttpProvider(provider));
-			tests.forEach((test) => {
+		tests.forEach((test) => {
+			test.blockList.forEach((block) => {
 				it('should return the right block', async () => {
-					const block = await iconService.getBlockByHeight(test).execute();
-					assert.ok(!!block);
+					try {
+						const result = await test.iconService.getBlockByHeight(block).execute();
+						assert.ok(!!result);
+					} catch (e) {
+						console.log(e);
+						assert.ok(false);
+					}
 				});
-			});
-		});
-	});
-});
-
-const mainnetTests = [
-	...tests,
-	9217169,
-	10000000,
-];
-
-describe('IconService', () => {
-	describe('getBlockByHeight() on Mainnet', () => {
-		const iconService = new IconService(new HttpProvider(providers[2]));
-		mainnetTests.forEach((test) => {
-			it('should return the right block', async () => {
-				const block = await iconService.getBlockByHeight(test).execute();
-				console.log(JSON.stringify(block, null, 2));
-				assert.ok(!!block);
 			});
 		});
 	});
