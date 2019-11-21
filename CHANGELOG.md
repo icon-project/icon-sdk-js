@@ -1,5 +1,11 @@
 # Changelog
 
+### Version 0.0.18 - November 21, 2019 ([NPM](https://www.npmjs.com/package/icon-sdk-js), [CDN](https://cdn.jsdelivr.net/gh/icon-project/icon-sdk-js@0.0.18/build/icon-sdk-js.web.min.js))
+
+#### Changes
+  - Support JSON-RPC v3 specification (Block, Transaction, TransactionResult)
+  - Delete Validator.isTransaction()
+
 ### Version 0.0.17 - November 15, 2019 ([NPM](https://www.npmjs.com/package/icon-sdk-js), [CDN](https://cdn.jsdelivr.net/gh/icon-project/icon-sdk-js@0.0.17/build/icon-sdk-js.web.min.js))
 
 #### Changes
