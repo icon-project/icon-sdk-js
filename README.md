@@ -2001,7 +2001,7 @@ There are 6 types of error cases. Details are as below:
 
 ## References
 
-- [ICON JSON-RPC API v3](https://icondev.readme.io/docs/json-rpc-specification) 
+- [ICON JSON-RPC API v3](https://www.icondev.io/docs/icon-json-rpc-v3)
 - [IRC2 Specification](https://github.com/icon-project/IIPs/blob/master/IIPS/iip-2.md)
 
 
@@ -2014,13 +2014,13 @@ Link:
 [getLastBlock()]: #getlastblock
 [sendTransaction()]: #sendtransaction
 
-[icx_getBlockByHeight]: https://icondev.readme.io/docs/json-rpc-specification#section-icx_getblockbyheight
-[icx_getBlockByHash]: https://icondev.readme.io/docs/json-rpc-specification#section-icx_getblockbyhash
-[icx_getLastBlock]: https://icondev.readme.io/docs/json-rpc-specification#section-icx_getlastblock
-[icx_getScoreApi]: https://icondev.readme.io/docs/json-rpc-specification#section-icx_getscoreapi
-[icx_getTransactionByHash]: https://icondev.readme.io/docs/json-rpc-specification#section-icx_gettransactionbyhash
-[icx_getTransactionResult]: https://icondev.readme.io/docs/json-rpc-specification#section-icx_gettransactionresult
-[ICON Networks]: https://icondev.readme.io/docs/icon-networks
+[icx_getBlockByHeight]: https://www.icondev.io/docs/icon-json-rpc-v3#section-icx-get-block-by-height
+[icx_getBlockByHash]: https://www.icondev.io/docs/icon-json-rpc-v3#section-icx-get-block-by-hash
+[icx_getLastBlock]: https://www.icondev.io/docs/icon-json-rpc-v3#section-icx-get-last-block
+[icx_getScoreApi]: https://www.icondev.io/docs/icon-json-rpc-v3#section-icx-get-score-api
+[icx_getTransactionByHash]: https://www.icondev.io/docs/icon-json-rpc-v3#section-icx-get-transaction-by-hash
+[icx_getTransactionResult]: https://www.icondev.io/docs/icon-json-rpc-v3#section-icx-get-transaction-result
+[ICON Networks]: https://www.icondev.io/docs/the-icon-network
 
 [IconService]: #iconservice
 [IconService.IconWallet]: #iconserviceiconwallet-wallet
