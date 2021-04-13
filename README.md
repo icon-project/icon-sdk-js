@@ -15,6 +15,7 @@ ICON supports JavaScript SDK for 3rd party or user services development. You can
 * [IconService.IconBuilder.MessageTransactionBuilder][MessageTransactionBuilder]
 * [IconService.IconBuilder.DeployTransactionBuilder][DeployTransactionBuilder]
 * [IconService.IconBuilder.CallTransactionBuilder][CallTransactionBuilder]
+* [IconService.IconBuilder.DepositTransactionBuilder][DepositTransactionBuilder]
 * [IconService.IconBuilder.CallBuilder][CallBuilder]
 * [IconService.SignedTransaction][SignedTransaction]
 * [IconService.HttpProvider][HttpProvider]
@@ -601,6 +602,7 @@ const pk = wallet.getAddress()
 | [MessageTransactionBuilder] | Builder class for `MessageTransaction` instance, which is for sending message data. Extends `IcxTransactionBuilder` class. |
 | [DeployTransactionBuilder] | Builder class for `DeployTransaction` instance, which is for deploying SCORE. Extends `IcxTransactionBuilder` class.  |
 | [CallTransactionBuilder] | Builder class for `CallTransaction` instance, which is for invoking a *state-transition* function of SCORE. Extends `IcxTransactionBuilder` class. |
+| [DepositTransactionBuilder] | Builder class for `DepositTransaction` instance, which is for depositing to SCORE(or withdrawing from SCORE). Extends `IcxTransactionBuilder` class. |
 | [CallBuilder] | Builder class for `Call` instance, which is for invoking a *read-only* function of SCORE. |
 
 ## IconService.IconBuilder.IcxTransactionBuilder
@@ -1154,6 +1156,108 @@ const txObj = new CallTransactionBuilder()
         _to: 'hxd008c05cbc0e689f04a5bb729a66b42377a9a497',
         _value: IconConverter.toHex(IconAmount.of(1, IconAmount.Unit.ICX).toLoop()),
     })
+    .build()
+```
+
+## IconService.IconBuilder.DepositTransactionBuilder
+
+Builder class for `DepositTransaction` instance. `DepositTransaction` is an object representing a transaction object used for depositing/withdrawing SCORE. It extends `IcxTransaction` class, so instance parameters and methods are mostly identical to `IcxTransaction` class, except for the following:
+
+| Parameter       | Description |
+| ------------- | ----------- |
+| `data` | An object data for depositing to SCORE. It contains 2 parameters: 1) `action` - Whether to deposit or withdraw. When making a withdrawal, id is required. 2) `id` (optional) - deposit id to withdraw. needed when withdraw deposit |
+| `dataType` | Data type of `data`. Fixed string `deposit` is in value. |
+
+For details of extended parameters and methods, see [IcxTransactionBuilder] section.
+
+### Constructor
+
+Creates an instance of `DepositTransactionBuilder` class.
+
+```javascript
+new DepositTransactionBuilder()
+```
+#### Parameters
+
+None
+
+
+
+### action()
+
+Setter method of 'action' property in 'data'.
+
+```javascript
+.action(action: string) => DepositTransactionBuilder
+```
+#### Parameters
+
+| Parameter       | Type | Description |
+| ------------- | ----------- | ----------- |
+| action | `string` | Whether to deposit or withdraw. (`add` or `withdraw`) |
+
+#### Returns
+`DepositTransactionBuilder` - Returns an instance of itself
+
+#### Example
+```javascript
+// Set `action` property.
+const txObj = new DepositTransactionBuilder()
+    .action('add')
+```
+
+
+### id()
+
+Setter method of 'id' property in 'data'.
+
+```javascript
+.id(params: string) => DepositTransactionBuilder
+```
+#### Parameters
+
+| Parameter       | Type | Description |
+| ------------- | ----------- | ----------- |
+| id | `string` | Deposit id to withdraw |
+
+#### Returns
+`DepositTransactionBuilder` - Returns an instance of itself
+
+#### Example
+```javascript
+// Set `id` property.
+const txObj = new DepositTransactionBuilder()
+    .id("0x8ed676ca8aeef92159f5bb1223db1e8bcf65ea8ea3d6ae9ed23e006407aa9fda")
+```
+
+
+### build()
+
+Returns an `DepositTransaction` instance which contains parameter you set.
+
+```javascript
+.build() => DepositTransaction
+```
+#### Parameters
+
+None
+
+#### Returns
+`DepositTransaction` - Returns an `DepositTransaction` instance.
+
+#### Example
+```javascript
+// Build `DepositTransaction` instance.
+const txObj = new DepositTransactionBuilder()
+    .from('hx902ecb51c109183ace539f247b4ea1347fbf23b5')
+    .to('cx3502b4dadbfcd654d26d53d8463f2929c2c3948d')
+    .stepLimit(IconConverter.toBigNumber('2000000'))
+    .nid(IconConverter.toBigNumber('3'))
+    .nonce(IconConverter.toBigNumber('1'))
+    .version(IconConverter.toBigNumber('3'))
+    .timestamp((new Date()).getTime() * 1000)
+    .action('withdraw')
+    .id("0x8ed676ca8aeef92159f5bb1223db1e8bcf65ea8ea3d6ae9ed23e006407aa9fda")
     .build()
 ```
 
@@ -2031,6 +2135,7 @@ Link:
 [MessageTransactionBuilder]: #iconserviceiconbuildermessagetransactionbuilder
 [DeployTransactionBuilder]: #iconserviceiconbuilderdeploytransactionbuilder
 [CallTransactionBuilder]: #iconserviceiconbuildercalltransactionbuilder
+[DepositTransactionBuilder]: #iconserviceiconbuilderdeposittransactionbuilder
 [CallBuilder]: #iconserviceiconbuildercallbuilder
 [IconService.SignedTransaction]: #iconservicesignedtransaction
 [SignedTransaction]: #iconservicesignedtransaction
