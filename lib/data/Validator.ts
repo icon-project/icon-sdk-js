@@ -16,12 +16,12 @@
 
 /* eslint-disable no-global-assign */
 
-import BigNumber from 'bignumber.js';
-import { isHex, isArray } from './Type';
-import { hasProperties } from './Util';
-import { toBigNumber } from './Converter';
+import BigNumber from "bignumber.js";
+import { isHex, isArray } from "./Type";
+import { hasProperties } from "./Util";
+import { toBigNumber } from "./Converter";
 
-const secp256k1 = require('secp256k1');
+const secp256k1 = require("secp256k1");
 
 /**
  * Check if input value is a private key.
@@ -29,15 +29,15 @@ const secp256k1 = require('secp256k1');
  * @return {boolean} returns true if the input value is a private key.
  */
 export function isPrivateKey(privKey) {
-	if (!privKey) {
-		return false;
-	}
+  if (!privKey) {
+    return false;
+  }
 
-	if (typeof privKey === 'string') {
-		return /^[0-9a-f]{64}$/g.test(privKey) && /\S/g.test(privKey);
-	}
+  if (typeof privKey === "string") {
+    return /^[0-9a-f]{64}$/g.test(privKey) && /\S/g.test(privKey);
+  }
 
-	return secp256k1.privateKeyVerify(Buffer.from(privKey, 'hex'));
+  return secp256k1.privateKeyVerify(Buffer.from(privKey, "hex"));
 }
 
 /**
@@ -46,7 +46,7 @@ export function isPrivateKey(privKey) {
  * @return {boolean} returns true if the input value is a public key.
  */
 export function isPublicKey(pubKey) {
-	return secp256k1.publicKeyVerify(Buffer.from(pubKey, 'hex'));
+  return secp256k1.publicKeyVerify(Buffer.from(pubKey, "hex"));
 }
 
 /**
@@ -55,7 +55,7 @@ export function isPublicKey(pubKey) {
  * @return {boolean} returns true if the input value is a EOA address.
  */
 export function isEoaAddress(address) {
-	return /^(hx)[0-9a-f]{40}$/g.test(address) && /\S/g.test(address);
+  return /^(hx)[0-9a-f]{40}$/g.test(address) && /\S/g.test(address);
 }
 
 /**
@@ -64,7 +64,7 @@ export function isEoaAddress(address) {
  * @return {boolean} returns true if the input value is a SCORE address.
  */
 export function isScoreAddress(address) {
-	return /^(cx)[0-9a-f]{40}$/g.test(address) && /\S/g.test(address);
+  return /^(cx)[0-9a-f]{40}$/g.test(address) && /\S/g.test(address);
 }
 
 /**
@@ -73,11 +73,11 @@ export function isScoreAddress(address) {
  * @return {boolean} returns true if the input value is a EOA or SCORE address.
  */
 export function isAddress(address) {
-	if (isEoaAddress(address) || isScoreAddress(address)) {
-		return true;
-	}
+  if (isEoaAddress(address) || isScoreAddress(address)) {
+    return true;
+  }
 
-	return false;
+  return false;
 }
 
 /**
@@ -86,7 +86,7 @@ export function isAddress(address) {
  * @return {boolean} returns true if the input value is a block hash.
  */
 export function isBlockHash(value: string): boolean {
-	return /^(0x)[0-9a-f]{64}$/g.test(value) && /\S/g.test(value);
+  return /^(0x)[0-9a-f]{64}$/g.test(value) && /\S/g.test(value);
 }
 
 /**
@@ -95,7 +95,7 @@ export function isBlockHash(value: string): boolean {
  * @return {boolean} returns true if the input value has upper case letter.
  */
 export function hasUppercase(value) {
-	return /[A-Z]/g.test(value);
+  return /[A-Z]/g.test(value);
 }
 
 /**
@@ -104,7 +104,7 @@ export function hasUppercase(value) {
  * @return {boolean} returns true if the input value has blank.
  */
 export function hasBlank(value) {
-	return /\s/g.test(value);
+  return /\s/g.test(value);
 }
 
 /**
@@ -113,19 +113,23 @@ export function hasBlank(value) {
  * @return {boolean} returns true if the input value is a block number.
  */
 export function isBlockNumber(value: string | BigNumber): boolean {
-	try {
-		if (hasUppercase(value.toString()) || hasBlank(value)) {
-			return false;
-		}
+  try {
+    if (hasUppercase(value.toString()) || hasBlank(value)) {
+      return false;
+    }
 
-		const number = toBigNumber(value);
-		const min = toBigNumber(0);
-		const max = toBigNumber(2 ** 256);
+    const number = toBigNumber(value);
+    const min = toBigNumber(0);
+    const max = toBigNumber(2 ** 256);
 
-		return number.isInteger() && number.isGreaterThanOrEqualTo(min) && number.isLessThan(max);
-	} catch (e) {
-		return false;
-	}
+    return (
+      number.isInteger() &&
+      number.isGreaterThanOrEqualTo(min) &&
+      number.isLessThan(max)
+    );
+  } catch (e) {
+    return false;
+  }
 }
 
 /**
@@ -134,7 +138,7 @@ export function isBlockNumber(value: string | BigNumber): boolean {
  * @return {boolean} returns true if the input value is 'latest'.
  */
 export function isPredefinedBlockValue(value) {
-	return value === 'latest';
+  return value === "latest";
 }
 
 /**
@@ -143,7 +147,7 @@ export function isPredefinedBlockValue(value) {
  * @return {boolean} returns true if the input value is transaction hash.
  */
 export function isTransactionHash(hash) {
-	return /^(0x)[0-9a-f]{64}$/g.test(hash) && /\S/g.test(hash);
+  return /^(0x)[0-9a-f]{64}$/g.test(hash) && /\S/g.test(hash);
 }
 
 /**
@@ -152,10 +156,12 @@ export function isTransactionHash(hash) {
  * @return {boolean} returns true if the input value is 'call' object.
  */
 export function isCall(call) {
-	return hasProperties(call, ['to', 'data', 'dataType'])
-    && hasProperties(call.data, ['method'])
-    && isScoreAddress(call.to)
-    && call.dataType === 'call';
+  return (
+    hasProperties(call, ["to", "data", "dataType"]) &&
+    hasProperties(call.data, ["method"]) &&
+    isScoreAddress(call.to) &&
+    call.dataType === "call"
+  );
 }
 
 /**
@@ -164,32 +170,42 @@ export function isCall(call) {
  * @return {boolean} returns true if the input transaction object has a data properties properly.
  */
 export function checkDataInTransaction(transaction) {
-	switch (transaction.dataType) {
-		case 'call': {
-			return Object.prototype.hasOwnProperty.call(transaction, 'data')
-        && hasProperties(transaction.data, ['method']);
-		}
-		case 'deploy': {
-			return Object.prototype.hasOwnProperty.call(transaction, 'data')
-        && hasProperties(transaction.data, ['contentType', 'content'])
-        && isHex(transaction.data.content);
-		}
-		case 'message': {
-			return Object.prototype.hasOwnProperty.call(transaction, 'data')
-        && isHex(transaction.data);
-		}
-		case 'base': {
-			return Object.prototype.hasOwnProperty.call(transaction, 'data')
-        && hasProperties(transaction.data, ['prep', 'result']);
-		}
-		case 'deposit': {
-			return Object.prototype.hasOwnProperty.call(transaction, 'data')
-        && hasProperties(transaction.data, ['action']);
-		}
-		default: {
-			return true;
-		}
-	}
+  switch (transaction.dataType) {
+    case "call": {
+      return (
+        Object.prototype.hasOwnProperty.call(transaction, "data") &&
+        hasProperties(transaction.data, ["method"])
+      );
+    }
+    case "deploy": {
+      return (
+        Object.prototype.hasOwnProperty.call(transaction, "data") &&
+        hasProperties(transaction.data, ["contentType", "content"]) &&
+        isHex(transaction.data.content)
+      );
+    }
+    case "message": {
+      return (
+        Object.prototype.hasOwnProperty.call(transaction, "data") &&
+        isHex(transaction.data)
+      );
+    }
+    case "base": {
+      return (
+        Object.prototype.hasOwnProperty.call(transaction, "data") &&
+        hasProperties(transaction.data, ["prep", "result"])
+      );
+    }
+    case "deposit": {
+      return (
+        Object.prototype.hasOwnProperty.call(transaction, "data") &&
+        hasProperties(transaction.data, ["action"])
+      );
+    }
+    default: {
+      return true;
+    }
+  }
 }
 
 /**
@@ -198,26 +214,42 @@ export function checkDataInTransaction(transaction) {
  * @return {boolean} returns true if an input transaction object is a signed transaction object.
  */
 export function isSignedTransaction(signedTransaction) {
-	const transaction = signedTransaction.getProperties();
-	if (!hasProperties(transaction, ['to', 'from', 'stepLimit', 'nid', 'version', 'timestamp', 'signature'])
-    || !isAddress(transaction.to)
-    || !isAddress(transaction.from)
-    || !isHex(transaction.stepLimit)
-    || !isHex(transaction.nid)
-    || !isHex(transaction.version)
-    || !isHex(transaction.timestamp)) {
-		return false;
-	}
+  const transaction = signedTransaction.getProperties();
+  if (
+    !hasProperties(transaction, [
+      "to",
+      "from",
+      "stepLimit",
+      "nid",
+      "version",
+      "timestamp",
+      "signature",
+    ]) ||
+    !isAddress(transaction.to) ||
+    !isAddress(transaction.from) ||
+    !isHex(transaction.stepLimit) ||
+    !isHex(transaction.nid) ||
+    !isHex(transaction.version) ||
+    !isHex(transaction.timestamp)
+  ) {
+    return false;
+  }
 
-	if (Object.prototype.hasOwnProperty.call(transaction, 'value') && !isHex(transaction.value)) {
-		return false;
-	}
+  if (
+    Object.prototype.hasOwnProperty.call(transaction, "value") &&
+    !isHex(transaction.value)
+  ) {
+    return false;
+  }
 
-	if (Object.prototype.hasOwnProperty.call(transaction, 'nonce') && !isHex(transaction.nonce)) {
-		return false;
-	}
+  if (
+    Object.prototype.hasOwnProperty.call(transaction, "nonce") &&
+    !isHex(transaction.nonce)
+  ) {
+    return false;
+  }
 
-	return checkDataInTransaction(transaction);
+  return checkDataInTransaction(transaction);
 }
 
 /**
@@ -226,21 +258,21 @@ export function isSignedTransaction(signedTransaction) {
  * @return {boolean} returns true if an input object is a block object.
  */
 export function isBlock(block) {
-	return hasProperties(block, [
-		'height',
-		['block_hash', 'blockHash'],
-		['merkle_tree_root_hash', 'merkleTreeRootHash'],
-		['prev_block_hash', 'prevBlockHash'],
-		['peer_id', 'peerId'],
-		['confirmed_transaction_list', 'confirmedTransactionList'],
-		'signature',
-		['time_stamp', 'timestamp', 'timeStamp'],
-		'version',
-	]);
+  return hasProperties(block, [
+    "height",
+    ["block_hash", "blockHash"],
+    ["merkle_tree_root_hash", "merkleTreeRootHash"],
+    ["prev_block_hash", "prevBlockHash"],
+    ["peer_id", "peerId"],
+    ["confirmed_transaction_list", "confirmedTransactionList"],
+    "signature",
+    ["time_stamp", "timestamp", "timeStamp"],
+    "version",
+  ]);
 }
 
 export function isScoreApi(api) {
-	return hasProperties(api, ['type', 'name']);
+  return hasProperties(api, ["type", "name"]);
 }
 
 /**
@@ -249,11 +281,11 @@ export function isScoreApi(api) {
  * @return {boolean} returns true if an input object is a ScoreApiList object.
  */
 export function isScoreApiList(scoreApiList) {
-	if (!isArray(scoreApiList)) {
-		return false;
-	}
+  if (!isArray(scoreApiList)) {
+    return false;
+  }
 
-	return scoreApiList.every(api => isScoreApi(api));
+  return scoreApiList.every((api) => isScoreApi(api));
 }
 
 /**
@@ -262,15 +294,15 @@ export function isScoreApiList(scoreApiList) {
  * @return {boolean} returns true if an input object is a transaction result object.
  */
 export function isTransactionResult(transaction) {
-	return hasProperties(transaction, [
-		'status',
-		'to',
-		'txHash',
-		'txIndex',
-		'blockHeight',
-		'blockHash',
-		'cumulativeStepUsed',
-		'stepUsed',
-		'stepPrice',
-	]);
+  return hasProperties(transaction, [
+    "status",
+    "to",
+    "txHash",
+    "txIndex",
+    "blockHeight",
+    "blockHash",
+    "cumulativeStepUsed",
+    "stepUsed",
+    "stepPrice",
+  ]);
 }

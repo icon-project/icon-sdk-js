@@ -14,16 +14,16 @@
  * limitations under the License.
  */
 
-import { IcxTransaction, IcxTransactionBuilder } from './IcxTransaction';
-import { createPrivate } from '../../data/Util';
-import { Hash } from '../../types/hash';
+import { IcxTransaction, IcxTransactionBuilder } from "./IcxTransaction";
+import { createPrivate } from "../../data/Util";
+import { Hash } from "../../types/hash";
 
 /**
  * SubClass for making the transaction object for calling a method in SCORE.
  * @extends {IcxTransaction}
  */
 export class CallTransaction extends IcxTransaction {
-  dataType: 'call';
+  dataType: "call";
   to: string;
   from: string;
   value: Hash;
@@ -37,9 +37,20 @@ export class CallTransaction extends IcxTransaction {
   params: any;
   data: any;
 
-  constructor(to, from, value, stepLimit, nid, nonce, version, timestamp, method, params) {
+  constructor(
+    to,
+    from,
+    value,
+    stepLimit,
+    nid,
+    nonce,
+    version,
+    timestamp,
+    method,
+    params
+  ) {
     super(to, from, value, stepLimit, nid, nonce, version, timestamp);
-    this.dataType = 'call';
+    this.dataType = "call";
     this.data = { method };
 
     if (params) {
@@ -103,7 +114,7 @@ export class CallTransactionBuilder extends IcxTransactionBuilder {
       this.private(this).timestamp,
 
       this.private(this).method,
-      this.private(this).params,
+      this.private(this).params
     );
   }
 }

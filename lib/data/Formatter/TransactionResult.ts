@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-import BigNumber from 'bignumber.js';
-import { addHxPrefix, add0xPrefix, addCxPrefix } from '../Hexadecimal';
-import { toNumber, toBigNumber } from '../Converter';
-import { Hash } from '../../types/hash';
+import BigNumber from "bignumber.js";
+import { addHxPrefix, add0xPrefix, addCxPrefix } from "../Hexadecimal";
+import { toNumber, toBigNumber } from "../Converter";
+import { Hash } from "../../types/hash";
 
 export default class TransactionResult {
   status: Hash;

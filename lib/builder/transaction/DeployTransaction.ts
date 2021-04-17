@@ -14,16 +14,16 @@
  * limitations under the License.
  */
 
-import { IcxTransaction, IcxTransactionBuilder } from './IcxTransaction';
-import { createPrivate } from '../../data/Util';
-import { Hash } from '../../types/hash';
+import { IcxTransaction, IcxTransactionBuilder } from "./IcxTransaction";
+import { createPrivate } from "../../data/Util";
+import { Hash } from "../../types/hash";
 
 /**
  * Subclass making a transaction object for deploying SCORE.
  * @extends {IcxTransaction}
  */
 class DeployTransaction extends IcxTransaction {
-  dataType: 'deploy';
+  dataType: "deploy";
   to: string;
   from: string;
   value: Hash;
@@ -35,10 +35,22 @@ class DeployTransaction extends IcxTransaction {
   params: any;
   data: any;
 
-  constructor(to, from, value, stepLimit, nid, nonce, version, timestamp, contentType, content, params) {
+  constructor(
+    to,
+    from,
+    value,
+    stepLimit,
+    nid,
+    nonce,
+    version,
+    timestamp,
+    contentType,
+    content,
+    params
+  ) {
     super(to, from, value, stepLimit, nid, nonce, version, timestamp);
 
-    this.dataType = 'deploy';
+    this.dataType = "deploy";
     this.data = { contentType, content, params };
   }
 }
@@ -112,7 +124,7 @@ export default class DeployTransactionBuilder extends IcxTransactionBuilder {
 
       this.private(this).contentType,
       this.private(this).content,
-      this.private(this).params,
+      this.private(this).params
     );
   }
 }

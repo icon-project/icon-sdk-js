@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-import { isArray } from '../Type';
-import { ScoreError } from '../../Exception';
-import { createPrivate } from '../Util';
+import { isArray } from "../Type";
+import { ScoreError } from "../../Exception";
+import { createPrivate } from "../Util";
 
 export default class ScoreApiList {
   public private: any;

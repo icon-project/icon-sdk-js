@@ -14,36 +14,38 @@
  * limitations under the License.
  */
 
-import BigNumber from 'bignumber.js';
+import BigNumber from "bignumber.js";
 
 export function isString(value) {
-	return typeof value === 'string' || value instanceof String;
+  return typeof value === "string" || value instanceof String;
 }
 
 export function isByte(value) {
-	return Boolean(value) && value.byteLength !== undefined;
+  return Boolean(value) && value.byteLength !== undefined;
 }
 
 export function isObject(obj) {
-	return typeof obj === 'object';
+  return typeof obj === "object";
 }
 
 export function isArray(obj) {
-	return Array.isArray(obj);
+  return Array.isArray(obj);
 }
 
-export function isBigNumber(value: string | number | BigNumber): value is BigNumber {
-	return BigNumber.isBigNumber(value);
+export function isBigNumber(
+  value: string | number | BigNumber
+): value is BigNumber {
+  return BigNumber.isBigNumber(value);
 }
 
 export function isHex(value: string): boolean {
-	return /^(0x)[0-9a-f]+$/g.test(value);
+  return /^(0x)[0-9a-f]+$/g.test(value);
 }
 
 export function isFunction(value) {
-	return typeof value === 'function';
+  return typeof value === "function";
 }
 
 export function isInteger(value) {
-	return Number.isInteger(value);
+  return Number.isInteger(value);
 }

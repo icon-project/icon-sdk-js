@@ -14,13 +14,15 @@
  * limitations under the License.
  */
 
-import HttpRequest from './HttpRequest';
-import { NetworkError } from '../../../Exception';
+import HttpRequest from "./HttpRequest";
+import { NetworkError } from "../../../Exception";
 
-const { XMLHttpRequest } = require('../../../module/node');
+const { XMLHttpRequest } = require("../../../module/node");
 
 export default class HttpClient {
-  static newCall<T = any>(httpRequest: HttpRequest): { execute(): Promise<T>; sendAsync(): Promise<T> } {
+  static newCall<T = any>(
+    httpRequest: HttpRequest
+  ): { execute(): Promise<T>; sendAsync(): Promise<T> } {
     return {
       execute(): Promise<T> {
         return this.sendAsync();
@@ -32,7 +34,7 @@ export default class HttpClient {
         return new Promise<T>((resolve, reject) => {
           const req = new XMLHttpRequest();
 
-          req.open('POST', url, true);
+          req.open("POST", url, true);
 
           req.onload = (): void => {
             if (req.status === 200) {

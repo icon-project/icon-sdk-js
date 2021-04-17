@@ -14,16 +14,16 @@
  * limitations under the License.
  */
 
-import { IcxTransaction, IcxTransactionBuilder } from './IcxTransaction';
-import { createPrivate } from '../../data/Util';
-import { Hash } from '../../types/hash';
+import { IcxTransaction, IcxTransactionBuilder } from "./IcxTransaction";
+import { createPrivate } from "../../data/Util";
+import { Hash } from "../../types/hash";
 
 /**
  * Subclass for making a transaction object for sending a message.
  * @extends {IcxTransaction}
  */
 class MessageTransaction extends IcxTransaction {
-  dataType: 'message';
+  dataType: "message";
   to: string;
   from: string;
   value: Hash;
@@ -34,9 +34,19 @@ class MessageTransaction extends IcxTransaction {
   timestamp: Hash;
   data: string;
 
-  constructor(to, from, value, stepLimit, nid, nonce, version, timestamp, data) {
+  constructor(
+    to,
+    from,
+    value,
+    stepLimit,
+    nid,
+    nonce,
+    version,
+    timestamp,
+    data
+  ) {
     super(to, from, value, stepLimit, nid, nonce, version, timestamp);
-    this.dataType = 'message';
+    this.dataType = "message";
 
     if (data) {
       this.data = data;
@@ -87,7 +97,7 @@ export default class MessageTransactionBuilder extends IcxTransactionBuilder {
       this.private(this).version,
       this.private(this).timestamp,
 
-      this.private(this).data,
+      this.private(this).data
     );
   }
 }

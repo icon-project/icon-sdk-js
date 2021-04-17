@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-import ConfirmedTransaction from './ConfirmedTransaction';
-import { add0xPrefix } from '../Hexadecimal';
-import { toNumber } from '../Converter';
+import ConfirmedTransaction from "./ConfirmedTransaction";
+import { add0xPrefix } from "../Hexadecimal";
+import { toNumber } from "../Converter";
 
 export default class Transaction extends ConfirmedTransaction {
   txIndex: number;

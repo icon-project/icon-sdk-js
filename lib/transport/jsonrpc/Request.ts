@@ -21,7 +21,7 @@ export default class Request {
   params: any;
 
   constructor(id: number, method: string, params: any) {
-    this.jsonrpc = '2.0';
+    this.jsonrpc = "2.0";
     this.id = id;
     this.method = method;
     this.params = params;

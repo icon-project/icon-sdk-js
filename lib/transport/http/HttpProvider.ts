@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-import Request from '../jsonrpc/Request';
-import HttpClient from './client/HttpClient';
-import HttpRequest from './client/HttpRequest';
-import HttpCall from './client/HttpCall';
+import Request from "../jsonrpc/Request";
+import HttpClient from "./client/HttpClient";
+import HttpRequest from "./client/HttpRequest";
+import HttpCall from "./client/HttpCall";
 
 /**
  * Class representing HTTP-based provider
@@ -33,7 +33,10 @@ export default class HttpProvider {
     this.url = url;
   }
 
-  request<T = unknown>(request: Request, converter?: (result: string | T) => T): HttpCall<T> {
+  request<T = unknown>(
+    request: Request,
+    converter?: (result: string | T) => T
+  ): HttpCall<T> {
     const body = JSON.stringify(request, (_: string, value) => {
       if (value != null) {
         return value;

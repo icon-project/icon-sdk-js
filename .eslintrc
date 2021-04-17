@@ -27,7 +27,6 @@
     "func-names": 0,
     "import/no-unresolved": 0,
     "import/extensions": 0,
-    "indent": [2, "tab", { "SwitchCase": 1 }],
     "max-len": 0,
     "new-cap": 0,
     "no-bitwise": 0,

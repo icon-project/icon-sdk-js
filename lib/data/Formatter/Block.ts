@@ -14,22 +14,25 @@
  * limitations under the License.
  */
 
-import ConfirmedTransaction from './ConfirmedTransaction';
-import { add0xPrefix, addHxPrefix } from '../Hexadecimal';
-import { toNumber } from '../Converter';
-import { hasProperties, isGenesisBlock } from '../Util';
-import { FormatError } from '../../Exception';
-import { checkDataInTransaction } from '../Validator';
-import { Hash } from '../../types/hash';
+import ConfirmedTransaction from "./ConfirmedTransaction";
+import { add0xPrefix, addHxPrefix } from "../Hexadecimal";
+import { toNumber } from "../Converter";
+import { hasProperties, isGenesisBlock } from "../Util";
+import { FormatError } from "../../Exception";
+import { checkDataInTransaction } from "../Validator";
+import { Hash } from "../../types/hash";
 
 /**
  * @description Convert confirmed transaction list in block data into the right format.
  */
-function toConfirmedTransaction(data: ConfirmedTransaction): ConfirmedTransaction {
-  if (!hasProperties(data, [
-    ['txHash', 'tx_hash'],
-  ]) || !checkDataInTransaction(data)) {
-    const error = new FormatError('Confirmed transaction object is invalid.');
+function toConfirmedTransaction(
+  data: ConfirmedTransaction
+): ConfirmedTransaction {
+  if (
+    !hasProperties(data, [["txHash", "tx_hash"]]) ||
+    !checkDataInTransaction(data)
+  ) {
+    const error = new FormatError("Confirmed transaction object is invalid.");
     throw error.toString();
   }
 
@@ -53,10 +56,12 @@ export default class Block {
     this.merkleTreeRootHash = add0xPrefix(data.merkle_tree_root_hash);
     this.prevBlockHash = add0xPrefix(data.prev_block_hash);
     this.peerId = addHxPrefix(data.peer_id);
-    this.confirmedTransactionList = (data.confirmed_transaction_list || []).map(
-      (transaction: ConfirmedTransaction) => (isGenesisBlock(data.height)
+    this.confirmedTransactionList = (
+      data.confirmed_transaction_list || []
+    ).map((transaction: ConfirmedTransaction) =>
+      isGenesisBlock(data.height)
         ? transaction
-        : toConfirmedTransaction(transaction)),
+        : toConfirmedTransaction(transaction)
     );
     this.signature = data.signature;
     this.timeStamp = toNumber(data.time_stamp);

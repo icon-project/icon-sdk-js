@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 
-import BigNumber from 'bignumber.js';
-import { IcxTransaction } from './builder/transaction/IcxTransaction';
-import MessageTransaction from './builder/transaction/MessageTransaction';
-import { CallTransaction } from './builder/transaction/CallTransaction';
-import DeployTransaction from './builder/transaction/DeployTransaction';
-import Wallet from './Wallet';
-import { toRawTransaction } from './data/Converter';
-import { serialize, createPrivate } from './data/Util';
+import BigNumber from "bignumber.js";
+import { IcxTransaction } from "./builder/transaction/IcxTransaction";
+import MessageTransaction from "./builder/transaction/MessageTransaction";
+import { CallTransaction } from "./builder/transaction/CallTransaction";
+import DeployTransaction from "./builder/transaction/DeployTransaction";
+import Wallet from "./Wallet";
+import { toRawTransaction } from "./data/Converter";
+import { serialize, createPrivate } from "./data/Util";
 
 function makeSignature(transaction: SignedTransaction, wallet: Wallet): string {
   const rawTransaction = toRawTransaction(transaction);
@@ -30,7 +30,10 @@ function makeSignature(transaction: SignedTransaction, wallet: Wallet): string {
   return signature;
 }
 
-function createProperties(transaction: SignedTransaction, wallet: Wallet): SignedTransaction {
+function createProperties(
+  transaction: SignedTransaction,
+  wallet: Wallet
+): SignedTransaction {
   const rawTransaction = toRawTransaction(transaction);
 
   rawTransaction.signature = makeSignature(transaction, wallet);
@@ -62,7 +65,11 @@ export default class SignedTransaction {
    * @param {Wallet} wallet - The wallet instance.
    */
   constructor(
-    transaction: IcxTransaction | MessageTransaction | CallTransaction | DeployTransaction,
+    transaction:
+      | IcxTransaction
+      | MessageTransaction
+      | CallTransaction
+      | DeployTransaction,
     wallet: Wallet
   ) {
     this.private = createPrivate();
@@ -83,7 +90,10 @@ export default class SignedTransaction {
    * @return {string} The signature string.
    */
   getSignature(): string {
-    return makeSignature(this.private(this).transaction, this.private(this).wallet);
+    return makeSignature(
+      this.private(this).transaction,
+      this.private(this).wallet
+    );
   }
 
   /**
@@ -92,6 +102,9 @@ export default class SignedTransaction {
    * @return {object} The signed transaction object.
    */
   getProperties(): SignedTransaction {
-    return createProperties(this.private(this).transaction, this.private(this).wallet);
+    return createProperties(
+      this.private(this).transaction,
+      this.private(this).wallet
+    );
   }
 }

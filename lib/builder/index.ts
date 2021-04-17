@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-import { CallBuilder } from './call/Call';
-import { IcxTransactionBuilder } from './transaction/IcxTransaction';
-import { CallTransactionBuilder } from './transaction/CallTransaction';
-import DeployTransactionBuilder from './transaction/DeployTransaction';
-import DepositTransactionBuilder from './transaction/DepositTransaction';
-import MessageTransactionBuilder from './transaction/MessageTransaction';
+import { CallBuilder } from "./call/Call";
+import { IcxTransactionBuilder } from "./transaction/IcxTransaction";
+import { CallTransactionBuilder } from "./transaction/CallTransaction";
+import DeployTransactionBuilder from "./transaction/DeployTransaction";
+import DepositTransactionBuilder from "./transaction/DepositTransaction";
+import MessageTransactionBuilder from "./transaction/MessageTransaction";
 
 const Builder = {
   CallBuilder,

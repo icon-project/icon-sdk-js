@@ -14,11 +14,16 @@
  * limitations under the License.
  */
 
-import BigNumber from 'bignumber.js';
-import { addHxPrefix, add0xPrefix } from '../Hexadecimal';
-import { toBigNumber, toNumber } from '../Converter';
+import BigNumber from "bignumber.js";
+import { addHxPrefix, add0xPrefix } from "../Hexadecimal";
+import { toBigNumber, toNumber } from "../Converter";
 
-const assignParams = (_this: unknown, params: string[], data: any, converter: (source: any) => any = value => value) => {
+const assignParams = (
+  _this: unknown,
+  params: string[],
+  data: any,
+  converter: (source: any) => any = (value) => value
+) => {
   const convertedParams = {};
 
   params.map((param) => {
@@ -50,13 +55,21 @@ export default class ConfirmedTransaction {
   txHash: string;
 
   constructor(data) {
-    assignParams(this, ['timestamp'], data, toNumber);
-    assignParams(this, ['value', 'fee', 'nid', 'stepLimit', 'nonce'], data, toBigNumber);
-    assignParams(this, ['from', 'to'], data, addHxPrefix);
-    assignParams(this, ['signature', 'dataType', 'data'], data);
-    this.version = (data.version && toBigNumber(data.version).gte(3))
-      ? toBigNumber(data.version)
-      : toBigNumber(2);
-    this.txHash = data.tx_hash ? add0xPrefix(data.tx_hash) : add0xPrefix(data.txHash);
+    assignParams(this, ["timestamp"], data, toNumber);
+    assignParams(
+      this,
+      ["value", "fee", "nid", "stepLimit", "nonce"],
+      data,
+      toBigNumber
+    );
+    assignParams(this, ["from", "to"], data, addHxPrefix);
+    assignParams(this, ["signature", "dataType", "data"], data);
+    this.version =
+      data.version && toBigNumber(data.version).gte(3)
+        ? toBigNumber(data.version)
+        : toBigNumber(2);
+    this.txHash = data.tx_hash
+      ? add0xPrefix(data.tx_hash)
+      : add0xPrefix(data.txHash);
   }
 }

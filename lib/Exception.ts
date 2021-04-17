@@ -15,12 +15,12 @@
  */
 
 const ExceptionCode = {
-  0: 'DATA ERROR',
-  1: 'FORMAT ERROR',
-  2: 'WALLET ERROR',
-  3: 'RPC ERROR',
-  4: 'SCORE ERROR',
-  5: 'NETWORK ERROR',
+  0: "DATA ERROR",
+  1: "FORMAT ERROR",
+  2: "WALLET ERROR",
+  3: "RPC ERROR",
+  4: "SCORE ERROR",
+  5: "NETWORK ERROR",
 } as const;
 
 /**

@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-import { createPrivate } from '../../data/Util';
-import { Hash } from '../../types/hash';
+import { createPrivate } from "../../data/Util";
+import { Hash } from "../../types/hash";
 
 /**
  * Class for calling the SCORE API.
@@ -23,12 +23,12 @@ import { Hash } from '../../types/hash';
 export class Call {
   to: Hash;
   from: Hash;
-  dataType: 'call';
+  dataType: "call";
   data: unknown;
 
   constructor(to: Hash, from: Hash, data: unknown) {
     this.to = to;
-    this.dataType = 'call';
+    this.dataType = "call";
     this.data = data;
     if (from) {
       this.from = from;
@@ -106,7 +106,7 @@ export class CallBuilder {
     return new Call(
       this.private(this).to,
       this.private(this).from,
-      this.private(this).data,
+      this.private(this).data
     );
   }
 }

@@ -14,15 +14,13 @@
  * limitations under the License.
  */
 
-import BigNumber from 'bignumber.js';
-import * as utf8 from 'utf8';
-import SignedTransaction from '../SignedTransaction';
-import { add0xPrefix } from './Hexadecimal';
-import {
-	isString, isBigNumber, isHex, isInteger,
-} from './Type';
-import { DataError } from '../Exception';
-import { Hash } from '../types/hash';
+import BigNumber from "bignumber.js";
+import * as utf8 from "utf8";
+import SignedTransaction from "../SignedTransaction";
+import { add0xPrefix } from "./Hexadecimal";
+import { isString, isBigNumber, isHex, isInteger } from "./Type";
+import { DataError } from "../Exception";
+import { Hash } from "../types/hash";
 
 /**
  * Convert UTF-8 text to hex string.
@@ -30,38 +28,38 @@ import { Hash } from '../types/hash';
  * @return {string} the hex string.
  */
 export function fromUtf8(value: string): string {
-	if (!isString(value)) {
-		const error = new DataError('Invalid string');
-		throw error.toString();
-	}
+  if (!isString(value)) {
+    const error = new DataError("Invalid string");
+    throw error.toString();
+  }
 
-	const bytes = [];
-	let convertedText = '';
+  const bytes = [];
+  let convertedText = "";
 
-	for (let i = 0; i < value.length; i += 1) {
-		const originBytes = unescape(encodeURIComponent(value[i]));
+  for (let i = 0; i < value.length; i += 1) {
+    const originBytes = unescape(encodeURIComponent(value[i]));
 
-		for (let j = 0; j < originBytes.length; j += 1) {
-			bytes.push(originBytes[j].charCodeAt(0));
-		}
-	}
+    for (let j = 0; j < originBytes.length; j += 1) {
+      bytes.push(originBytes[j].charCodeAt(0));
+    }
+  }
 
-	const textToHexFormat = '%x';
+  const textToHexFormat = "%x";
 
-	for (let i = 0; i < bytes.length; i += 1) {
-		const byte = bytes[i];
-		let hexByte = byte.toString(16);
+  for (let i = 0; i < bytes.length; i += 1) {
+    const byte = bytes[i];
+    let hexByte = byte.toString(16);
 
-		if (hexByte.length === 1) {
-			hexByte = `0${hexByte}`;
-		}
+    if (hexByte.length === 1) {
+      hexByte = `0${hexByte}`;
+    }
 
-		let char = textToHexFormat;
-		char = char.replace(/%x/g, hexByte);
-		convertedText += char;
-	}
+    let char = textToHexFormat;
+    char = char.replace(/%x/g, hexByte);
+    convertedText += char;
+  }
 
-	return add0xPrefix(convertedText);
+  return add0xPrefix(convertedText);
 }
 
 /**
@@ -70,30 +68,30 @@ export function fromUtf8(value: string): string {
  * @returns {String} the UTF-8 string.
  */
 export function toUtf8(value: string): string {
-	if (!isHex(value)) {
-		const error = new DataError('Invalid hex string');
-		throw error.toString();
-	}
+  if (!isHex(value)) {
+    const error = new DataError("Invalid hex string");
+    throw error.toString();
+  }
 
-	let str = '';
-	let i = 0; const
-		l = value.length;
+  let str = "";
+  let i = 0;
+  const l = value.length;
 
-	if (value.substring(0, 2) === '0x') {
-		i = 2;
-	}
+  if (value.substring(0, 2) === "0x") {
+    i = 2;
+  }
 
-	for (; i < l; i += 2) {
-		const code = parseInt(value.substr(i, 2), 16);
+  for (; i < l; i += 2) {
+    const code = parseInt(value.substr(i, 2), 16);
 
-		if (code === 0) {
-			break;
-		}
+    if (code === 0) {
+      break;
+    }
 
-		str += String.fromCharCode(code);
-	}
+    str += String.fromCharCode(code);
+  }
 
-	return utf8.decode(str);
+  return utf8.decode(str);
 }
 
 /**
@@ -102,11 +100,11 @@ export function toUtf8(value: string): string {
  * @return {number} the value converted to number.
  */
 export function toNumber(value: Hash): number {
-	if (isBigNumber(value)) {
-		return (value as BigNumber).toNumber();
-	}
+  if (isBigNumber(value)) {
+    return (value as BigNumber).toNumber();
+  }
 
-	return (new BigNumber(value)).toNumber();
+  return new BigNumber(value).toNumber();
 }
 
 /**
@@ -115,11 +113,11 @@ export function toNumber(value: Hash): number {
  * @return {BigNumber} the value converted to BigNumber.
  */
 export function toBigNumber(value: Hash): BigNumber {
-	if (isBigNumber(value)) {
-		return value;
-	}
+  if (isBigNumber(value)) {
+    return value;
+  }
 
-	return new BigNumber(value);
+  return new BigNumber(value);
 }
 
 /**
@@ -128,7 +126,7 @@ export function toBigNumber(value: Hash): BigNumber {
  * @return {string} the value converted to hex string.
  */
 export function toHexNumber(value: Hash): string {
-	return add0xPrefix(toBigNumber(value).toString(16));
+  return add0xPrefix(toBigNumber(value).toString(16));
 }
 
 /**
@@ -137,28 +135,28 @@ export function toHexNumber(value: Hash): string {
  * @return {string} the value converted to hex string.
  */
 export function toHex(value: Hash): string {
-	if (!value) {
-		return '0x0';
-	}
+  if (!value) {
+    return "0x0";
+  }
 
-	if (isHex(value.toString())) {
-		return value.toString();
-	}
+  if (isHex(value.toString())) {
+    return value.toString();
+  }
 
-	if (isString(value)) {
-		return fromUtf8(value.toString());
-	}
+  if (isString(value)) {
+    return fromUtf8(value.toString());
+  }
 
-	if (isInteger(value)) {
-		return toHexNumber(value);
-	}
+  if (isInteger(value)) {
+    return toHexNumber(value);
+  }
 
-	if (isBigNumber(value) && value.isInteger()) {
-		return toHexNumber(value);
-	}
+  if (isBigNumber(value) && value.isInteger()) {
+    return toHexNumber(value);
+  }
 
-	const error = new DataError('Invalid value');
-	throw error.toString();
+  const error = new DataError("Invalid value");
+  throw error.toString();
 }
 
 /**
@@ -166,44 +164,46 @@ export function toHex(value: Hash): string {
  * @param {object} transaction - the transaction object.
  * @return {object} the raw transaction object.
  */
-export function toRawTransaction(transaction: SignedTransaction): SignedTransaction {
-	const {
-		to,
-		from,
-		stepLimit,
-		nid,
-		version,
-		timestamp,
-		dataType,
-		data,
-		value,
-		nonce,
-	} = transaction;
+export function toRawTransaction(
+  transaction: SignedTransaction
+): SignedTransaction {
+  const {
+    to,
+    from,
+    stepLimit,
+    nid,
+    version,
+    timestamp,
+    dataType,
+    data,
+    value,
+    nonce,
+  } = transaction;
 
-	const rawTransaction = {
-		to,
-		from,
-		stepLimit: toHexNumber(stepLimit),
-		nid: toHexNumber(nid),
-		version: toHexNumber(version),
-		timestamp: toHexNumber(timestamp),
-	};
+  const rawTransaction = {
+    to,
+    from,
+    stepLimit: toHexNumber(stepLimit),
+    nid: toHexNumber(nid),
+    version: toHexNumber(version),
+    timestamp: toHexNumber(timestamp),
+  };
 
-	if (value) {
-		(rawTransaction as any).value = toHexNumber(value);
-	}
+  if (value) {
+    (rawTransaction as any).value = toHexNumber(value);
+  }
 
-	if (nonce) {
-		(rawTransaction as any).nonce = toHexNumber(nonce);
-	}
+  if (nonce) {
+    (rawTransaction as any).nonce = toHexNumber(nonce);
+  }
 
-	if (dataType) {
-		(rawTransaction as any).dataType = dataType;
-	}
+  if (dataType) {
+    (rawTransaction as any).dataType = dataType;
+  }
 
-	if (['call', 'deploy', 'message'].indexOf(dataType) !== -1 && data) {
-		(rawTransaction as any).data = data;
-	}
+  if (["call", "deploy", "message"].indexOf(dataType) !== -1 && data) {
+    (rawTransaction as any).data = data;
+  }
 
-	return rawTransaction as any;
+  return rawTransaction as any;
 }

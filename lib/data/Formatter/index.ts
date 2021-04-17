@@ -14,30 +14,32 @@
  * limitations under the License.
  */
 
-import Block from './Block';
-import Transaction from './Transaction';
-import TransactionResult from './TransactionResult';
-import ScoreApiList from './ScoreApiList';
-import { hasProperties } from '../Util';
-import { FormatError } from '../../Exception';
-import { checkDataInTransaction, isScoreApiList } from '../Validator';
+import Block from "./Block";
+import Transaction from "./Transaction";
+import TransactionResult from "./TransactionResult";
+import ScoreApiList from "./ScoreApiList";
+import { hasProperties } from "../Util";
+import { FormatError } from "../../Exception";
+import { checkDataInTransaction, isScoreApiList } from "../Validator";
 
 /**
  * @description Convert block data into the right format.
  */
 export function toBlock(data: Block): Block {
-  if (!hasProperties(data, [
-    'height',
-    'block_hash',
-    'merkle_tree_root_hash',
-    'prev_block_hash',
-    'peer_id',
-    'confirmed_transaction_list',
-    'signature',
-    'time_stamp',
-    'version',
-  ])) {
-    const error = new FormatError('Block object is invalid.');
+  if (
+    !hasProperties(data, [
+      "height",
+      "block_hash",
+      "merkle_tree_root_hash",
+      "prev_block_hash",
+      "peer_id",
+      "confirmed_transaction_list",
+      "signature",
+      "time_stamp",
+      "version",
+    ])
+  ) {
+    const error = new FormatError("Block object is invalid.");
     throw error.toString();
   }
 
@@ -48,13 +50,16 @@ export function toBlock(data: Block): Block {
  * @description Convert transaction data into the right format.
  */
 export function toTransaction(data: Transaction): Transaction {
-  if (!hasProperties(data, [
-    ['txHash', 'tx_hash'],
-    'txIndex',
-    'blockHeight',
-    'blockHash',
-  ]) || !checkDataInTransaction(data)) {
-    const error = new FormatError('Transaction object is invalid.');
+  if (
+    !hasProperties(data, [
+      ["txHash", "tx_hash"],
+      "txIndex",
+      "blockHeight",
+      "blockHash",
+    ]) ||
+    !checkDataInTransaction(data)
+  ) {
+    const error = new FormatError("Transaction object is invalid.");
     throw error.toString();
   }
 
@@ -62,11 +67,11 @@ export function toTransaction(data: Transaction): Transaction {
 }
 
 function checkStatusInTransaction(data: TransactionResult): boolean {
-  if (data.status === '0x1' && !hasProperties(data, ['eventLogs'])) {
+  if (data.status === "0x1" && !hasProperties(data, ["eventLogs"])) {
     return false;
   }
 
-  if (data.status === '0x0' && !hasProperties(data, ['failure'])) {
+  if (data.status === "0x0" && !hasProperties(data, ["failure"])) {
     return false;
   }
 
@@ -77,18 +82,21 @@ function checkStatusInTransaction(data: TransactionResult): boolean {
  * @description Convert transaction result data into the right format.
  */
 export function toTransactionResult(data) {
-  if (!hasProperties(data, [
-    'status',
-    'to',
-    'txHash',
-    'txIndex',
-    'blockHeight',
-    'blockHash',
-    'cumulativeStepUsed',
-    'stepUsed',
-    'stepPrice',
-  ]) || !checkStatusInTransaction(data)) {
-    const error = new FormatError('Transaction result object is invalid.');
+  if (
+    !hasProperties(data, [
+      "status",
+      "to",
+      "txHash",
+      "txIndex",
+      "blockHeight",
+      "blockHash",
+      "cumulativeStepUsed",
+      "stepUsed",
+      "stepPrice",
+    ]) ||
+    !checkStatusInTransaction(data)
+  ) {
+    const error = new FormatError("Transaction result object is invalid.");
     throw error.toString();
   }
 
@@ -100,7 +108,7 @@ export function toTransactionResult(data) {
  */
 export function toScoreApiList(data) {
   if (!isScoreApiList(data)) {
-    const error = new FormatError('SCORE API list is invalid.');
+    const error = new FormatError("SCORE API list is invalid.");
     throw error.toString();
   }
 

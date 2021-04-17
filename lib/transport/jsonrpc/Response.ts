@@ -14,17 +14,23 @@
  * limitations under the License.
  */
 
-import { Exception } from '../../Exception';
+import { Exception } from "../../Exception";
 
 export default class Response<T> {
   result: T;
   error: Exception;
 
-  constructor(response: { result: string; error: Exception }, converter?: (result: string) => T) {
+  constructor(
+    response: { result: string; error: Exception },
+    converter?: (result: string) => T
+  ) {
     const { result, error } = response;
 
     if (result) {
-      this.result = typeof converter === 'function' ? converter(result as string) : result as unknown as T;
+      this.result =
+        typeof converter === "function"
+          ? converter(result as string)
+          : ((result as unknown) as T);
     }
 
     if (error) {

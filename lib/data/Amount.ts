@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 
-import BigNumber from 'bignumber.js';
-import { toBigNumber, toNumber } from './Converter';
-import { isBigNumber, isHex } from './Type';
-import { add0xPrefix } from './Hexadecimal';
-import { Hash } from '../types/hash';
+import BigNumber from "bignumber.js";
+import { toBigNumber, toNumber } from "./Converter";
+import { isBigNumber, isHex } from "./Type";
+import { add0xPrefix } from "./Hexadecimal";
+import { Hash } from "../types/hash";
 
 function getTenDigit(digit) {
-	return (new BigNumber(10)).exponentiatedBy(digit);
+  return new BigNumber(10).exponentiatedBy(digit);
 }
 
 /**
@@ -32,9 +32,9 @@ export default class IconAmount {
    * IconAmount class property which contains unit digit constants
    */
   static Unit = {
-  	LOOP: 0,
-  	GLOOP: 9,
-  	ICX: 18,
+    LOOP: 0,
+    GLOOP: 9,
+    ICX: 18,
   };
 
   /**
@@ -72,8 +72,8 @@ export default class IconAmount {
    * to avoid a potential loss of precision.
    */
   constructor(value, digit) {
-  	this.value = toBigNumber(value);
-  	this.digit = toNumber(digit);
+    this.value = toBigNumber(value);
+    this.digit = toNumber(digit);
   }
 
   /**
@@ -84,7 +84,7 @@ export default class IconAmount {
    * @return {IconAmount} the IconAmount instance.
    */
   static of(value, digit) {
-  	return new IconAmount(toBigNumber(value), digit);
+    return new IconAmount(toBigNumber(value), digit);
   }
 
   /**
@@ -92,7 +92,7 @@ export default class IconAmount {
    * @return {number} the digit property of IconAmount instance.
    */
   getDigit() {
-  	return this.digit;
+    return this.digit;
   }
 
   /**
@@ -100,7 +100,7 @@ export default class IconAmount {
    * @return {string} the stringified value property of IconAmount instance
    */
   toString() {
-  	return this.value.toString();
+    return this.value.toString();
   }
 
   /**
@@ -108,7 +108,7 @@ export default class IconAmount {
    * @return {BigNumber} the value property converted into loop
    */
   toLoop() {
-  	return this.value.times(getTenDigit(this.digit));
+    return this.value.times(getTenDigit(this.digit));
   }
 
   /**
@@ -117,48 +117,48 @@ export default class IconAmount {
    * @return {IconAmount} the IconAmount instance converted into custom digit
    */
   convertUnit(digit) {
-  	// TODO: check toLoop
-  	// original source
-  	// const loop = this.toLoop(this.value);
-  	const loop = this.toLoop();
+    // TODO: check toLoop
+    // original source
+    // const loop = this.toLoop(this.value);
+    const loop = this.toLoop();
 
-  	return IconAmount.of(loop.dividedBy(getTenDigit(digit)), digit);
+    return IconAmount.of(loop.dividedBy(getTenDigit(digit)), digit);
   }
 }
 
 const UnitMap = {
-	loop: '1',
-	gloop: '1000000000',
-	icx: '1000000000000000000',
+  loop: "1",
+  gloop: "1000000000",
+  icx: "1000000000000000000",
 };
 
 function getUnitValue(unit: string): BigNumber {
-	let unitValue = UnitMap[(unit || 'icx').toLowerCase()];
-	unitValue = unitValue || '1000000000000000000';
+  let unitValue = UnitMap[(unit || "icx").toLowerCase()];
+  unitValue = unitValue || "1000000000000000000";
 
-	return toBigNumber(unitValue);
+  return toBigNumber(unitValue);
 }
 
 function convertValue(number: Hash, calculated: BigNumber): Hash {
-	if (isBigNumber(number)) {
-		return calculated;
-	}
+  if (isBigNumber(number)) {
+    return calculated;
+  }
 
-	if (isHex(number.toString())) {
-		return add0xPrefix(calculated.toString(16));
-	}
+  if (isHex(number.toString())) {
+    return add0xPrefix(calculated.toString(16));
+  }
 
-	return calculated.toNumber();
+  return calculated.toNumber();
 }
 
 function toLoop(number: Hash, unit: string): Hash {
-	const calculated = toBigNumber(number).times(getUnitValue(unit));
+  const calculated = toBigNumber(number).times(getUnitValue(unit));
 
-	return convertValue(number, calculated);
+  return convertValue(number, calculated);
 }
 
 function fromLoop(number: Hash, unit: string): Hash {
-	const calculated = toBigNumber(number).dividedBy(getUnitValue(unit));
+  const calculated = toBigNumber(number).dividedBy(getUnitValue(unit));
 
-	return convertValue(number, calculated);
+  return convertValue(number, calculated);
 }

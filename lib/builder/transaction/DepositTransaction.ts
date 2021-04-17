@@ -14,16 +14,16 @@
  * limitations under the License.
  */
 
-import { IcxTransaction, IcxTransactionBuilder } from './IcxTransaction';
-import { createPrivate } from '../../data/Util';
-import { Hash } from '../../types/hash';
+import { IcxTransaction, IcxTransactionBuilder } from "./IcxTransaction";
+import { createPrivate } from "../../data/Util";
+import { Hash } from "../../types/hash";
 
 /**
  * Subclass making a transaction object for depositing to SCORE.
  * @extends {IcxTransaction}
  */
 class DepositTransaction extends IcxTransaction {
-  dataType: 'deposit';
+  dataType: "deposit";
   to: string;
   from: string;
   value: Hash;
@@ -34,9 +34,20 @@ class DepositTransaction extends IcxTransaction {
   timestamp: Hash;
   data: any;
 
-  constructor(to, from, value, stepLimit, nid, nonce, version, timestamp, action, id) {
+  constructor(
+    to,
+    from,
+    value,
+    stepLimit,
+    nid,
+    nonce,
+    version,
+    timestamp,
+    action,
+    id
+  ) {
     super(to, from, value, stepLimit, nid, nonce, version, timestamp);
-    this.dataType = 'deposit';
+    this.dataType = "deposit";
     this.data = { action };
     if (id) {
       this.data.id = id;
@@ -100,7 +111,7 @@ export default class DepositTransactionBuilder extends IcxTransactionBuilder {
       this.private(this).timestamp,
 
       this.private(this).action,
-      this.private(this).id,
+      this.private(this).id
     );
   }
 }

@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-import { createPrivate } from '../../data/Util';
-import { Hash } from '../../types/hash';
+import { createPrivate } from "../../data/Util";
+import { Hash } from "../../types/hash";
 
 /**
  * Super class representing a transaction object for sending transaction.
@@ -165,7 +165,7 @@ export class IcxTransactionBuilder {
       this.private(this).nid,
       this.private(this).nonce,
       this.private(this).version,
-      this.private(this).timestamp,
+      this.private(this).timestamp
     );
   }
 }

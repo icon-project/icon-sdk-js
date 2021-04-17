@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-import Response from '../../jsonrpc/Response';
-import { Exception, RpcError } from '../../../Exception';
+import Response from "../../jsonrpc/Response";
+import { Exception, RpcError } from "../../../Exception";
 
 export default class HttpCall<T> {
   httpCall: HttpCall<T>;
@@ -34,9 +34,9 @@ export default class HttpCall<T> {
     try {
       const response = await this.httpCall.execute();
 
-      return (new Response<T>(response as any, this.converter as any)).result;
+      return new Response<T>(response as any, this.converter as any).result;
     } catch (e) {
-      if (typeof e.error === 'object') {
+      if (typeof e.error === "object") {
         const rpcError = new RpcError(e.error.message);
         throw rpcError.toString();
       } else {

@@ -14,25 +14,25 @@
  * limitations under the License.
  */
 
-import BigNumber from 'bignumber.js';
-import Request from './transport/jsonrpc/Request';
-import Wallet from './Wallet';
-import Builder from './builder';
-import SignedTransaction from './SignedTransaction';
-import * as Validator from './data/Validator';
-import * as Formatter from './data/Formatter';
-import { DataError } from './Exception';
-import * as Util from './data/Util';
-import Amount from './data/Amount';
-import * as Converter from './data/Converter';
-import HttpProvider from './transport/http/HttpProvider';
-import * as Hexadecimal from './data/Hexadecimal';
-import HttpCall from './transport/http/client/HttpCall';
-import Block from './data/Formatter/Block';
-import ScoreApiList from './data/Formatter/ScoreApiList';
-import Transaction from './data/Formatter/Transaction';
-import TransactionResult from './data/Formatter/TransactionResult';
-import { Call } from './builder/call/Call';
+import BigNumber from "bignumber.js";
+import Request from "./transport/jsonrpc/Request";
+import Wallet from "./Wallet";
+import Builder from "./builder";
+import SignedTransaction from "./SignedTransaction";
+import * as Validator from "./data/Validator";
+import * as Formatter from "./data/Formatter";
+import { DataError } from "./Exception";
+import * as Util from "./data/Util";
+import Amount from "./data/Amount";
+import * as Converter from "./data/Converter";
+import HttpProvider from "./transport/http/HttpProvider";
+import * as Hexadecimal from "./data/Hexadecimal";
+import HttpCall from "./transport/http/client/HttpCall";
+import Block from "./data/Formatter/Block";
+import ScoreApiList from "./data/Formatter/ScoreApiList";
+import Transaction from "./data/Formatter/Transaction";
+import TransactionResult from "./data/Formatter/TransactionResult";
+import { Call } from "./builder/call/Call";
 
 /**
  * Class which provides APIs of ICON network.
@@ -64,7 +64,7 @@ export default class IconService {
    */
   getTotalSupply(): HttpCall<BigNumber> {
     const requestId = Util.getCurrentTime();
-    const request = new Request(requestId, 'icx_getTotalSupply', null);
+    const request = new Request(requestId, "icx_getTotalSupply", null);
 
     return this.provider.request<BigNumber>(request, Converter.toBigNumber);
   }
@@ -81,7 +81,7 @@ export default class IconService {
     } else {
       const requestId = Util.getCurrentTime();
       const params = { address };
-      const request = new Request(requestId, 'icx_getBalance', params);
+      const request = new Request(requestId, "icx_getBalance", params);
 
       return this.provider.request<BigNumber>(request, Converter.toBigNumber);
     }
@@ -107,7 +107,9 @@ export default class IconService {
       return this.getLastBlock();
     }
 
-    const error = new DataError(`[${value}] is an unrecognized block reference.`);
+    const error = new DataError(
+      `[${value}] is an unrecognized block reference.`
+    );
     throw error.toString();
   }
 
@@ -120,7 +122,7 @@ export default class IconService {
     if (Validator.isBlockNumber(value)) {
       const requestId = Util.getCurrentTime();
       const params = { height: Converter.toHex(value) };
-      const request = new Request(requestId, 'icx_getBlockByHeight', params);
+      const request = new Request(requestId, "icx_getBlockByHeight", params);
 
       return this.provider.request(request, Formatter.toBlock);
     }
@@ -138,7 +140,7 @@ export default class IconService {
     if (Validator.isBlockHash(value)) {
       const requestId = Util.getCurrentTime();
       const params = { hash: value };
-      const request = new Request(requestId, 'icx_getBlockByHash', params);
+      const request = new Request(requestId, "icx_getBlockByHash", params);
 
       return this.provider.request(request, Formatter.toBlock);
     }
@@ -153,7 +155,7 @@ export default class IconService {
    */
   getLastBlock(): HttpCall<Block> {
     const requestId = Util.getCurrentTime();
-    const request = new Request(requestId, 'icx_getLastBlock', null);
+    const request = new Request(requestId, "icx_getLastBlock", null);
 
     return this.provider.request(request, Formatter.toBlock);
   }
@@ -170,7 +172,7 @@ export default class IconService {
     } else {
       const requestId = Util.getCurrentTime();
       const params = { address };
-      const request = new Request(requestId, 'icx_getScoreApi', params);
+      const request = new Request(requestId, "icx_getScoreApi", params);
 
       return this.provider.request(request, Formatter.toScoreApiList);
     }
@@ -188,7 +190,11 @@ export default class IconService {
     } else {
       const requestId = Util.getCurrentTime();
       const params = { txHash: hash };
-      const request = new Request(requestId, 'icx_getTransactionByHash', params);
+      const request = new Request(
+        requestId,
+        "icx_getTransactionByHash",
+        params
+      );
 
       return this.provider.request(request, Formatter.toTransaction);
     }
@@ -206,7 +212,11 @@ export default class IconService {
     } else {
       const requestId = Util.getCurrentTime();
       const params = { txHash: hash };
-      const request = new Request(requestId, 'icx_getTransactionResult', params);
+      const request = new Request(
+        requestId,
+        "icx_getTransactionResult",
+        params
+      );
 
       return this.provider.request(request, Formatter.toTransactionResult);
     }
@@ -219,12 +229,12 @@ export default class IconService {
    */
   sendTransaction(signedTransaction: SignedTransaction): HttpCall<string> {
     if (!Validator.isSignedTransaction(signedTransaction)) {
-      const error = new DataError('Transaction object is invalid.');
+      const error = new DataError("Transaction object is invalid.");
       throw error.toString();
     } else {
       const requestId = Util.getCurrentTime();
       const params = signedTransaction.getProperties();
-      const request = new Request(requestId, 'icx_sendTransaction', params);
+      const request = new Request(requestId, "icx_sendTransaction", params);
 
       return this.provider.request(request);
     }
@@ -237,12 +247,12 @@ export default class IconService {
    */
   call(call: Call): HttpCall<any> {
     if (!Validator.isCall(call)) {
-      const error = new DataError('Call object is invalid.');
+      const error = new DataError("Call object is invalid.");
       throw error.toString();
     } else {
       const requestId = Util.getCurrentTime();
       const params = call;
-      const request = new Request(requestId, 'icx_call', params);
+      const request = new Request(requestId, "icx_call", params);
 
       return this.provider.request(request);
     }

@@ -15,21 +15,21 @@
  */
 
 function addPrefix(checkers, prefix, str) {
-	for (let i = 0; i < checkers.length; i += 1) {
-		if (checkers[i](str)) {
-			return str;
-		}
-	}
+  for (let i = 0; i < checkers.length; i += 1) {
+    if (checkers[i](str)) {
+      return str;
+    }
+  }
 
-	return prefix + str;
+  return prefix + str;
 }
 
 function removePrefix(checkFunc, str) {
-	if (checkFunc(str)) {
-		return str.substr(2);
-	}
+  if (checkFunc(str)) {
+    return str.substr(2);
+  }
 
-	return str;
+  return str;
 }
 
 /**
@@ -38,7 +38,7 @@ function removePrefix(checkFunc, str) {
  * @return {boolean} returns true if string starts with '0x' prefix.
  */
 export function is0xPrefix(str: string): boolean {
-	return /^(0x)/i.test(str);
+  return /^(0x)/i.test(str);
 }
 
 /**
@@ -47,7 +47,7 @@ export function is0xPrefix(str: string): boolean {
  * @return {boolean} returns true if string starts with 'hx' prefix.
  */
 export function isHxPrefix(str: string): boolean {
-	return /^(hx)/i.test(str);
+  return /^(hx)/i.test(str);
 }
 
 /**
@@ -56,7 +56,7 @@ export function isHxPrefix(str: string): boolean {
  * @return {boolean} returns true if string starts with 'cx' prefix.
  */
 export function isCxPrefix(str: string): boolean {
-	return /^(cx)/i.test(str);
+  return /^(cx)/i.test(str);
 }
 
 /**
@@ -65,7 +65,7 @@ export function isCxPrefix(str: string): boolean {
  * @return {string} the string with '0x' prefix.
  */
 export function add0xPrefix(str: string): string {
-	return addPrefix([is0xPrefix], '0x', str);
+  return addPrefix([is0xPrefix], "0x", str);
 }
 
 /**
@@ -74,7 +74,7 @@ export function add0xPrefix(str: string): string {
  * @return {string} the string with 'hx' prefix.
  */
 export function addHxPrefix(str: string): string {
-	return addPrefix([isHxPrefix, isCxPrefix], 'hx', str);
+  return addPrefix([isHxPrefix, isCxPrefix], "hx", str);
 }
 
 /**
@@ -83,7 +83,7 @@ export function addHxPrefix(str: string): string {
  * @return {string} the string with 'cx' prefix.
  */
 export function addCxPrefix(str: string): string {
-	return addPrefix([isHxPrefix, isCxPrefix], 'cx', str);
+  return addPrefix([isHxPrefix, isCxPrefix], "cx", str);
 }
 
 /**
@@ -92,7 +92,7 @@ export function addCxPrefix(str: string): string {
  * @return {string} the string without '0x' prefix.
  */
 export function remove0xPrefix(str: string): string {
-	return removePrefix(is0xPrefix, str);
+  return removePrefix(is0xPrefix, str);
 }
 
 /**
@@ -101,7 +101,7 @@ export function remove0xPrefix(str: string): string {
  * @return {string} the string without 'hx' prefix.
  */
 export function removeHxPrefix(str: string): string {
-	return removePrefix(isHxPrefix, str);
+  return removePrefix(isHxPrefix, str);
 }
 
 /**
@@ -110,5 +110,5 @@ export function removeHxPrefix(str: string): string {
  * @return {string} the string without 'cx' prefix.
  */
 export function removeCxPrefix(str: string): string {
-	return removePrefix(isCxPrefix, str);
+  return removePrefix(isCxPrefix, str);
 }
