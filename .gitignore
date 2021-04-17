@@ -15,7 +15,6 @@ yarn-error.log*
 .vscode
 .npmignore
 yarn.lock
-package-lock.json
 .travis.yml
 .nvmrc
 .eslintrc

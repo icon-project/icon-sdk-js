@@ -1,0 +1,16 @@
+{
+  "coc.preferences.formatOnType": false,
+  "coc.preferences.formatOnSaveFiletypes": [],
+  "eslint.autoFixOnSave": true,
+  "eslint.filetypes": [],
+  "eslint.nodePath": ".yarn/sdks",
+  "eslint.options": {
+    "configFile": ".eslintrc.js"
+  },
+  "eslint.packageManager": "yarn",
+  "prettier.disableSuccessMessage": true,
+  "prettier.formatterPriority": -1,
+  "prettier.singleQuote": true,
+  "tsserver.formatOnType": true,
+  "tsserver.tsdk": ".yarn/sdks/typescript/lib"
+}

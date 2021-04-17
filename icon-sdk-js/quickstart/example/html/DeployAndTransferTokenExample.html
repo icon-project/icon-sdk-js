@@ -1,0 +1,68 @@
+<html>
+    <head>
+        <title>DeployAndTransferTokenExample - ICON SDK JS QUICKSTART</title>
+        <style>
+            body {
+                padding-left: 30px;
+            }
+        </style>
+    </head>
+    <body>
+        <br />
+        <h2>DeployAndTransferTokenExample</h2>
+        <p>An example of deploying IRC token and transferring deployed token.</p>
+        <br />
+        <hr>
+        <br />
+        <div>
+            <h3>1. Upload Score File</h3>
+            <p>Read the binary data from ‘./resource/test.zi’</p>
+            <form action='#' onsubmit="return false;">
+                <input type='file' id='fileinput' />
+                <input type='button' id='D01' value='Deploy ST Token' />
+            </form>
+            <p><span id='D01-1'></span></p>
+            <p><span id='D01-2'></span></p>
+            <p><span id='D01-3'></span></p>
+        </div>
+        <br />
+        <hr>
+        <br />
+        <div>
+            <h3>2. Check Score Deployment TX Status</h3>
+            <button id='D02'>Check Score Deployment TX Status</button>
+            <p><span id='D02-1'></span></p>
+            <p><span id='D02-2'></span></p>
+            <p><span id='D02-3'></span></p>
+        </div>
+        <br />
+        <hr>
+        <br />
+        <div>
+            <h3>3. Send ST Token</h3>
+            <p>Transfer 1 ST Token to hxd008c05cbc0e689f04a5bb729a66b42377a9a497</p>
+            <button id='D03'>Send ST Token</button>
+            <p><span id='D03-1'></span></p>
+            <p><span id='D03-2'></span></p>
+        </div>
+        <br />
+        <hr>
+        <br />
+        <div>
+            <h3>4. Check ST Token Balance</h3>
+            <span id='D04-1'></span>
+            <p>hx902ecb51c109183ace539f247b4ea1347fbf23b5: <span id='D04-2'>0</span> ST</p>
+            <p>hxd008c05cbc0e689f04a5bb729a66b42377a9a497: <span id='D04-3'>0</span> ST</p>
+            <button id='D04'>Reload Token Balance</button>
+        </div>
+        <br />
+        <hr>
+        <br />
+        <div>
+            <h3>5. Check ST Token Transaction TX Status</h3>
+            <p><span id='D05-1'></span></p>
+            <p><span id='D05-2'></span></p>
+            <button id='D05'>Check TX Status</button>
+        </div>
+    </body>
+</html>

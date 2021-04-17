@@ -1,0 +1,74 @@
+<html>
+    <head>
+        <title>WalletExample - ICON SDK JS QUICKSTART</title>
+        <style>
+            body {
+                padding-left: 30px;
+            }
+        </style>
+    </head>
+    <body>
+        <br />
+        <h2>WalletExample</h2>
+        <p>An example of creating and loading a keywallet</p>
+        <br />
+        <hr>
+        <br />
+        <div>
+            <h3>1. Create Wallet</h3>
+            <button id='W01'>Create Wallet</button>
+            <p><span id='W01-1'></span></p>
+            <p><span id='W01-2'></span></p>
+        </div>
+        <br />
+        <hr>
+        <br />
+        <div>
+            <h3>2. Store Wallet</h3>
+            <button id='W02'>Store Wallet</button>
+            <p><span id='W02-1'></span></p>
+            <p><b><span id='W02-2'></span></b></p>
+        </div>
+        <br />
+        <hr>
+        <br />
+        <div>
+            <h3>3. Load Wallet By Keystore File</h3>
+            <p>Keystore Object: {
+                "version": 3,
+                "id": "e00e113c-1e45-47e4-b732-10f3d1903d75",
+                "address": "hx7d3d4c743bb82b927ea8a0551a3b9288e722ac84",
+                "crypto": {
+                    "ciphertext": "d5df37230528bbfc0015e93c61e60041a31fb63266f61ffec60a31f474d4d7d0",
+                    "cipherparams": {
+                        "iv": "feaf0cc19678e4b78369904a99ba411e"
+                    },
+                    "cipher": "aes-128-ctr",
+                    "kdf": "scrypt",
+                    "kdfparams": {
+                        "dklen": 32,
+                        "salt": "e2e3666919161044f7b369d6ad4296380d4a13b9b5e844301c64a502ea3da240",
+                        "n": 16384,
+                        "r": 8,
+                        "p": 1
+                    },
+                    "mac": "43789e78de4744d06c14cf966b9609fadbcd815b5380caf3f778797f9824d9d7"
+                }
+            }
+            </p>
+            <button id='W03'>Load Wallet By Keystore File</button>
+            <p><span id='W03-1'></span></p>
+            <p><b><span id='W03-2'></span></b></p>
+        </div>
+        <br />
+        <hr>
+        <br />
+        <div>
+            <h3>4. Load Wallet By Private Key</h3>
+            <p>Private Key: 38f792b95a5202ab431bfc799f7e1e5c74ec0b9ede5c6142ee7364f2c84d72f6</p>
+            <button id='W04'>Load Wallet By Private Key</button>
+            <p><span id='W04-1'></span></p>
+            <p><b><span id='W04-2'></span></b></p>
+        </div>
+    </body>
+</html>
