@@ -6,14 +6,14 @@ import MockData from '../../mockData/index.js';
 let icxTransactionExample;
 
 class IcxTransactionExample {
-	constructor() {
+  constructor() {
 
-		// HttpProvider is used to communicate with http.
-		this.provider = new HttpProvider(MockData.NODE_URL);
-		
-		// Create IconService instance
+    // HttpProvider is used to communicate with http.
+    this.provider = new HttpProvider(MockData.NODE_URL);
+
+    // Create IconService instance
         this.iconService = new IconService(this.provider);
-        
+
         // Load wallet
         this.wallet = IconWallet.loadPrivateKey(MockData.PRIVATE_KEY_1);
         this.txHash = '';
@@ -30,19 +30,19 @@ class IcxTransactionExample {
 
     addListener() {
         // 1. Send ICX Transaction
-		document.getElementById('I01').addEventListener('click', async () => {
+    document.getElementById('I01').addEventListener('click', async () => {
             document.getElementById('I03-2').innerHTML = '';
-			await this.sendTransaction();
+      await this.sendTransaction();
         });
-        
+
         // 2. Check Wallet Balance
-		document.getElementById('I02').addEventListener('click', async () => {
-			await this.getWalletBalance();
+    document.getElementById('I02').addEventListener('click', async () => {
+      await this.getWalletBalance();
         });
 
         // 3. Check TX Status
-		document.getElementById('I03').addEventListener('click', async () => {
-			await this.checkTxStatus();
+    document.getElementById('I03').addEventListener('click', async () => {
+      await this.checkTxStatus();
         });
     }
 
@@ -76,7 +76,7 @@ class IcxTransactionExample {
         // Timestamp is used to prevent the identical transactions. Only current time is required (Standard unit : us)
         // If the timestamp is considerably different from the current time, the transaction will be rejected.
         const timestamp = (new Date()).getTime() * 1000;
-        
+
         //Enter transaction information
         const icxTransactionBuilder = new IcxTransactionBuilder();
         const transaction = icxTransactionBuilder
@@ -87,13 +87,13 @@ class IcxTransactionExample {
             .stepLimit(stepLimit)
             .timestamp(timestamp)
             .version(version)
-            .build();        
+            .build();
         return transaction;
     }
 
     async getDefaultStepCost() {
         const { CallBuilder } = IconBuilder;
-        
+
         // Get governance score api list
         const governanceApi = await this.iconService.getScoreApi(MockData.GOVERNANCE_ADDRESS).execute();
         console.log(governanceApi)
@@ -132,7 +132,7 @@ class IcxTransactionExample {
 }
 
 if (document.getElementById('I01')) {
-	icxTransactionExample = new IcxTransactionExample();
+  icxTransactionExample = new IcxTransactionExample();
 }
 
 export default icxTransactionExample;

@@ -1,7 +1,76 @@
 {
-	"extends": ["airbnb"],
-	"rules": {
-		"indent": ["error", "tab", { "SwitchCase": 1 }],
-		"no-tabs": 0
-	}
+  "globals": {
+    "$Diff": true,
+    "__PATH_PREFIX": true
+  },
+  "env": {
+    "es6": true,
+    "node": true,
+    "browser": true
+  },
+  "parser": "@typescript-eslint/parser",
+  "extends": ["airbnb", "eslint:recommended", "plugin:prettier/recommended"],
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module"
+  },
+  "plugins": [
+    "@typescript-eslint",
+    "prettier"
+  ],
+  "rules": {
+    "prettier/prettier": 2,
+    "block-scoped-var": 0,
+    "camelcase": 0,
+    "consistent-return": 0,
+    "default-case": 0,
+    "func-names": 0,
+    "import/no-unresolved": 0,
+    "import/extensions": 0,
+    "max-len": 0,
+    "new-cap": 0,
+    "no-bitwise": 0,
+    "no-cond-assign": 0,
+    "no-continue": 0,
+    "no-mixed-spaces-and-tabs": 0,
+    "no-multi-assign": 0,
+    "no-nested-ternary": 0,
+    "no-param-reassign": 0,
+    "no-plusplus": 0,
+    "no-proto": 0,
+    "no-redeclare": 0,
+    "no-restricted-properties": 0,
+    "no-restricted-syntax": 0,
+    "no-return-assign": 0,
+    "no-sequences": 0,
+    "no-shadow": 0,
+    "no-sparse-arrays": 0,
+    "no-tabs": 0,
+    "no-underscore-dangle": 0,
+    "no-unreachable": 0,
+    "no-unused-expressions": 0,
+    "no-use-before-define": 0,
+    "no-var": 0,
+    "no-void": 0,
+    "prefer-destructuring": 0,
+    "vars-on-top": 0
+  },
+  "overrides": [{
+    "files": [
+      "**/test/*.js",
+      "**/test/*.ts",
+      "**/*.spec.js",
+      "**/*.spec.ts",
+      "**/*.test.js",
+      "**/*.test.ts"
+    ],
+    "rules": {
+      "import/extensions": 0,
+      "import/no-unresolved": 0,
+      "@typescript-eslint/explicit-function-return-type": 0,
+      "max-len": 0,
+      "no-console": 0,
+      "no-undef": 0
+    }
+  }],
 }

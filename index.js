@@ -14,6 +14,6 @@
  * limitations under the License.
  */
 
-import IconService from './lib/IconService';
+import IconService from "./lib/IconService";
 
 export default IconService;
