@@ -14,11 +14,11 @@ const intervalGetLatestBlock = async (self, interval) => {
 }
 
 class SyncBlockExample {
-	constructor() {
-		// HttpProvider is used to communicate with http.
-		this.provider = new HttpProvider(MockData.NODE_URL);
-		
-		// Create IconService instance
+  constructor() {
+    // HttpProvider is used to communicate with http.
+    this.provider = new HttpProvider(MockData.NODE_URL);
+    
+    // Create IconService instance
         this.iconService = new IconService(this.provider);
         this.timer;
         this.prevHeight = null;
@@ -28,7 +28,7 @@ class SyncBlockExample {
     addListener() {
         // 1. Sync Block
         const self = this;
-		document.getElementById('S01').addEventListener('click', async () => {
+    document.getElementById('S01').addEventListener('click', async () => {
             document.getElementById('S01').disabled = true;
             intervalFlag = true;
             await intervalGetLatestBlock(self, 5000);
@@ -132,7 +132,7 @@ class SyncBlockExample {
 }
 
 if (document.getElementById('S01')) {
-	syncBlockExample = new SyncBlockExample();
+  syncBlockExample = new SyncBlockExample();
 }
 
 export default SyncBlockExample;

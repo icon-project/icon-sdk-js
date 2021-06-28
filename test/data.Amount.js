@@ -1,5 +1,5 @@
 import assert from 'assert';
-import { IconAmount, IconConverter } from '../build/icon-sdk-js.node.min';
+import IconService from '../build/icon-sdk-js.node.min';
 
 const unitTests = [{
 	name: 'LOOP',
@@ -12,13 +12,13 @@ const unitTests = [{
 	value: 18,
 }];
 
-const testValue = IconAmount.of(777, IconAmount.Unit.ICX);
+const testValue = IconService.IconAmount.of(777, IconService.IconAmount.Unit.ICX);
 
 describe('data/Amount', () => {
 	describe('units', () => {
 		unitTests.forEach((unit) => {
 			it(`should be the right unit value - ${unit.name}: ${unit.value}`, () => {
-				assert.strictEqual(IconAmount.Unit[unit.name], unit.value);
+				assert.strictEqual(IconService.IconAmount.Unit[unit.name], unit.value);
 			});
 		});
 	});
@@ -37,13 +37,13 @@ describe('data/Amount', () => {
 
 	describe('toLoop()', () => {
 		it('should be the right value', () => {
-			assert.deepEqual(testValue.toLoop(), IconConverter.toBigNumber('777000000000000000000'));
+			assert.deepEqual(testValue.toLoop(), IconService.IconConverter.toBigNumber('777000000000000000000'));
 		});
 	});
 
 	describe('convertUnit()', () => {
 		it('should be the right value', () => {
-			assert.deepEqual(testValue.convertUnit(IconAmount.Unit.LOOP), IconAmount.of('777000000000000000000', IconAmount.Unit.LOOP));
+			assert.deepEqual(testValue.convertUnit(IconService.IconAmount.Unit.LOOP), IconService.IconAmount.of('777000000000000000000', IconService.IconAmount.Unit.LOOP));
 		});
 	});
 });

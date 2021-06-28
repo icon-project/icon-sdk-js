@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+    "declaration": true,
+    "moduleResolution": "node",
+    "module": "commonjs",
+    "target": "es2015",
+    "importHelpers": true
+  },
+  "include": ["lib/**/*"],
+  "exclude": ["**/*.test.ts"]
+}

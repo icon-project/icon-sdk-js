@@ -1,5 +1,5 @@
 import assert from 'assert';
-import { IconValidator } from '../build/icon-sdk-js.node.min';
+import IconService from '../build/icon-sdk-js.node.min';
 
 const tests = [
 	{ value: 'hx14d922b2350a876877571d1cf5db835a575be1cb', is: true },
@@ -17,7 +17,7 @@ describe('data/Validator', () => {
 	describe('isAddress()', () => {
 		tests.forEach((test) => {
 			it(`${test.value} is ${test.is}`, () => {
-				assert.strictEqual(IconValidator.isAddress(test.value), test.is);
+				assert.strictEqual(IconService.IconValidator.isAddress(test.value), test.is);
 			});
 		});
 	});

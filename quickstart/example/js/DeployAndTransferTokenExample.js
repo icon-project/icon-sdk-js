@@ -6,16 +6,16 @@ import MockData from '../../mockData/index.js';
 let deployAndTransferTokenExample;
 
 class DeployAndTransferTokenExample {
-	constructor() {
-		// HttpProvider is used to communicate with http.
-		this.provider = new HttpProvider(MockData.NODE_URL);
-		
-		// Create IconService instance
+  constructor() {
+    // HttpProvider is used to communicate with http.
+    this.provider = new HttpProvider(MockData.NODE_URL);
+
+    // Create IconService instance
         this.iconService = new IconService(this.provider);
-        
+
         // Load wallet
         this.wallet = IconWallet.loadPrivateKey(MockData.PRIVATE_KEY_1);
-        
+
         this.deployTxHash = '';
         this.transactionTxHash = '';
         this.content = '';
@@ -27,36 +27,36 @@ class DeployAndTransferTokenExample {
 
     addListener() {
         // 1. Upload Score File
-		document.getElementById('D01').addEventListener('click', async () => {
-			await this.readFile();
+    document.getElementById('D01').addEventListener('click', async () => {
+      await this.readFile();
         });
 
         // 2. Check Score Deployment TX Status
-		document.getElementById('D02').addEventListener('click', async () => {
-			await this.checkDeployTxStatus();
+    document.getElementById('D02').addEventListener('click', async () => {
+      await this.checkDeployTxStatus();
         });
 
         // 3. Send ST Token
-		document.getElementById('D03').addEventListener('click', async () => {
-			await this.sendTransaction();
+    document.getElementById('D03').addEventListener('click', async () => {
+      await this.sendTransaction();
         });
-        
+
         // 4. Check ST Token Balance
-		document.getElementById('D04').addEventListener('click', async () => {
-			await this.getTokenBalance(MockData.WALLET_ADDRESS_1);
+    document.getElementById('D04').addEventListener('click', async () => {
+      await this.getTokenBalance(MockData.WALLET_ADDRESS_1);
             await this.getTokenBalance(MockData.WALLET_ADDRESS_2);
         });
 
         // 5. Check ST Token Transaction TX Status
-		document.getElementById('D05').addEventListener('click', async () => {
-			await this.checkTransactionTxStatus();
+    document.getElementById('D05').addEventListener('click', async () => {
+      await this.checkTransactionTxStatus();
         });
     }
 
     async readFile() {
         let input, file, fr;
         const self = this;
-    
+
         if (typeof window.FileReader !== 'function') {
             document.getElementById('D01-1').innerHTML = "The file API isn't supported on this browser yet.";
             return;
@@ -145,13 +145,13 @@ class DeployAndTransferTokenExample {
             .content(`0x${this.content}`)
             .params(params)
             .version(version)
-            .build();        
-        return transaction; 
+            .build();
+        return transaction;
     }
 
     async getMaxStepLimit() {
         const { CallBuilder } = IconBuilder;
-        
+
         const governanceApi = await this.iconService.getScoreApi(MockData.GOVERNANCE_ADDRESS).execute();
         // "getMaxStepLimit" : the maximum step limit value that any SCORE execution should be bounded by.
         const methodName = 'getMaxStepLimit';
@@ -232,7 +232,7 @@ class DeployAndTransferTokenExample {
             _to: MockData.WALLET_ADDRESS_2,
             _value: IconConverter.toHex(value)
         }
-        
+
         //Enter transaction information
         const tokenTransactionBuilder = new CallTransactionBuilder();
         const transaction = tokenTransactionBuilder
@@ -244,13 +244,13 @@ class DeployAndTransferTokenExample {
             .method(methodName)
             .params(params)
             .version(version)
-            .build();        
+            .build();
         return transaction;
     }
 
     async getDefaultStepCost() {
         const { CallBuilder } = IconBuilder;
-        
+
         // Get governance score api list
         const governanceApi = await this.iconService.getScoreApi(MockData.GOVERNANCE_ADDRESS).execute();
         console.log(governanceApi)
@@ -312,7 +312,7 @@ class DeployAndTransferTokenExample {
 }
 
 if (document.getElementById('D01')) {
-	deployAndTransferTokenExample = new DeployAndTransferTokenExample();
+  deployAndTransferTokenExample = new DeployAndTransferTokenExample();
 }
 
 export default DeployAndTransferTokenExample;

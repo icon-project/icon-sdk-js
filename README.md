@@ -2002,28 +2002,6 @@ IconValidator.isPrivateKey(privKey: any) => boolean
 const isPrivateKey = IconValidator.isPrivateKey('7abca1...20a9f1')
 ```
 
-### static isPublicKey()
-
-Check if input value is a public key type string.
-
-```javascript
-IconValidator.isPublicKey(pubKey: any) => boolean
-```
-#### Parameters
-
-| Parameter       | Type | Description |
-| ------------- | ----------- | ----------- |
-| public | `any` | an input value |
-
-#### Returns
-`boolean` - Returns true if the input value is a public key type string.
-
-#### Example
-```javascript
-// Returns true if the input value is a public key type string.
-const isPublicKey = IconValidator.isPublicKey('7abca1...20a9f1')
-```
-
 ### static isEoaAddress()
 
 Check if input value is a EOA address type string.
