@@ -1,6 +1,7 @@
 /* eslint-disable */
 
-import IconService, { IconAmount, IconConverter, HttpProvider, IconWallet, IconBuilder, SignedTransaction } from 'icon-sdk-js';
+import IconService from 'icon-sdk-js';
+const { IconAmount, IconConverter, HttpProvider, IconWallet, IconBuilder, SignedTransaction } = IconService;
 import MockData from '../../mockData/index.js';
 
 let deployAndTransferTokenExample;
