@@ -1,6 +1,7 @@
 /* eslint-disable */
 
-import IconService, { IconConverter, HttpProvider } from 'icon-sdk-js';
+import IconService from 'icon-sdk-js';
+const { IconConverter, HttpProvider } = IconService;
 import MockData from '../../mockData/index.js';
 
 let syncBlockExample;
@@ -17,7 +18,7 @@ class SyncBlockExample {
   constructor() {
     // HttpProvider is used to communicate with http.
     this.provider = new HttpProvider(MockData.NODE_URL);
-    
+
     // Create IconService instance
         this.iconService = new IconService(this.provider);
         this.timer;
@@ -52,7 +53,7 @@ class SyncBlockExample {
             if (this.prevHeight === null) this.prevHeight = nextHeight - 1;
             // Print transaction list of block.
             var blockArr = [];
-            for (let a = this.prevHeight + 1; a - nextHeight < 0; a += 1) { 
+            for (let a = this.prevHeight + 1; a - nextHeight < 0; a += 1) {
                 blockArr.push(a);
             }
             Promise.all(
@@ -81,26 +82,26 @@ class SyncBlockExample {
                 if ((transaction.value !== undefined) && transaction.value > 0) {
                     document.getElementById("S03-2").innerHTML += `<li>${block.height} - [ICX] status: ${txResult.status === 1 ? 'success' : 'failure'}  |  amount: ${transaction.value}</li>`
                 }
-    
+
                 // Print token transaction
                 if (transaction.dataType !== undefined &&
                     transaction.dataType === "call") {
                     const method = transaction.data.method;
-    
+
                     if (method !== null && method === "transfer") {
                         const params = transaction.data.params;
                         const value = IconConverter.toBigNumber(params["_value"]); // value
                         const toAddr = params["_to"];
-    
+
                         const tokenName = await this.getTokenName(transaction.to);
                         const symbol = await this.getTokenSymbol(transaction.to);
-                        
+
                         document.getElementById("S03-2").innerHTML += `<li>${block.height} - [${tokenName} - ${symbol}] status: ${txResult.status === 1 ? 'success' : 'failure'}  |  amount: ${value}</li>`;
                     }
                 }
             })
         )
-        
+
         this.prevHeight = block.height;
     }
 

@@ -1,5 +1,10 @@
 # Changelog
 
+### Version 1.0.0 - June 29, 2021 ([NPM](https://www.npmjs.com/package/icon-sdk-js), [CDN](https://cdn.jsdelivr.net/gh/icon-project/icon-sdk-js@1.0.0/build/icon-sdk-js.web.min.js))
+
+#### Changes
+- Adopt typescript
+
 ### Version 0.0.19 - April 15, 2021 ([NPM](https://www.npmjs.com/package/icon-sdk-js), [CDN](https://cdn.jsdelivr.net/gh/icon-project/icon-sdk-js@0.0.19/build/icon-sdk-js.web.min.js))
 
 #### Changes
