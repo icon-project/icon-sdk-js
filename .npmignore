@@ -16,5 +16,7 @@ yarn.lock
 .eslintrc
 .editorconfig
 .babelrc
+.idea
+.gitattributes
 
-build/
+lib/
