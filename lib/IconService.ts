@@ -286,4 +286,25 @@ export default class IconService {
       return this.provider.request(request);
     }
   }
+
+  /**
+   * Get the transaction trace.
+   * @param {string} hash - The transaction hash.
+   * @return {HttpCall} The HttpCall instance for debug_getTrace JSON-RPC API request.
+   */
+  getTrace(hash: string): HttpCall<any> {
+    if (!Validator.isTransactionHash(hash)) {
+      const error = new DataError(`[${hash}] is an unrecognized hash value.`);
+      throw error.toString();
+    } else {
+      const requestId = Util.getCurrentTime();
+      const params = { txHash: hash };
+      const request = new Request(
+        requestId,
+        "debug_getTrace",
+        params
+      );
+      return this.provider.request(request);
+    }
+  }
 }
