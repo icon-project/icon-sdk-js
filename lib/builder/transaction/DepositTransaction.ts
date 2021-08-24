@@ -22,7 +22,7 @@ import { Hash } from "../../types/hash";
  * Subclass making a transaction object for depositing to SCORE.
  * @extends {IcxTransaction}
  */
-class DepositTransaction extends IcxTransaction {
+export class DepositTransaction extends IcxTransaction {
   dataType: "deposit";
   to: string;
   from: string;

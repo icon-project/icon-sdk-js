@@ -1,33 +1,35 @@
 /* eslint-disable */
 
 import IconService from 'icon-sdk-js';
-const { IconAmount, IconConverter, HttpProvider, IconWallet, IconBuilder, SignedTransaction } = IconService;
 import MockData from '../../mockData/index.js';
+
+const { IconAmount, IconConverter, HttpProvider, IconWallet, IconBuilder, SignedTransaction } = IconService;
 
 let icxTransactionExample;
 
 class IcxTransactionExample {
   constructor() {
-
     // HttpProvider is used to communicate with http.
     this.provider = new HttpProvider(MockData.NODE_URL);
+    this.debugProvider = new HttpProvider(MockData.DEBUG_URL);
 
     // Create IconService instance
-        this.iconService = new IconService(this.provider);
+    this.iconService = new IconService(this.provider);
+    this.debugService = new IconService(this.debugProvider);
 
-        // Load wallet
-        this.wallet = IconWallet.loadPrivateKey(MockData.PRIVATE_KEY_1);
-        this.txHash = '';
+    // Load wallet
+    this.wallet = IconWallet.loadPrivateKey(MockData.PRIVATE_KEY_1);
+    this.txHash = '';
 
-        this.addListener();
-        (async () => {
-            try {
-              await this.getWalletBalance();
-            } catch(e) {
-              console.log(e);
-            }
-        })();
-    }
+    this.addListener();
+    (async () => {
+        try {
+          await this.getWalletBalance();
+        } catch(e) {
+          console.log(e);
+        }
+    })();
+  }
 
     addListener() {
         // 1. Send ICX Transaction
@@ -45,6 +47,12 @@ class IcxTransactionExample {
     document.getElementById('I03').addEventListener('click', async () => {
       await this.checkTxStatus();
         });
+
+        // 4. estimate step
+    document.getElementById('I04').addEventListener('click', async () => {
+      await this.estimateStep();
+    });
+
     }
 
     async sendTransaction() {
@@ -64,39 +72,72 @@ class IcxTransactionExample {
     }
 
     async buildICXTransaction() {
-        const { IcxTransactionBuilder } = IconBuilder;
+      const { IcxTransactionBuilder } = IconBuilder;
 
-        const walletAddress = this.wallet.getAddress();
-        // 1 ICX -> 1000000000000000000 conversion
-        const value = IconAmount.of(1, IconAmount.Unit.ICX).toLoop();
-        // You can use "governance score apis" to get step costs.
-        const stepLimit = await this.getDefaultStepCost();
-        // networkId of node 1:mainnet, 2~:etc
-        const networkId = IconConverter.toBigNumber(3);
-        const version = IconConverter.toBigNumber(3);
-        // Timestamp is used to prevent the identical transactions. Only current time is required (Standard unit : us)
-        // If the timestamp is considerably different from the current time, the transaction will be rejected.
-        const timestamp = (new Date()).getTime() * 1000;
+      const walletAddress = this.wallet.getAddress();
+      // 1 ICX -> 1000000000000000000 conversion
+      const value = IconAmount.of(1, IconAmount.Unit.ICX).toLoop();
+      // You can use "governance score apis" to get step costs.
+      const stepLimit = await this.getDefaultStepCost();
+      // networkId of node 1:mainnet, 2~:etc
+      const networkId = IconConverter.toBigNumber(3);
+      const version = IconConverter.toBigNumber(3);
+      // Timestamp is used to prevent the identical transactions. Only current time is required (Standard unit : us)
+      // If the timestamp is considerably different from the current time, the transaction will be rejected.
+      const timestamp = (new Date()).getTime() * 1000;
 
-        //Enter transaction information
-        const icxTransactionBuilder = new IcxTransactionBuilder();
-        const transaction = icxTransactionBuilder
-            .nid(networkId)
-            .from(walletAddress)
-            .to(MockData.WALLET_ADDRESS_2)
-            .value(value)
-            .stepLimit(stepLimit)
-            .timestamp(timestamp)
-            .version(version)
-            .build();
-        return transaction;
+      //Enter transaction information
+      const icxTransactionBuilder = new IcxTransactionBuilder();
+      return icxTransactionBuilder
+          .nid(networkId)
+          .from(walletAddress)
+          .to(MockData.WALLET_ADDRESS_2)
+          .value(value)
+          .stepLimit(stepLimit)
+          .timestamp(timestamp)
+          .version(version)
+          .build();
     }
 
-    async getDefaultStepCost() {
-        const { CallBuilder } = IconBuilder;
+  async estimateStep() {
+    // Build transaction object
+    const transaction = this.buildEstimationRequest();
+    const transactionProperties = JSON.stringify(IconConverter.toRawTransaction(transaction)).split(",").join(", \n")
+    document.getElementById('I04-1').innerHTML = `<b>Transaction</b>: ${transactionProperties}`;
+    // query step
+    this.estimatedStep = await this.debugService.estimateStep(transaction).execute();
+    console.log(this.estimatedStep);
+    // // Print estimated step
+    document.getElementById('I04-2').innerHTML = `<b> estimated step is ${this.estimatedStep}</b>`;
+  }
 
-        // Get governance score api list
-        const governanceApi = await this.iconService.getScoreApi(MockData.GOVERNANCE_ADDRESS).execute();
+  buildEstimationRequest() {
+    const { IcxTransactionBuilder } = IconBuilder;
+
+    const walletAddress = this.wallet.getAddress();
+    // 1 ICX -> 1000000000000000000 conversion
+    const value = IconAmount.of(1, IconAmount.Unit.ICX).toLoop();
+    const networkId = IconConverter.toBigNumber(3);
+    const version = IconConverter.toBigNumber(3);
+    const timestamp = (new Date()).getTime() * 1000;
+
+    //Enter transaction information
+    const icxTransactionBuilder = new IcxTransactionBuilder();
+    return icxTransactionBuilder
+      .nid(networkId)
+      .from(walletAddress)
+      .to(MockData.WALLET_ADDRESS_2)
+      .value(value)
+      .timestamp(timestamp)
+      .version(version)
+      .build();
+  }
+
+  async getDefaultStepCost() {
+    const { CallBuilder } = IconBuilder;
+
+    // Get governance score api list
+    const governanceApi = await this.iconService.getScoreApi(MockData.GOVERNANCE_ADDRESS).execute();
         console.log(governanceApi)
         const methodName = 'getStepCosts';
         // Check input and output parameters of api if you need

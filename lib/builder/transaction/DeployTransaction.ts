@@ -22,7 +22,7 @@ import { Hash } from "../../types/hash";
  * Subclass making a transaction object for deploying SCORE.
  * @extends {IcxTransaction}
  */
-class DeployTransaction extends IcxTransaction {
+export class DeployTransaction extends IcxTransaction {
   dataType: "deploy";
   to: string;
   from: string;

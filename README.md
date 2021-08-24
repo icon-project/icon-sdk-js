@@ -372,6 +372,29 @@ Send a transaction that changes the states of address.
 const txHash = await iconService.sendTransaction(signedTransaction).execute();
 ```
 
+### estimateStep()
+
+Returns an estimated step of how much step is necessary to allow the transaction to complete.
+
+```javascript
+.estimateStep(transaction:IcxTransaction | MessageTransaction | DepositTransaction | DeployTransaction | CallTransaction) => HttpCall // .execute() => string
+```
+
+#### Parameters
+
+| Parameter       | Type | Description |
+| ------------- | ----------- | ----------- |
+| transaction | `IcxTransaction` | an instance of [IcxTransaction | MessageTransaction | DepositTransaction | DeployTransaction | CallTransaction] class. |
+
+#### Returns
+`HttpCall` - The HttpCall instance for `icx_sendTransaction` JSON-RPC API request. If `execute()` successfully, it returns a `BigNumber` value of estimated step.
+
+#### Example
+```javascript
+// Returns the tx hash of transaction.
+const step = await iconService.estimateStep(transaction).execute();
+```
+
 ### call()
 
 Calls external function of SCORE.
@@ -2095,6 +2118,7 @@ Link:
 [getBlockByHash()]: #getblockbyhash
 [getLastBlock()]: #getlastblock
 [sendTransaction()]: #sendtransaction
+[estimateStep()]: #estimateStep
 
 [icx_getBlockByHeight]: https://www.icondev.io/docs/icon-json-rpc-v3#section-icx-get-block-by-height
 [icx_getBlockByHash]: https://www.icondev.io/docs/icon-json-rpc-v3#section-icx-get-block-by-hash

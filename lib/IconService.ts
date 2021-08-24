@@ -33,6 +33,11 @@ import ScoreApiList from "./data/Formatter/ScoreApiList";
 import Transaction from "./data/Formatter/Transaction";
 import TransactionResult from "./data/Formatter/TransactionResult";
 import { Call } from "./builder/call/Call";
+import { IcxTransaction } from "./builder/transaction/IcxTransaction";
+import { MessageTransaction } from "./builder/transaction/MessageTransaction";
+import { DepositTransaction } from "./builder/transaction/DepositTransaction";
+import { DeployTransaction } from "./builder/transaction/DeployTransaction";
+import { CallTransaction } from "./builder/transaction/CallTransaction";
 
 /**
  * Class which provides APIs of ICON network.
@@ -240,6 +245,30 @@ export default class IconService {
     }
   }
 
+  /**
+   * Returns an estimated step of how much step is necessary to allow the transaction to complete.
+   * @param {SignedTransaction} transaction - Parameters
+   * @return {HttpCall} The HttpCall instance for debug_estimateStep JSON-RPC API request.
+   */
+  estimateStep(
+    transaction:
+      | IcxTransaction
+      | MessageTransaction
+      | DepositTransaction
+      | DeployTransaction
+      | CallTransaction
+  ): HttpCall<BigNumber> {
+    const rawTx = Converter.toRawTransaction(transaction);
+    if (!Validator.checkTxData(rawTx)) {
+      const error = new DataError("Transaction object is invalid.");
+      throw error.toString();
+    } else {
+      const requestId = Util.getCurrentTime();
+      const request = new Request(requestId, "debug_estimateStep", rawTx);
+
+      return this.provider.request(request);
+    }
+  }
   /**
    * Calls a SCORE API just for reading.
    * @param {Call} call - The call instance exported by CallBuilder
