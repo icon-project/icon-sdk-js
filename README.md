@@ -349,6 +349,29 @@ Get the result of transaction by transaction hash.
 const txObject = await iconService.getTransactionResult('0xb903239f8543d04b5dc1ba6579132b143087c68db1b2168786408fcbce568238').execute();
 ```
 
+### getTrace()
+
+Get the transaction trace.
+
+```javascript
+.getTrace(hash: string) => HttpCall // .execute() => any
+```
+
+#### Parameters
+
+| Parameter       | Type | Description |
+| ------------- | ----------- | ----------- |
+| hash | `string` |  |
+
+#### Returns
+`HttpCall` - The HttpCall instance for `debug_getTrace` JSON-RPC API request. If `execute()` successfully, it returns a `BigNumber` value of estimated step.
+
+#### Example
+```javascript
+// Returns the transaction trace.
+const trace = await iconService.getTrace(hash).execute();
+```
+
 ### sendTransaction()
 
 Send a transaction that changes the states of address.
@@ -391,7 +414,7 @@ Returns an estimated step of how much step is necessary to allow the transaction
 
 #### Example
 ```javascript
-// Returns the tx hash of transaction.
+// Returns the estimated step to execute transaction.
 const step = await iconService.estimateStep(transaction).execute();
 ```
 
@@ -2119,6 +2142,7 @@ Link:
 [getLastBlock()]: #getlastblock
 [sendTransaction()]: #sendtransaction
 [estimateStep()]: #estimateStep
+[getTrace()]: #getTrace
 
 [icx_getBlockByHeight]: https://www.icondev.io/docs/icon-json-rpc-v3#section-icx-get-block-by-height
 [icx_getBlockByHash]: https://www.icondev.io/docs/icon-json-rpc-v3#section-icx-get-block-by-hash

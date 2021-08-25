@@ -299,11 +299,7 @@ export default class IconService {
     } else {
       const requestId = Util.getCurrentTime();
       const params = { txHash: hash };
-      const request = new Request(
-        requestId,
-        "debug_getTrace",
-        params
-      );
+      const request = new Request(requestId, "debug_getTrace", params);
       return this.provider.request(request);
     }
   }
