@@ -351,7 +351,7 @@ const txObject = await iconService.getTransactionResult('0xb903239f8543d04b5dc1b
 
 ### getTrace()
 
-Get the transaction trace.
+Get the transaction trace. newly added from ICON2
 
 ```javascript
 .getTrace(hash: string) => HttpCall // .execute() => any
