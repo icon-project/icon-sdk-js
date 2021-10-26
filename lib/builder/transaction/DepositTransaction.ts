@@ -44,13 +44,17 @@ export class DepositTransaction extends IcxTransaction {
     version,
     timestamp,
     action,
-    id
+    id,
+    amount
   ) {
     super(to, from, value, stepLimit, nid, nonce, version, timestamp);
     this.dataType = "deposit";
     this.data = { action };
     if (id) {
       this.data.id = id;
+    }
+    if (amount) {
+      this.data.amount = amount;
     }
   }
 }
@@ -70,6 +74,7 @@ export default class DepositTransactionBuilder extends IcxTransactionBuilder {
     this.private = createPrivate();
     this.private(this).action = undefined;
     this.private(this).id = undefined;
+    this.private(this).amount = undefined;
   }
 
   /**
@@ -95,6 +100,16 @@ export default class DepositTransactionBuilder extends IcxTransactionBuilder {
   }
 
   /**
+   * Set 'amount' property
+   * @param {string} amount - amount of deposit to withdraw
+   * @return {DepositTransactionBuilder} this.
+   */
+  amount(amount: Hash): DepositTransactionBuilder {
+    this.private(this).amount = amount;
+    return this;
+  }
+
+  /**
    * Build 'DepositTransaction' object
    * @return {DepositTransaction} 'DepositTransaction'
    * instance exported by 'DepositTransactionBuilder'
@@ -111,7 +126,8 @@ export default class DepositTransactionBuilder extends IcxTransactionBuilder {
       this.private(this).timestamp,
 
       this.private(this).action,
-      this.private(this).id
+      this.private(this).id,
+      this.private(this).amount
     );
   }
 }
