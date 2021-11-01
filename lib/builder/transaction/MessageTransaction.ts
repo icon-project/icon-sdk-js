@@ -22,7 +22,7 @@ import { Hash } from "../../types/hash";
  * Subclass for making a transaction object for sending a message.
  * @extends {IcxTransaction}
  */
-class MessageTransaction extends IcxTransaction {
+export class MessageTransaction extends IcxTransaction {
   dataType: "message";
   to: string;
   from: string;

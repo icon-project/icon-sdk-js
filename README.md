@@ -349,6 +349,29 @@ Get the result of transaction by transaction hash.
 const txObject = await iconService.getTransactionResult('0xb903239f8543d04b5dc1ba6579132b143087c68db1b2168786408fcbce568238').execute();
 ```
 
+### getTrace()
+
+Get the transaction trace. newly added from ICON2
+
+```javascript
+.getTrace(hash: string) => HttpCall // .execute() => any
+```
+
+#### Parameters
+
+| Parameter       | Type | Description |
+| ------------- | ----------- | ----------- |
+| hash | `string` |  |
+
+#### Returns
+`HttpCall` - The HttpCall instance for `debug_getTrace` JSON-RPC API request. If `execute()` successfully, it returns a `BigNumber` value of estimated step.
+
+#### Example
+```javascript
+// Returns the transaction trace.
+const trace = await iconService.getTrace(hash).execute();
+```
+
 ### sendTransaction()
 
 Send a transaction that changes the states of address.
@@ -370,6 +393,29 @@ Send a transaction that changes the states of address.
 ```javascript
 // Returns the tx hash of transaction.
 const txHash = await iconService.sendTransaction(signedTransaction).execute();
+```
+
+### estimateStep()
+
+Returns an estimated step of how much step is necessary to allow the transaction to complete.
+
+```javascript
+.estimateStep(transaction:IcxTransaction | MessageTransaction | DepositTransaction | DeployTransaction | CallTransaction) => HttpCall // .execute() => string
+```
+
+#### Parameters
+
+| Parameter       | Type | Description |
+| ------------- | ----------- | ----------- |
+| transaction | `IcxTransaction` | an instance of [IcxTransaction | MessageTransaction | DepositTransaction | DeployTransaction | CallTransaction] class. |
+
+#### Returns
+`HttpCall` - The HttpCall instance for `icx_sendTransaction` JSON-RPC API request. If `execute()` successfully, it returns a `BigNumber` value of estimated step.
+
+#### Example
+```javascript
+// Returns the estimated step to execute transaction.
+const step = await iconService.estimateStep(transaction).execute();
 ```
 
 ### call()
@@ -2095,6 +2141,8 @@ Link:
 [getBlockByHash()]: #getblockbyhash
 [getLastBlock()]: #getlastblock
 [sendTransaction()]: #sendtransaction
+[estimateStep()]: #estimateStep
+[getTrace()]: #getTrace
 
 [icx_getBlockByHeight]: https://www.icondev.io/docs/icon-json-rpc-v3#section-icx-get-block-by-height
 [icx_getBlockByHash]: https://www.icondev.io/docs/icon-json-rpc-v3#section-icx-get-block-by-hash

@@ -29,6 +29,8 @@ export class IcxTransaction {
   nonce: Hash;
   version: Hash;
   timestamp: Hash;
+  data: string;
+  dataType: any;
 
   constructor(to, from, value, stepLimit, nid, nonce, version, timestamp) {
     this.to = to;

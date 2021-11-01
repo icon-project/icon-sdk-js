@@ -15,6 +15,7 @@
  */
 
 import BigNumber from "bignumber.js";
+import { Hash } from "../types/hash";
 
 export function isString(value) {
   return typeof value === "string" || value instanceof String;
@@ -38,8 +39,8 @@ export function isBigNumber(
   return BigNumber.isBigNumber(value);
 }
 
-export function isHex(value: string): boolean {
-  return /^(0x)[0-9a-f]+$/g.test(value);
+export function isHex(value: Hash): boolean {
+  return /^(0x)[0-9a-f]+$/g.test(<string>value);
 }
 
 export function isFunction(value) {

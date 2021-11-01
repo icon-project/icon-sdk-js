@@ -207,40 +207,47 @@ export function checkDataInTransaction(transaction) {
 export function isSignedTransaction(signedTransaction) {
   const transaction = signedTransaction.getProperties();
   if (
-    !hasProperties(transaction, [
-      "to",
-      "from",
-      "stepLimit",
-      "nid",
-      "version",
-      "timestamp",
-      "signature",
-    ]) ||
-    !isAddress(transaction.to) ||
-    !isAddress(transaction.from) ||
-    !isHex(transaction.stepLimit) ||
-    !isHex(transaction.nid) ||
-    !isHex(transaction.version) ||
-    !isHex(transaction.timestamp)
+    !hasProperties(transaction, ["stepLimit", "signature"]) ||
+    !isHex(transaction.stepLimit)
+  ) {
+    return false;
+  }
+
+  return checkTxData(transaction);
+}
+
+/**
+ * Check if an input transaction object is valid.
+ * @param {object} txData - the transaction object.
+ * @return {boolean} returns true if an input transaction object is a signed transaction object.
+ */
+export function checkTxData(txData) {
+  if (
+    !hasProperties(txData, ["to", "from", "nid", "version", "timestamp"]) ||
+    !isAddress(txData.to) ||
+    !isAddress(txData.from) ||
+    !isHex(txData.nid) ||
+    !isHex(txData.version) ||
+    !isHex(txData.timestamp)
   ) {
     return false;
   }
 
   if (
-    Object.prototype.hasOwnProperty.call(transaction, "value") &&
-    !isHex(transaction.value)
+    Object.prototype.hasOwnProperty.call(txData, "value") &&
+    !isHex(txData.value)
   ) {
     return false;
   }
 
   if (
-    Object.prototype.hasOwnProperty.call(transaction, "nonce") &&
-    !isHex(transaction.nonce)
+    Object.prototype.hasOwnProperty.call(txData, "nonce") &&
+    !isHex(txData.nonce)
   ) {
     return false;
   }
 
-  return checkDataInTransaction(transaction);
+  return checkDataInTransaction(txData);
 }
 
 /**

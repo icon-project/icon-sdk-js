@@ -16,18 +16,17 @@
 
 import BigNumber from "bignumber.js";
 import { IcxTransaction } from "./builder/transaction/IcxTransaction";
-import MessageTransaction from "./builder/transaction/MessageTransaction";
+import { MessageTransaction } from "./builder/transaction/MessageTransaction";
 import { CallTransaction } from "./builder/transaction/CallTransaction";
-import DeployTransaction from "./builder/transaction/DeployTransaction";
+import { DeployTransaction } from "./builder/transaction/DeployTransaction";
+import { DepositTransaction } from "./builder/transaction/DepositTransaction";
 import Wallet from "./Wallet";
 import { toRawTransaction } from "./data/Converter";
-import { serialize, createPrivate } from "./data/Util";
+import { createPrivate, serialize } from "./data/Util";
 
 function makeSignature(transaction: SignedTransaction, wallet: Wallet): string {
   const rawTransaction = toRawTransaction(transaction);
-  const signature = wallet.sign(serialize(rawTransaction) as any);
-
-  return signature;
+  return wallet.sign(serialize(rawTransaction) as any);
 }
 
 function createProperties(
@@ -60,8 +59,8 @@ export default class SignedTransaction {
 
   /**
    * Creates an instance of SignedTransaction.
-   * @param {IcxTransaction|MessageTransaction|CallTransaction|DeployTransaction}
-   * 	transaction - The transaction instance.
+   *  transaction - The transaction instance.
+   * @param transaction
    * @param {Wallet} wallet - The wallet instance.
    */
   constructor(
@@ -69,7 +68,8 @@ export default class SignedTransaction {
       | IcxTransaction
       | MessageTransaction
       | CallTransaction
-      | DeployTransaction,
+      | DeployTransaction
+      | DepositTransaction,
     wallet: Wallet
   ) {
     this.private = createPrivate();

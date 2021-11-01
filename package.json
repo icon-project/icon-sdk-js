@@ -19,7 +19,7 @@
     "dev": "NODE_PATH=./ webpack --progress --colors --watch --env dev",
     "test": "NODE_PATH=./ mocha --require @babel/register --colors --timeout 0",
     "test:watch": "NODE_PATH=./ mocha --require @babel/register --colors -w --timeout 0",
-    "quickstart:rebuild": "eslint --fix . && NODE_PATH=./ webpack --env build && cd quickstart && npm install && mkdir ./node_modules/icon-sdk-js; cp -rf ../build ./node_modules/icon-sdk-js; cp -rf ../package.json ./node_modules/icon-sdk-js/package.json && npm start"
+    "quickstart:rebuild": "eslint --fix . && NODE_PATH=./ webpack --env build && cd quickstart && yarn && yarn start"
   },
   "repository": {
     "type": "git",

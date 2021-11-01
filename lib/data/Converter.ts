@@ -16,11 +16,15 @@
 
 import BigNumber from "bignumber.js";
 import * as utf8 from "utf8";
-import SignedTransaction from "../SignedTransaction";
 import { add0xPrefix } from "./Hexadecimal";
 import { isString, isBigNumber, isHex, isInteger } from "./Type";
 import { DataError } from "../Exception";
 import { Hash } from "../types/hash";
+import { IcxTransaction } from "../builder/transaction/IcxTransaction";
+import { MessageTransaction } from "../builder/transaction/MessageTransaction";
+import { CallTransaction } from "../builder/transaction/CallTransaction";
+import { DeployTransaction } from "../builder/transaction/DeployTransaction";
+import { DepositTransaction } from "../builder/transaction/DepositTransaction";
 
 /**
  * Convert UTF-8 text to hex string.
@@ -165,8 +169,13 @@ export function toHex(value: Hash): string {
  * @return {object} the raw transaction object.
  */
 export function toRawTransaction(
-  transaction: SignedTransaction
-): SignedTransaction {
+  transaction:
+    | IcxTransaction
+    | MessageTransaction
+    | CallTransaction
+    | DeployTransaction
+    | DepositTransaction
+) {
   const {
     to,
     from,
@@ -183,11 +192,14 @@ export function toRawTransaction(
   const rawTransaction = {
     to,
     from,
-    stepLimit: toHexNumber(stepLimit),
     nid: toHexNumber(nid),
     version: toHexNumber(version),
     timestamp: toHexNumber(timestamp),
   };
+
+  if (stepLimit) {
+    (rawTransaction as any).stepLimit = toHexNumber(stepLimit);
+  }
 
   if (value) {
     (rawTransaction as any).value = toHexNumber(value);
