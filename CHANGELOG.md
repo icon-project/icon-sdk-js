@@ -1,5 +1,12 @@
 # Changelog
 
+### Version 1.1.1 - November 1, 2021 ([NPM](https://www.npmjs.com/package/icon-sdk-js), [CDN](https://cdn.jsdelivr.net/npm/icon-sdk-js@1.1.1))
+
+#### Changes
+- add debug_getTrace
+
+# Changelog
+
 ### Version 1.1.0 - July 1, 2021 ([NPM](https://www.npmjs.com/package/icon-sdk-js), [CDN](https://cdn.jsdelivr.net/npm/icon-sdk-js@1.1.0))
 
 #### Changes
