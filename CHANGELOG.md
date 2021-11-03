@@ -1,11 +1,14 @@
 # Changelog
 
+### Version 1.1.2 - November 3, 2021 ([NPM](https://www.npmjs.com/package/icon-sdk-js), [CDN](https://cdn.jsdelivr.net/npm/icon-sdk-js@1.1.2))
+
+#### Changes
+- update base transaction validation function
+
 ### Version 1.1.1 - November 1, 2021 ([NPM](https://www.npmjs.com/package/icon-sdk-js), [CDN](https://cdn.jsdelivr.net/npm/icon-sdk-js@1.1.1))
 
 #### Changes
 - add debug_getTrace
-
-# Changelog
 
 ### Version 1.1.0 - July 1, 2021 ([NPM](https://www.npmjs.com/package/icon-sdk-js), [CDN](https://cdn.jsdelivr.net/npm/icon-sdk-js@1.1.0))
 

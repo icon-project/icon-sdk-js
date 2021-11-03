@@ -69,8 +69,8 @@ export default class DepositTransactionBuilder extends IcxTransactionBuilder {
   /**
    * Creates an instance of DepositTransactionBuilder.
    */
-  constructor(to, from, value, stepLimit, nid, nonce, version, timestamp) {
-    super(to, from, value, stepLimit, nid, nonce, version, timestamp);
+  constructor() {
+    super();
     this.private = createPrivate();
     this.private(this).action = undefined;
     this.private(this).id = undefined;

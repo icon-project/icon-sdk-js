@@ -58,7 +58,7 @@ export class IcxTransactionBuilder {
   /**
    * Creates an instance of IcxTransactionBuilder.
    */
-  constructor(..._: any[]) {
+  constructor() {
     this.private = createPrivate();
     this.private(this).to = undefined;
     this.private(this).from = undefined;

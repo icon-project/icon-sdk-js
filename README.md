@@ -53,7 +53,7 @@ npm install --save icon-sdk-js
 or using CDN.
 
 ```html
-<script src="https://cdn.jsdelivr.net/gh/icon-project/icon-sdk-js@latest/build/icon-sdk-js.web.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/icon-project/icon-sdk-js@latest/build/icon-sdk-js.web.min.js"></script>
 ```
 
 Then, import `icon-sdk-js` module.

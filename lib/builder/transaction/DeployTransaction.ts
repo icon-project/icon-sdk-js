@@ -65,8 +65,8 @@ export default class DeployTransactionBuilder extends IcxTransactionBuilder {
   /**
    * Creates an instance of DeployTransactionBuilder.
    */
-  constructor(...args: any[]) {
-    super(...args);
+  constructor() {
+    super();
 
     this.private = createPrivate();
     this.private(this).contentType = undefined;

@@ -64,8 +64,8 @@ export default class MessageTransactionBuilder extends IcxTransactionBuilder {
   /**
    * Creates an instance of MessageTransactionBuilder.
    */
-  constructor(to, from, value, stepLimit, nid, nonce, version, timestamp) {
-    super(to, from, value, stepLimit, nid, nonce, version, timestamp);
+  constructor() {
+    super();
 
     this.private = createPrivate();
     this.private(this).data = undefined;

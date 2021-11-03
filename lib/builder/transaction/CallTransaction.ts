@@ -69,8 +69,8 @@ export class CallTransactionBuilder extends IcxTransactionBuilder {
   /**
    * Creates an instance of CallTransactionBuilder.
    */
-  constructor(to, from, value, stepLimit, nid, nonce, version, timestamp) {
-    super(to, from, value, stepLimit, nid, nonce, version, timestamp);
+  constructor() {
+    super();
     this.private = createPrivate();
     this.private(this).method = undefined;
     this.private(this).params = undefined;
