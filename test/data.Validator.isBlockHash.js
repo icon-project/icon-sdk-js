@@ -18,7 +18,7 @@ describe('data/Validator', () => {
   describe('isBlockHash()', () => {
     tests.forEach((test) => {
       it(`${test.value} is ${test.is}`, () => {
-        assert.strictEqual(IconService.IconValidator.isBlockHash(test.value), test.is);
+        assert.strictEqual(IconService.IconValidator.isValidHash(test.value), test.is);
       });
     });
   });

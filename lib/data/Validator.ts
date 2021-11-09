@@ -72,15 +72,6 @@ export function isAddress(address) {
 }
 
 /**
- * Check if input value is a block hash.
- * @param {any} value - the input value.
- * @return {boolean} returns true if the input value is a block hash.
- */
-export function isBlockHash(value: string): boolean {
-  return /^(0x)[0-9a-f]{64}$/g.test(value) && /\S/g.test(value);
-}
-
-/**
  * Check if input value has upper case letter.
  * @param {any} value - the input value.
  * @return {boolean} returns true if the input value has upper case letter.
@@ -103,7 +94,7 @@ export function hasBlank(value) {
  * @param {any} value - the input value.
  * @return {boolean} returns true if the input value is a block number.
  */
-export function isBlockNumber(value: string | BigNumber): boolean {
+export function isNonNegative(value: string | BigNumber): boolean {
   try {
     if (hasUppercase(value.toString()) || hasBlank(value)) {
       return false;
@@ -133,11 +124,11 @@ export function isPredefinedBlockValue(value) {
 }
 
 /**
- * Check if input value is transaction hash.
+ * Check if input value is hash.
  * @param {any} hash - the input value.
  * @return {boolean} returns true if the input value is transaction hash.
  */
-export function isTransactionHash(hash) {
+export function isValidHash(hash) {
   return /^(0x)[0-9a-f]{64}$/g.test(hash) && /\S/g.test(hash);
 }
 

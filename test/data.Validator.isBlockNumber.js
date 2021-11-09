@@ -24,7 +24,7 @@ describe('data/Validator', () => {
   describe('isBlockNumber()', () => {
     tests.forEach((test) => {
       it(`${test.value} is ${test.is}`, () => {
-        assert.strictEqual(IconService.IconValidator.isBlockNumber(test.value), test.is);
+        assert.strictEqual(IconService.IconValidator.isNonNegative(test.value), test.is);
       });
     });
   });

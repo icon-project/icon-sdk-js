@@ -100,11 +100,11 @@ export default class IconService {
    */
   /* TODO: add description of number, hash and latest string */
   getBlock(value: string | BigNumber): HttpCall<Block> {
-    if (Validator.isBlockHash(value.toString())) {
+    if (Validator.isValidHash(value.toString())) {
       return this.getBlockByHash(value.toString());
     }
 
-    if (Validator.isBlockNumber(value)) {
+    if (Validator.isNonNegative(value)) {
       return this.getBlockByHeight(Converter.toBigNumber(value));
     }
 
@@ -124,7 +124,7 @@ export default class IconService {
    * @return {object} The Block object
    */
   getBlockByHeight(value: BigNumber): HttpCall<Block> {
-    if (Validator.isBlockNumber(value)) {
+    if (Validator.isNonNegative(value)) {
       const requestId = Util.getCurrentTime();
       const params = { height: Converter.toHex(value) };
       const request = new Request(requestId, "icx_getBlockByHeight", params);
@@ -142,7 +142,7 @@ export default class IconService {
    * @return {object} The Block object
    */
   getBlockByHash(value: string): HttpCall<Block> {
-    if (Validator.isBlockHash(value)) {
+    if (Validator.isValidHash(value)) {
       const requestId = Util.getCurrentTime();
       const params = { hash: value };
       const request = new Request(requestId, "icx_getBlockByHash", params);
@@ -189,7 +189,7 @@ export default class IconService {
    * @return {HttpCall} The HttpCall instance for icx_getTransactionByHash JSON-RPC API request.
    */
   getTransaction(hash: string): HttpCall<Transaction> {
-    if (!Validator.isTransactionHash(hash)) {
+    if (!Validator.isValidHash(hash)) {
       const error = new DataError(`[${hash}] is an unrecognized hash value.`);
       throw error.toString();
     } else {
@@ -211,7 +211,7 @@ export default class IconService {
    * @return {HttpCall} The HttpCall instance for icx_getTransactionResult JSON-RPC API request.
    */
   getTransactionResult(hash: string): HttpCall<TransactionResult> {
-    if (!Validator.isTransactionHash(hash)) {
+    if (!Validator.isValidHash(hash)) {
       const error = new DataError(`[${hash}] is an unrecognized hash value.`);
       throw error.toString();
     } else {
@@ -280,11 +280,175 @@ export default class IconService {
       throw error.toString();
     } else {
       const requestId = Util.getCurrentTime();
-      const params = call;
-      const request = new Request(requestId, "icx_call", params);
+      const request = new Request(requestId, "icx_call", call);
 
       return this.provider.request(request);
     }
+  }
+
+  /**
+   * sends a transaction like `icx_sendTransaction`, then it will wait for the
+   result of it for specified time.  If the timeout isn't set by user, it uses
+   `defaultWaitTimeout` of icon node.
+   * @param {SignedTransaction} signedTransaction - Parameters including signature.
+   * @return {HttpCall} The HttpCall instance for icx_sendTransaction JSON-RPC API request.
+   */
+  sendTransactionAndWait(
+    signedTransaction: SignedTransaction
+  ): HttpCall<string> {
+    if (!Validator.isSignedTransaction(signedTransaction)) {
+      const error = new DataError("Transaction object is invalid.");
+      throw error.toString();
+    }
+    const requestId = Util.getCurrentTime();
+    const params = signedTransaction.getProperties();
+    const request = new Request(
+      requestId,
+      "icx_sendTransactionAndWait",
+      params
+    );
+    return this.provider.request(request);
+  }
+
+  /**
+   * It will wait for the result of the transaction for specified time.
+   * If the timeout isn't set by user, it uses `defaultWaitTimeout` of icon node.
+   * @param {string} hash - The transaction hash.
+   * @return {HttpCall} The HttpCall instance for icx_getTransactionResult JSON-RPC API request.
+   */
+  waitTransactionResult(hash: string): HttpCall<TransactionResult> {
+    if (!Validator.isValidHash(hash)) {
+      const error = new DataError(`[${hash}] is an unrecognized hash value.`);
+      throw error.toString();
+    }
+    const requestId = Util.getCurrentTime();
+    const params = { txHash: hash };
+    const request = new Request(requestId, "icx_waitTransactionResult", params);
+    return this.provider.request(request, Formatter.toTransactionResult);
+  }
+
+  /**
+   * Get data by hash.
+   It can be used to retrieve data based on the hash algorithm (SHA3-256).
+   Following data can be retrieved by a hash.
+
+   * BlockHeader with the hash of the block
+   * Validators with BlockHeader.NextValidatorsHash
+   * Votes with BlockHeader.VotesHash
+   * etc…
+   * @param {string} hash - The hash value of the data to retrieve
+   * @return {HttpCall} The HttpCall instance for icx_getTransactionResult JSON-RPC API request.
+   */
+  getDataByHash(hash: string): HttpCall<TransactionResult> {
+    if (!Validator.isValidHash(hash)) {
+      const error = new DataError(`[${hash}] is an unrecognized hash value.`);
+      throw error.toString();
+    }
+    const requestId = Util.getCurrentTime();
+    const params = { hash: hash };
+    const request = new Request(requestId, "icx_getDataByHash", params);
+    return this.provider.request(request);
+  }
+
+  /**
+   * Get block header for specified height.
+   * @param {BigNumber | string} height - The height of the block.
+   * @return {HttpCall} The HttpCall instance for icx_getTransactionResult JSON-RPC API request.
+   */
+  getBlockHeaderByHeight(
+    height: string | BigNumber
+  ): HttpCall<TransactionResult> {
+    if (!Validator.isNonNegative(height)) {
+      const error = new DataError(
+        `[${height}] is an unrecognized block height`
+      );
+      throw error.toString();
+    }
+    const requestId = Util.getCurrentTime();
+    const params = { height: Converter.toHex(height) };
+    const request = new Request(
+      requestId,
+      "icx_getBlockHeaderByHeight",
+      params
+    );
+    return this.provider.request(request);
+  }
+
+  /**
+   * Get votes for the block specified by height.
+   * @param {BigNumber} height - The height of the block.
+   * @return {HttpCall} The HttpCall instance for icx_getTransactionResult JSON-RPC API request.
+   */
+  getVotesByHeight(height: string | BigNumber): HttpCall<TransactionResult> {
+    if (!Validator.isNonNegative(height)) {
+      const error = new DataError(
+        `[${height}] is an unrecognized block height`
+      );
+      throw error.toString();
+    }
+    const requestId = Util.getCurrentTime();
+    const params = { height: Converter.toHex(height) };
+    const request = new Request(requestId, "icx_getVotesByHeight", params);
+    return this.provider.request(request);
+  }
+  /**
+   * Get proof for the receipt
+   * @param {string} hash - The hash value of the block including the result
+   * @param {string} index - Index of the receipt in the block
+   * @return {HttpCall} The HttpCall instance for icx_getTransactionResult JSON-RPC API request.
+   */
+  getProofForResult(
+    hash: string,
+    index: string | BigNumber
+  ): HttpCall<TransactionResult> {
+    if (!Validator.isValidHash(hash)) {
+      const error = new DataError(`[${hash}] is an unrecognized hash value.`);
+      throw error.toString();
+    }
+    if (!Validator.isNonNegative(index)) {
+      const error = new DataError(`index must be non-negative number`);
+      throw error.toString();
+    }
+    const requestId = Util.getCurrentTime();
+    const params = { hash: hash, index: Converter.toHex(index) };
+    const request = new Request(requestId, "icx_getProofForResult", params);
+    return this.provider.request(request);
+  }
+
+  /**
+   * Get proof for the receipt and the events in it
+   * @param {string} hash - The hash value of the block including the result
+   * @param index - Index of the receipt in the block
+   * @param events - List of indexes of the events in the receipt
+   * @return {HttpCall} The HttpCall instance for icx_getTransactionResult JSON-RPC API request.
+   */
+  getProofForEvents(
+    hash: string,
+    index: string | BigNumber,
+    events: Array<string | BigNumber>
+  ): HttpCall<TransactionResult> {
+    if (!Validator.isValidHash(hash)) {
+      const error = new DataError(`[${hash}] is an unrecognized hash value.`);
+      throw error.toString();
+    }
+    if (!Validator.isNonNegative(index)) {
+      const error = new DataError(`index must be none-negative number`);
+      throw error.toString();
+    }
+    if (!events.every(Validator.isNonNegative)) {
+      const error = new DataError(
+        `All event index must be none-negative number`
+      );
+      throw error.toString();
+    }
+    const requestId = Util.getCurrentTime();
+    const params = {
+      hash: hash,
+      index: Converter.toHex(index),
+      events: events.map(Converter.toHex),
+    };
+    const request = new Request(requestId, "icx_getProofForEvents", params);
+    return this.provider.request(request);
   }
 
   /**
@@ -293,7 +457,7 @@ export default class IconService {
    * @return {HttpCall} The HttpCall instance for debug_getTrace JSON-RPC API request.
    */
   getTrace(hash: string): HttpCall<any> {
-    if (!Validator.isTransactionHash(hash)) {
+    if (!Validator.isValidHash(hash)) {
       const error = new DataError(`[${hash}] is an unrecognized hash value.`);
       throw error.toString();
     } else {

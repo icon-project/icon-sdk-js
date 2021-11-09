@@ -12,7 +12,7 @@ describe('data/Validator', () => {
   describe('isTransactionHash()', () => {
     tests.forEach((test) => {
       it(`${test.value} is ${test.is}`, () => {
-        assert.strictEqual(IconService.IconValidator.isTransactionHash(test.value), test.is);
+        assert.strictEqual(IconService.IconValidator.isValidHash(test.value), test.is);
       });
     });
   });
