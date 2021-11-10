@@ -1144,7 +1144,7 @@ Builder class for `DeployTransaction` instance. `DeployTransaction` is an object
 
 | Parameter       | Description |
 | ------------- | ----------- |
-| `data` | A deploy object data. It contains 3 parameters: 1) `contentType` - Mime-type of the content. 2) `content` - Compressed SCORE data. 3) `params` (optional) - Function parameters delivered to on_install() or on_update() |
+| `data` | A deploy object data. It contains 3 parameters: 1) `contentType` - Mime-type of the content. 2) `content` - Compressed SCORE data. 3) `params` - Function parameters delivered to on_install() or on_update() |
 | `dataType` | Data type of `data`. Fixed string `deploy` is in value. |
 
 For details of extended parameters and methods, see [IcxTransactionBuilder] section.
