@@ -410,12 +410,186 @@ Returns an estimated step of how much step is necessary to allow the transaction
 | transaction | `IcxTransaction` | an instance of [IcxTransaction | MessageTransaction | DepositTransaction | DeployTransaction | CallTransaction] class. |
 
 #### Returns
-`HttpCall` - The HttpCall instance for `icx_sendTransaction` JSON-RPC API request. If `execute()` successfully, it returns a `BigNumber` value of estimated step.
+`HttpCall` - The HttpCall instance for `debug_estimateStep` JSON-RPC API request. If `execute()` successfully, it returns a `BigNumber` value of estimated step.
 
 #### Example
 ```javascript
 // Returns the estimated step to execute transaction.
 const step = await iconService.estimateStep(transaction).execute();
+```
+
+### sendTransactionAndWait()
+
+It sends a transaction like `icx_sendTransaction`, then it will wait for the
+result.
+
+```javascript
+sendTransactionAndWait(signedTransaction: SignedTransaction) => HttpCall // .execute() => object
+```
+
+#### Parameters
+
+| Parameter       | Type | Description |
+| ------------- | ----------- | ----------- |
+| signedTransaction | `SignedTransaction` | an instance of [SignedTransaction] class. |
+
+#### Returns
+`HttpCall` - The HttpCall instance for `icx_sendTransactionAndWait` JSON-RPC API request. If `execute()` successfully, it returns a `object` value of transaction result.
+
+#### Example
+```javascript
+// Returns the tx hash of transaction.
+const result = await iconService.sendTransactionAndWait(signedTransaction).execute();
+```
+
+### waitTransactionResult()
+
+It will wait for the result of the transaction for specified time.
+
+```javascript
+waitTransactionResult(hash: string) => HttpCall // .execute() => object
+```
+
+#### Parameters
+
+| Parameter       | Type | Description |
+| ------------- | ----------- | ----------- |
+| hash | `string` | transaction hash |
+
+#### Returns
+`HttpCall` - The HttpCall instance for `icx_waitTransactionResult` JSON-RPC API request. If `execute()` successfully, it returns a transaction result `object`. For details of returned object, see [here][icx_getTransactionResult].
+
+#### Example
+```javascript
+// Returns the tx hash of transaction.
+const result = await iconService.waitTransactionResult(hash).execute();
+```
+
+### getDataByHash()
+
+Get data by hash.
+
+It can be used to retrieve data based on the hash algorithm (SHA3-256).
+
+Following data can be retrieved by a hash.
+
+* BlockHeader with the hash of the block
+* Validators with BlockHeader.NextValidatorsHash
+* Votes with BlockHeader.VotesHash
+* etc…
+
+```javascript
+getDataByHash(hash: string) => HttpCall // .execute() => string
+```
+
+#### Parameters
+
+| Parameter       | Type | Description |
+| ------------- | ----------- | ----------- |
+| hash | `string` | The hash value of the data to retrieve |
+
+#### Returns
+`HttpCall` - The HttpCall instance for `icx_getDataByHash` JSON-RPC API request. If `execute()` successfully, it returns base64 encoded data
+
+#### Example
+```javascript
+// Returns the tx hash of transaction.
+const data = await iconService.getDataByHash(hash).execute();
+```
+
+### getBlockHeaderByHeight()
+
+Get block header for specified height.
+
+```javascript
+getBlockHeaderByHeight(height: string | BigNumber) => HttpCall // .execute() => string
+```
+
+#### Parameters
+
+| Parameter       | Type | Description |
+| ------------- | ----------- | ----------- |
+| height | `string | BigNumber` | The height of the block in hex string |
+
+#### Returns
+`HttpCall` - The HttpCall instance for `icx_getBlockHeaderByHeight` JSON-RPC API request. If `execute()` successfully, it returns base64 encoded data
+
+#### Example
+```javascript
+// Returns the tx hash of transaction.
+const data = await iconService.getBlockHeaderByHeight(height).execute();
+```
+
+### getVotesByHeight()
+
+Get votes for the block specified by height.
+
+```javascript
+getVotesByHeight(height: string | BigNumber) => HttpCall // .execute() => string
+```
+
+#### Parameters
+
+| Parameter       | Type | Description |
+| ------------- | ----------- | ----------- |
+| height | `string | BigNumber` | The height of the block in hex string |
+
+#### Returns
+`HttpCall` - The HttpCall instance for `icx_getVotesByHeight` JSON-RPC API request. If `execute()` successfully, it returns base64 encoded votes data
+
+#### Example
+```javascript
+// Returns the tx hash of transaction.
+const data = await iconService.getVotesByHeight(height).execute();
+```
+
+### getProofForResult()
+
+Get proof for the receipt. Proof, itself, may include the receipt.
+
+```javascript
+getProofForResult(hash: string | BigNumber, index: string | BigNumber) => HttpCall // .execute() => Array<string>
+```
+
+#### Parameters
+
+| Parameter       | Type | Description |
+| ------------- | ----------- | ----------- |
+| hash | `string` | The hash value of the block including the result. |
+| index | `string | BigNumber` | Index of the receipt in the block.<br/> 0 for the first. |
+
+#### Returns
+`HttpCall` - The HttpCall instance for `icx_getProofForResult` JSON-RPC API request. If `execute()` successfully, it returns List of base64 encoded proof including the receipt
+
+#### Example
+```javascript
+// Returns the tx hash of transaction.
+const data = await iconService.getProofForResult(hash, index).execute();
+```
+
+### getProofForEvents()
+
+Get proof for the receipt and the events in it. The proof may include the data itself.
+
+```javascript
+getProofForEvents(hash: string | BigNumber, index: string | BigNumber, events: Array<string | BigNumber>) => HttpCall // .execute() => Array<string>
+```
+
+#### Parameters
+
+| Parameter       | Type | Description |
+| ------------- | ----------- | ----------- |
+| hash | `string` | The hash value of the block including the result. |
+| index | `string | BigNumber` | Index of the receipt in the block.<br/> 0 for the first. |
+| events | Array  | false    | List of indexes of the events in the receipt.            |
+
+#### Returns
+`HttpCall` - The HttpCall instance for `icx_getProofForEvents` JSON-RPC API request. If `execute()` successfully, it returns List of List of base64 encoded proof including the receipt and the events
+
+#### Example
+```javascript
+// Returns the tx hash of transaction.
+const data = await iconService.getProofForEvents(hash, index, events).execute();
 ```
 
 ### call()

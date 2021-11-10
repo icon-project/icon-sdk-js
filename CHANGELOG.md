@@ -1,5 +1,10 @@
 # Changelog
 
+### Version 1.1.3 - November 10, 2021 ([NPM](https://www.npmjs.com/package/icon-sdk-js), [CDN](https://cdn.jsdelivr.net/npm/icon-sdk-js@1.1.3))
+
+#### Changes
+- Add newly added APIs on ICON2
+
 ### Version 1.1.2 - November 3, 2021 ([NPM](https://www.npmjs.com/package/icon-sdk-js), [CDN](https://cdn.jsdelivr.net/npm/icon-sdk-js@1.1.2))
 
 #### Changes
