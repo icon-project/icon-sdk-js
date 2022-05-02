@@ -38,6 +38,7 @@ import { MessageTransaction } from "./builder/transaction/MessageTransaction";
 import { DepositTransaction } from "./builder/transaction/DepositTransaction";
 import { DeployTransaction } from "./builder/transaction/DeployTransaction";
 import { CallTransaction } from "./builder/transaction/CallTransaction";
+import { Hash } from "./types/hash";
 
 /**
  * Class which provides APIs of ICON network.
@@ -65,11 +66,18 @@ export default class IconService {
 
   /**
    * Get the total number of issued coins.
+   * @param {Hash} height - block Height.
    * @return {HttpCall} The HttpCall instance for icx_getTotalSupply JSON-RPC API request.
    */
-  getTotalSupply(): HttpCall<BigNumber> {
+  getTotalSupply(height: Hash): HttpCall<BigNumber> {
+    let params;
+    if (height == undefined) {
+      params = null;
+    } else {
+      params = { height };
+    }
     const requestId = Util.getCurrentTime();
-    const request = new Request(requestId, "icx_getTotalSupply", null);
+    const request = new Request(requestId, "icx_getTotalSupply", params);
 
     return this.provider.request<BigNumber>(request, Converter.toBigNumber);
   }
@@ -77,15 +85,21 @@ export default class IconService {
   /**
    * Get the balance of the address.
    * @param {string} address - The EOA or SCORE address.
+   * @param {Hash} height - block Height.
    * @return {HttpCall} The HttpCall instance for icx_getBalance JSON-RPC API request.
    */
-  getBalance(address: string): HttpCall<BigNumber> {
+  getBalance(address: string, height: Hash): HttpCall<BigNumber> {
+    let params;
+    if (height == undefined) {
+      params = { address };
+    } else {
+      params = { address, height };
+    }
     if (!Validator.isAddress(address)) {
       const error = new DataError(`[${address}] is not valid address.`);
       throw error.toString();
     } else {
       const requestId = Util.getCurrentTime();
-      const params = { address };
       const request = new Request(requestId, "icx_getBalance", params);
 
       return this.provider.request<BigNumber>(request, Converter.toBigNumber);
@@ -168,15 +182,21 @@ export default class IconService {
   /**
    * @description Get the SCORE API list.
    * @param {string} address SCORE address
+   * @param {Hash} height block Height
    * @return {array} The list of SCORE API
    */
-  getScoreApi(address: string): HttpCall<ScoreApiList> {
+  getScoreApi(address: string, height: Hash): HttpCall<ScoreApiList> {
+    let params;
+    if (height == undefined) {
+      params = { address };
+    } else {
+      params = { address, height };
+    }
     if (!Validator.isScoreAddress(address)) {
       const error = new DataError(`[${address}] is not a valid SCORE address.`);
       throw error.toString();
     } else {
       const requestId = Util.getCurrentTime();
-      const params = { address };
       const request = new Request(requestId, "icx_getScoreApi", params);
 
       return this.provider.request(request, Formatter.toScoreApiList);
