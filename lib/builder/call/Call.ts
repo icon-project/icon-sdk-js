@@ -24,14 +24,18 @@ export class Call {
   to: Hash;
   from: Hash;
   dataType: "call";
+  height: Hash;
   data: unknown;
 
-  constructor(to: Hash, from: Hash, data: unknown) {
+  constructor(to: Hash, from: Hash, height: Hash, data: unknown) {
     this.to = to;
     this.dataType = "call";
     this.data = data;
     if (from) {
       this.from = from;
+    }
+    if (height) {
+      this.height = height;
     }
   }
 }
@@ -49,6 +53,7 @@ export class CallBuilder {
     this.private = createPrivate();
     this.private(this).to = undefined;
     this.private(this).from = undefined;
+    this.private(this).height = undefined;
     this.private(this).data = {};
   }
 
@@ -106,6 +111,7 @@ export class CallBuilder {
     return new Call(
       this.private(this).to,
       this.private(this).from,
+      this.private(this).height,
       this.private(this).data
     );
   }
