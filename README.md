@@ -1,3 +1,5 @@
+[![unittest](https://img.shields.io/github/workflow/status/icon-project/icon-sdk-js/lint%20and%20test/master?label=unittest&logo=github)](https://github.com/icon-project/icon-sdk-js/actions/workflows/lint.yml)
+[![npm - package](https://img.shields.io/github/package-json/v/icon-project/icon-sdk-js)](https://www.npmjs.com/package/icon-sdk-js)
 ---
 title: "ICON SDK for JavaScript"
 excerpt: ""
@@ -162,7 +164,7 @@ const balance = await iconService.getBalance('hx9d8a8376e7db9f00478feb9a46f44f0d
 
 ### getBlock()
 
-Get the block information. 
+Get the block information.
 > Since this API is an old version, we recommend to use [getBlockByHeight()], [getBlockByHash()], [getLastBlock()] API.
 
 ```javascript
@@ -201,7 +203,7 @@ const block2 = await iconService.getBlock("latest").execute();
 
 ### getBlockByHeight()
 
-Get the block information by block height. 
+Get the block information by block height.
 
 ```javascript
 .getBlockByHeight(value: number|BigNumber) => HttpCall // .execute() => object
@@ -224,7 +226,7 @@ const block = await iconService.getBlockByHeight(1000).execute();
 
 ### getBlockByHash()
 
-Get the block information by block hash. 
+Get the block information by block hash.
 
 ```javascript
 .getBlockByHash(value: string) => HttpCall // .execute() => object
@@ -247,7 +249,7 @@ const block = await iconService.getBlockByHash('0xdb310dd653b2573fd673ccc7489477
 
 ### getLastBlock()
 
-Get the latest block information. 
+Get the latest block information.
 
 ```javascript
 .getLastBlock() => HttpCall // .execute() => object
@@ -282,7 +284,7 @@ Get the SCORE API list.
 | address | `string` | a SCORE address. |
 
 #### Returns
-`HttpCall` - The HttpCall instance for `icx_getScoreApi` JSON-RPC API request. If `execute()` successfully, it returns a `ScoreApiList` instance, the API list of SCORE address. 
+`HttpCall` - The HttpCall instance for `icx_getScoreApi` JSON-RPC API request. If `execute()` successfully, it returns a `ScoreApiList` instance, the API list of SCORE address.
 
 `ScoreApiList` provides two instance methods, `getList()` and `getMethod()`.
 
