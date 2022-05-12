@@ -1,5 +1,11 @@
 # Changelog
 
+### Version 1.2.0 - May 12, 2022 ([NPM](https://www.npmjs.com/package/icon-sdk-js), [CDN](https://cdn.jsdelivr.net/npm/icon-sdk-js@1.2.0))
+
+#### Changes
+- Add "height" to query APIs
+- add badges to readme
+
 ### Version 1.1.3 - November 10, 2021 ([NPM](https://www.npmjs.com/package/icon-sdk-js), [CDN](https://cdn.jsdelivr.net/npm/icon-sdk-js@1.1.3))
 
 #### Changes
