@@ -1,8 +1,7 @@
 [![unittest](https://img.shields.io/github/workflow/status/icon-project/icon-sdk-js/lint%20and%20test/master?label=unittest&logo=github)](https://github.com/icon-project/icon-sdk-js/actions/workflows/lint.yml)
 [![npm - package](https://img.shields.io/github/package-json/v/icon-project/icon-sdk-js)](https://www.npmjs.com/package/icon-sdk-js)
 ---
-title: "ICON SDK for JavaScript"
-excerpt: ""
+ICON SDK for JavaScript
 ---
 
 ICON supports JavaScript SDK for 3rd party or user services development. You can integrate ICON JavaScript SDK into your project and utilize ICON’s functionality. This document provides you with an information of installation and API specification.
