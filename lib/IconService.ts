@@ -66,10 +66,10 @@ export default class IconService {
 
   /**
    * Get the total number of issued coins.
-   * @param {Hash} height - block Height.
+   * @param {Hash} [height] - block Height.
    * @return {HttpCall} The HttpCall instance for icx_getTotalSupply JSON-RPC API request.
    */
-  getTotalSupply(height: Hash): HttpCall<BigNumber> {
+  getTotalSupply(height?: Hash): HttpCall<BigNumber> {
     let params;
     if (height == undefined) {
       params = null;
@@ -85,10 +85,10 @@ export default class IconService {
   /**
    * Get the balance of the address.
    * @param {string} address - The EOA or SCORE address.
-   * @param {Hash} height - block Height.
+   * @param {Hash} [height] - block Height.
    * @return {HttpCall} The HttpCall instance for icx_getBalance JSON-RPC API request.
    */
-  getBalance(address: string, height: Hash): HttpCall<BigNumber> {
+  getBalance(address: string, height?: Hash): HttpCall<BigNumber> {
     let params;
     if (height == undefined) {
       params = { address };
@@ -182,10 +182,10 @@ export default class IconService {
   /**
    * @description Get the SCORE API list.
    * @param {string} address SCORE address
-   * @param {Hash} height block Height
+   * @param {Hash} [height] block Height
    * @return {array} The list of SCORE API
    */
-  getScoreApi(address: string, height: Hash): HttpCall<ScoreApiList> {
+  getScoreApi(address: string, height?: Hash): HttpCall<ScoreApiList> {
     let params;
     if (height == undefined) {
       params = { address };
