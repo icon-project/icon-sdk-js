@@ -24,10 +24,10 @@ export class Call {
   to: Hash;
   from: Hash;
   dataType: "call";
-  height: Hash;
   data: unknown;
+  height?: Hash;
 
-  constructor(to: Hash, from: Hash, height: Hash, data: unknown) {
+  constructor(to: Hash, from: Hash, data: unknown, height?: Hash) {
     this.to = to;
     this.dataType = "call";
     this.data = data;
@@ -104,6 +104,17 @@ export class CallBuilder {
   }
 
   /**
+   *  Set 'height' property
+   *  @param {Hash} [height] block height.
+   *  @return {CallBuilder} this.
+   */
+  height(height: Hash): CallBuilder {
+    this.private(this).height = height;
+
+    return this;
+  }
+
+  /**
    * Build 'Call' object
    * @return {Call} 'Call' instance exported by 'CallBuilder'.
    */
@@ -111,8 +122,8 @@ export class CallBuilder {
     return new Call(
       this.private(this).to,
       this.private(this).from,
-      this.private(this).height,
-      this.private(this).data
+      this.private(this).data,
+      this.private(this).height
     );
   }
 }
