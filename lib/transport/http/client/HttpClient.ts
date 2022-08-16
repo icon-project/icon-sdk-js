@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 ICON Foundation
+ * Copyright 2022 ICON Foundation
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,8 +17,6 @@
 import HttpRequest from "./HttpRequest";
 import { NetworkError } from "../../../Exception";
 
-const { XMLHttpRequest } = require("../../../module/node");
-
 export default class HttpClient {
   static newCall<T = any>(
     httpRequest: HttpRequest
@@ -31,25 +29,27 @@ export default class HttpClient {
       sendAsync<T>(): Promise<T> {
         const { url, body } = httpRequest;
 
-        return new Promise<T>((resolve, reject) => {
-          const req = new XMLHttpRequest();
+        return new Promise<T>(async (resolve, reject) => {
+          try {
+            const response = await fetch(url, {
+              method: "POST",
+              body: JSON.stringify(body),
+            });
 
-          req.open("POST", url, true);
+            if (response.ok) {
+              const result = await response.json();
 
-          req.onload = (): void => {
-            if (req.status === 200) {
-              resolve(JSON.parse(req.responseText) as T);
+              resolve(result);
             } else {
-              reject(JSON.parse(req.responseText));
+              const result = await response.json();
+
+              reject(result);
             }
-          };
+          } catch (e) {
+            const error = new NetworkError(e.message);
 
-          req.onerror = (): void => {
-            const error = new NetworkError(req.responseText);
             reject(error.toString());
-          };
-
-          req.send(body);
+          }
         });
       },
     };
