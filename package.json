@@ -26,7 +26,7 @@
     "url": "https://github.com/icon-project/icon-sdk-js/"
   },
   "engines": {
-    "node": ">=14.0.0",
+    "node": ">=16.0.0",
     "yarn": "^1.22.10"
   },
   "keywords": [
@@ -87,6 +87,7 @@
     "bignumber.js": "^7.2.1",
     "bip66": "^1.1.5",
     "js-sha3": "^0.8.0",
+    "node-fetch": "^3.2.10",
     "secp256k1": "3.5.2",
     "utf8": "^3.0.0",
     "uuid": "^3.3.2",

@@ -1,5 +1,6 @@
 [![unittest](https://img.shields.io/github/workflow/status/icon-project/icon-sdk-js/lint%20and%20test/master?label=unittest&logo=github)](https://github.com/icon-project/icon-sdk-js/actions/workflows/lint.yml)
 [![npm - package](https://img.shields.io/github/package-json/v/icon-project/icon-sdk-js)](https://www.npmjs.com/package/icon-sdk-js)
+![node-current](https://img.shields.io/node/v/icon-sdk-js)
 ---
 ICON SDK for JavaScript
 ---
@@ -58,6 +59,7 @@ or using CDN.
 ```
 
 Then, import `icon-sdk-js` module.
+This module uses fetch internally. So if you use this in old browser, You should import [whatwg-fetch](https://github.com/github/fetch).
 
 ```javascript
 import IconService from 'icon-sdk-js';
