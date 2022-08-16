@@ -1,6 +1,11 @@
 # Changelog
 
 
+### Version 1.2.4 - May 12, 2022 ([NPM](https://www.npmjs.com/package/icon-sdk-js), [CDN](https://cdn.jsdelivr.net/npm/icon-sdk-js@1.2.4))
+
+#### Changes
+- Replace XHR with fetch
+
 ### Version 1.2.1 - May 12, 2022 ([NPM](https://www.npmjs.com/package/icon-sdk-js), [CDN](https://cdn.jsdelivr.net/npm/icon-sdk-js@1.2.1))
 
 #### Changes
