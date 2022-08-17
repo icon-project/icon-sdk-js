@@ -204,6 +204,30 @@ export default class IconService {
   }
 
   /**
+   * @description Get the SCORE status
+   * @param {string} address SCORE address
+   * @param {Hash} [height] block Height
+   * @return {array} status of SCORE
+   */
+  getScoreStatus(address: string, height?: Hash): HttpCall<ScoreApiList> {
+    let params;
+    if (height == undefined) {
+      params = { address };
+    } else {
+      params = { address, height };
+    }
+    if (!Validator.isScoreAddress(address)) {
+      const error = new DataError(`[${address}] is not a valid SCORE address.`);
+      throw error.toString();
+    } else {
+      const requestId = Util.getCurrentTime();
+      const request = new Request(requestId, "icx_getScoreStatus", params);
+
+      return this.provider.request(request);
+    }
+  }
+
+  /**
    * Get the transaction information.
    * @param {string} hash - The transaction hash.
    * @return {HttpCall} The HttpCall instance for icx_getTransactionByHash JSON-RPC API request.
