@@ -1,7 +1,12 @@
 # Changelog
 
+### Version 1.2.5 - Aug 17, 2022 ([NPM](https://www.npmjs.com/package/icon-sdk-js), [CDN](https://cdn.jsdelivr.net/npm/icon-sdk-js@1.2.5))
 
-### Version 1.2.4 - May 12, 2022 ([NPM](https://www.npmjs.com/package/icon-sdk-js), [CDN](https://cdn.jsdelivr.net/npm/icon-sdk-js@1.2.4))
+#### Changes
+- Fix HttpClient
+  - make request body to object.
+
+### Version 1.2.4 - Aug 16, 2022 ([NPM](https://www.npmjs.com/package/icon-sdk-js), [CDN](https://cdn.jsdelivr.net/npm/icon-sdk-js@1.2.4))
 
 #### Changes
 - Replace XHR with fetch
