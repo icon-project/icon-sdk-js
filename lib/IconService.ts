@@ -107,32 +107,6 @@ export default class IconService {
   }
 
   /**
-   * Get the block information.
-   * @param {string|BigNumber} value - The height or hash value of block.
-   * @return {HttpCall} The HttpCall instance for icx_getBlockByHeight,
-   *   icx_getBlockByHash or icx_getLastBlock JSON-RPC API request.
-   */
-  /* TODO: add description of number, hash and latest string */
-  getBlock(value: string | BigNumber): HttpCall<Block> {
-    if (Validator.isValidHash(value.toString())) {
-      return this.getBlockByHash(value.toString());
-    }
-
-    if (Validator.isNonNegative(value)) {
-      return this.getBlockByHeight(Converter.toBigNumber(value));
-    }
-
-    if (Validator.isPredefinedBlockValue(value)) {
-      return this.getLastBlock();
-    }
-
-    const error = new DataError(
-      `[${value}] is an unrecognized block reference.`
-    );
-    throw error.toString();
-  }
-
-  /**
    * @description Get the block information.
    * @param {BigNumber} value The value of block number
    * @return {object} The Block object
