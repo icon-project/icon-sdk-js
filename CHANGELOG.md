@@ -1,5 +1,10 @@
 # Changelog
 
+### Version 1.2.6 - Sep 20, 2022 ([NPM](https://www.npmjs.com/package/icon-sdk-js), [CDN](https://cdn.jsdelivr.net/npm/icon-sdk-js@1.2.6))
+
+#### Changes
+- Add icx_getScoreStatus API
+
 ### Version 1.2.5 - Aug 17, 2022 ([NPM](https://www.npmjs.com/package/icon-sdk-js), [CDN](https://cdn.jsdelivr.net/npm/icon-sdk-js@1.2.5))
 
 #### Changes
