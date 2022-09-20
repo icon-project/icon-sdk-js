@@ -122,12 +122,14 @@ const iconService = new IconService(httpProvider);
 Get the total number of issued coins.
 
 ```javascript
-.getTotalSupply() => HttpCall // .execute() => BigNumber
+.getTotalSupply(height: string|BigNumber|number) => HttpCall // .execute() => BigNumber
 ```
 
 #### Parameters
 
-None
+| Parameter | Type | Description |
+| ------------- | ----------- | ----------- |
+| height | `string\|BigNumber\|number` | block height. |
 
 #### Returns
 
@@ -145,7 +147,7 @@ const totalSupply = await iconService.getTotalSupply().execute();
 Get the balance of the address.
 
 ```javascript
-.getBalance(address: string) => HttpCall // .execute() => BigNumber
+.getBalance(address: string, height?: string|BigNumber|number) => HttpCall // .execute() => BigNumber
 ```
 
 #### Parameters
@@ -153,6 +155,7 @@ Get the balance of the address.
 | Parameter       | Type | Description |
 | ------------- | ----------- | ----------- |
 | address | `string` | an EOA address. |
+| height | `string\|BigNumber\|number` | block height. |
 
 #### Returns
 `HttpCall` - The HttpCall instance for `icx_getBalance` JSON-RPC API request. If `execute()` successfully, it returns a `BigNumber` value of ICX balance.
@@ -161,45 +164,6 @@ Get the balance of the address.
 ```javascript
 /* Returns the balance of a EOA address */
 const balance = await iconService.getBalance('hx9d8a8376e7db9f00478feb9a46f44f0d051aab57').execute();
-```
-
-### getBlock()
-
-Get the block information.
-> Since this API is an old version, we recommend to use [getBlockByHeight()], [getBlockByHash()], [getLastBlock()] API.
-
-```javascript
-.getBlock(value: string|number|BigNumber) => HttpCall // .execute() => object
-```
-
-#### Parameters
-
-| Parameter       | Type | Description |
-| ------------- | ----------- | ----------- |
-| value | `string`, `number`, `BigNumber` | the height or hash value of block.
-
-Depending on the type of input value, there are different ways to get block information.
-
-1. Get block by height - Put integer value of a block height. It will delegate to [icx_getBlockByHeight] RPC method.
-
-2. Get block by hash - Put block hash value. It will delegate to [icx_getBlockByHash] RPC method.
-
-3. Get latest block - Put the string `'latest'`. It will delegate to [icx_getLastBlock] RPC method.
-
-#### Returns
-`HttpCall` - The HttpCall instance for `icx_getBlockByHeight`, `icx_getBlockByHash` or `icx_getLastBlock` JSON-RPC API request. If `execute()` successfully, it returns a block `object`. For details of returned block object, see _Example_ section of [icx_getLastBlock].
-
-
-#### Example
-```javascript
-// Returns block information by block height
-const block1 = await iconService.getBlock(1000).execute();
-
-// Returns block information by block hash
-const block2 = await iconService.getBlock("0xdb310dd653b2573fd673ccc7489477a0b697333f77b3cb34a940db67b994fd95").execute();
-
-// Returns latest block information
-const block2 = await iconService.getBlock("latest").execute(); 
 ```
 
 ### getBlockByHeight()
@@ -275,7 +239,7 @@ const block = await iconService.getLastBlock().execute();
 Get the SCORE API list.
 
 ```javascript
-.getScoreApi(address: string) => HttpCall // .execute() => array
+.getScoreApi(address: string, height?: Hash) => HttpCall // .execute() => array
 ```
 
 #### Parameters
@@ -283,6 +247,7 @@ Get the SCORE API list.
 | Parameter       | Type | Description |
 | ------------- | ----------- | ----------- |
 | address | `string` | a SCORE address. |
+| height | `string\|BigNumber\|number` | block height. |
 
 #### Returns
 `HttpCall` - The HttpCall instance for `icx_getScoreApi` JSON-RPC API request. If `execute()` successfully, it returns a `ScoreApiList` instance, the API list of SCORE address.
@@ -304,6 +269,30 @@ console.log(apiList.getList());
 
 // { type: 'function', name: 'getStepCosts', inputs: [], outputs: [ { type: 'dict' } ], readonly: '0x1' }
 console.log(apiList.getMethod('getStepCosts'));
+```
+
+### getScoreStatus()
+
+Get the SCORE status
+
+```javascript
+.getScoreStatus(address: string, height?: Hash) => HttpCall
+```
+
+#### Parameters
+
+| Parameter       | Type | Description |
+| ------------- | ----------- | ----------- |
+| address | `string` | a SCORE address. |
+| height | `string\|BigNumber\|number` | block height. |
+
+#### Returns
+`HttpCall` - The HttpCall instance for `icx_getScoreStatus` JSON-RPC API request. If `execute()` successfully, it returns a status of SCORE.
+
+#### Example
+```javascript
+// Returns Score Status
+const status = await iconService.getScoreStatus('cxb903239f8543d04b5dc1ba6579132b143087c68d').execute();
 ```
 
 ### getTransaction()

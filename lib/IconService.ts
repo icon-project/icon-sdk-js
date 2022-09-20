@@ -107,32 +107,6 @@ export default class IconService {
   }
 
   /**
-   * Get the block information.
-   * @param {string|BigNumber} value - The height or hash value of block.
-   * @return {HttpCall} The HttpCall instance for icx_getBlockByHeight,
-   *   icx_getBlockByHash or icx_getLastBlock JSON-RPC API request.
-   */
-  /* TODO: add description of number, hash and latest string */
-  getBlock(value: string | BigNumber): HttpCall<Block> {
-    if (Validator.isValidHash(value.toString())) {
-      return this.getBlockByHash(value.toString());
-    }
-
-    if (Validator.isNonNegative(value)) {
-      return this.getBlockByHeight(Converter.toBigNumber(value));
-    }
-
-    if (Validator.isPredefinedBlockValue(value)) {
-      return this.getLastBlock();
-    }
-
-    const error = new DataError(
-      `[${value}] is an unrecognized block reference.`
-    );
-    throw error.toString();
-  }
-
-  /**
    * @description Get the block information.
    * @param {BigNumber} value The value of block number
    * @return {object} The Block object
@@ -200,6 +174,30 @@ export default class IconService {
       const request = new Request(requestId, "icx_getScoreApi", params);
 
       return this.provider.request(request, Formatter.toScoreApiList);
+    }
+  }
+
+  /**
+   * @description Get the SCORE status
+   * @param {string} address SCORE address
+   * @param {Hash} [height] block Height
+   * @return {array} status of SCORE
+   */
+  getScoreStatus(address: string, height?: Hash): HttpCall<ScoreApiList> {
+    let params;
+    if (height == undefined) {
+      params = { address };
+    } else {
+      params = { address, height };
+    }
+    if (!Validator.isScoreAddress(address)) {
+      const error = new DataError(`[${address}] is not a valid SCORE address.`);
+      throw error.toString();
+    } else {
+      const requestId = Util.getCurrentTime();
+      const request = new Request(requestId, "icx_getScoreStatus", params);
+
+      return this.provider.request(request);
     }
   }
 
