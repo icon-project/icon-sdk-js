@@ -9,10 +9,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
-    - name: install node v16
+    - name: install node v18
       uses: actions/setup-node@v1
       with:
-        node-version: 16
+        node-version: 18
     - name: yarn install
       run: yarn install
     - name: eslint
@@ -24,7 +24,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [16.x]
+        node-version: [18.x]
     steps:
       - name: Checkout
         uses: actions/checkout@v2

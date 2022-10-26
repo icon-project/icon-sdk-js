@@ -9,13 +9,10 @@ module.exports = Merge(CommonConfig, {
 		new webpack.HotModuleReplacementPlugin(),
 	],
 	devServer: {
-		publicPath: '/',
 		port: 3000,
-		contentBase: path.join(process.cwd(), 'dist'),
 		host: '0.0.0.0',
 		historyApiFallback: true,
-		noInfo: false,
-		stats: 'minimal',
 		hot: true,
-	}
+	},
+  mode: "development"
 });

@@ -3,7 +3,6 @@
 
 const webpack = require('webpack');
 const path = require('path');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const { CheckerPlugin } = require('awesome-typescript-loader');
 const { env } = require('yargs').argv; // use --env with webpack 2
 const LIBRARY_NAME = 'icon-sdk-js';
@@ -37,7 +36,7 @@ const setPlugin = target =>
 const config = target => ({
   mode,
   entry: `${__dirname}/lib/index.ts`,
-  devtool: 'inline',
+  devtool: 'inline-source-map',
   target,
   output: {
     path: `${__dirname}/build`,
@@ -64,19 +63,24 @@ const config = target => ({
   },
   resolve: {
     modules: [path.resolve('./node_modules')],
-    extensions: ['.json', '.js', '.ts']
+    extensions: ['.json', '.js', '.ts'],
+    fallback: {
+      "crypto": require.resolve("crypto-browserify"),
+      "buffer": require.resolve("buffer/"),
+      "stream": require.resolve("readable-stream")
+    }
   },
-//   optimization: {
-    // minimizer: [
-    //   new UglifyJsPlugin({
-    //     cache: true,
-    //     parallel: true,
-    //     uglifyOptions: {
-    //       mangle: true,
-    //       compress: true
-    //     }
-    //   })
-    // ]
+  // optimization: {
+  //   minimizer: [
+  //     new UglifyJsPlugin({
+  //       cache: true,
+  //       parallel: true,
+  //       uglifyOptions: {
+  //         mangle: true,
+  //         compress: true
+  //       }
+  //     })
+  //   ]
   // },
   plugins: setPlugin(target)
 });
