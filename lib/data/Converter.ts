@@ -20,11 +20,6 @@ import { add0xPrefix } from "./Hexadecimal";
 import { isString, isBigNumber, isHex, isInteger } from "./Type";
 import { DataError } from "../Exception";
 import { Hash } from "../types/hash";
-import { IcxTransaction } from "../builder/transaction/IcxTransaction";
-import { MessageTransaction } from "../builder/transaction/MessageTransaction";
-import { CallTransaction } from "../builder/transaction/CallTransaction";
-import { DeployTransaction } from "../builder/transaction/DeployTransaction";
-import { DepositTransaction } from "../builder/transaction/DepositTransaction";
 
 /**
  * Convert UTF-8 text to hex string.
@@ -168,14 +163,7 @@ export function toHex(value: Hash): string {
  * @param {object} transaction - the transaction object.
  * @return {object} the raw transaction object.
  */
-export function toRawTransaction(
-  transaction:
-    | IcxTransaction
-    | MessageTransaction
-    | CallTransaction
-    | DeployTransaction
-    | DepositTransaction
-) {
+export function toRawTransaction(transaction) {
   const {
     to,
     from,

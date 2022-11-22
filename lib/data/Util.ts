@@ -18,7 +18,7 @@
 /* eslint-disable no-global-assign */
 
 import { sha3_256 as sha3256 } from "js-sha3";
-import { isObject, isArray, isString } from "./Type";
+import { isArray, isString } from "./Type";
 
 const secp256k1 = require("secp256k1");
 
@@ -42,7 +42,7 @@ export function isGenesisBlock(height: number): boolean {
 }
 
 export function hasProperties(obj, propertySet): boolean {
-  if (!isObject(obj)) {
+  if (typeof obj !== "object") {
     return false;
   }
 
@@ -64,15 +64,13 @@ export function hasProperties(obj, propertySet): boolean {
 
 export function createPrivate() {
   const weakMap = new WeakMap();
-  const internal = (key) => {
+  return (key) => {
     if (!weakMap.has(key)) {
       weakMap.set(key, {});
     }
 
     return weakMap.get(key);
   };
-
-  return internal;
 }
 
 export function makeTxHash(rawTrasaction) {
@@ -83,18 +81,13 @@ export function makeTxHash(rawTrasaction) {
 
 export function serialize(trasaction) {
   const phraseToSign = generateHashKey(trasaction);
-  const hashcode = sha3256.update(phraseToSign).hex();
-
-  return hashcode;
+  return sha3256.update(phraseToSign).hex();
 }
 
 export function generateHashKey(obj) {
-  let resultStrReplaced = "";
   const resultStr = objTraverse(obj);
-  resultStrReplaced = resultStr.substring(1).slice(0, -1);
-  const result = `icx_sendTransaction.${resultStrReplaced}`;
-
-  return result;
+  let resultStrReplaced: string = resultStr.substring(1).slice(0, -1);
+  return `icx_sendTransaction.${resultStrReplaced}`;
 }
 
 export function arrTraverse(arr) {
@@ -198,7 +191,5 @@ export function sign(data, privKey) {
   const signing = (secp256k1 as any).sign(Buffer.from(data, "hex"), privKey);
   const recovery = new Uint8Array(1);
   recovery[0] = signing.recovery;
-  const signature = concatTypedArrays(signing.signature, recovery);
-
-  return signature;
+  return concatTypedArrays(signing.signature, recovery);
 }

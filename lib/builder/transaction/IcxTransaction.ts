@@ -75,7 +75,7 @@ export class IcxTransactionBuilder {
    * @param {string} to - The EOA or SCORE address.
    * @return {IcxTransactionBuilder} this.
    */
-  to(to: string): IcxTransactionBuilder {
+  to(to: string) {
     this.private(this).to = to;
 
     return this;
@@ -86,7 +86,7 @@ export class IcxTransactionBuilder {
    * @param {string} from - The EOA address.
    * @return {IcxTransactionBuilder} this.
    */
-  from(from: string): IcxTransactionBuilder {
+  from(from: string) {
     this.private(this).from = from;
 
     return this;
@@ -97,7 +97,7 @@ export class IcxTransactionBuilder {
    * @param {string|BigNumber|number} value - The sending amount of ICX in loop unit.
    * @return {IcxTransactionBuilder} this.
    */
-  value(value: Hash): IcxTransactionBuilder {
+  value(value: Hash) {
     this.private(this).value = value;
 
     return this;
@@ -108,7 +108,7 @@ export class IcxTransactionBuilder {
    * @param {string|BigNumber|number} stepLimit - The step limit.
    * @return {IcxTransactionBuilder} this.
    */
-  stepLimit(stepLimit: Hash): IcxTransactionBuilder {
+  stepLimit(stepLimit: Hash) {
     this.private(this).stepLimit = stepLimit;
 
     return this;
@@ -119,7 +119,7 @@ export class IcxTransactionBuilder {
    * @param {string|BigNumber|number} nid - The nid (network ID)
    * @return {IcxTransactionBuilder} this.
    */
-  nid(nid: Hash): IcxTransactionBuilder {
+  nid(nid: Hash) {
     this.private(this).nid = nid;
 
     return this;
@@ -130,7 +130,7 @@ export class IcxTransactionBuilder {
    * @param {string|BigNumber|number} nonce - The nonce.
    * @return {IcxTransactionBuilder} this.
    */
-  nonce(nonce: Hash): IcxTransactionBuilder {
+  nonce(nonce: Hash) {
     this.private(this).nonce = nonce;
 
     return this;
@@ -141,7 +141,7 @@ export class IcxTransactionBuilder {
    * @param {string|BigNumber|number} version - The network version.
    * @return {IcxTransactionBuilder} this.
    */
-  version(version: Hash): IcxTransactionBuilder {
+  version(version: Hash) {
     this.private(this).version = version;
 
     return this;
@@ -152,13 +152,13 @@ export class IcxTransactionBuilder {
    * @param {string|BigNumber|number} timestamp - The timestamp.
    * @return {IcxTransactionBuilder} this.
    */
-  timestamp(timestamp: Hash): IcxTransactionBuilder {
+  timestamp(timestamp: Hash) {
     this.private(this).timestamp = timestamp;
 
     return this;
   }
 
-  build(): IcxTransaction {
+  build() {
     return new IcxTransaction(
       this.private(this).to,
       this.private(this).from,

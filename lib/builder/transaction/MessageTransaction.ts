@@ -76,7 +76,7 @@ export default class MessageTransactionBuilder extends IcxTransactionBuilder {
    * @param {string} data - The data to send.
    * @return {MessageTransactionBuilder} this.
    */
-  data(data: string): MessageTransactionBuilder {
+  data(data: string) {
     this.private(this).data = data;
 
     return this;
@@ -86,7 +86,7 @@ export default class MessageTransactionBuilder extends IcxTransactionBuilder {
    * Build 'MessageTransaction' object
    * @return {MessageTransaction} 'MessageTransaction' instance
    */
-  build(): MessageTransaction {
+  build() {
     return new MessageTransaction(
       this.private(this).to,
       this.private(this).from,

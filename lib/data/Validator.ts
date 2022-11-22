@@ -64,11 +64,7 @@ export function isScoreAddress(address) {
  * @return {boolean} returns true if the input value is a EOA or SCORE address.
  */
 export function isAddress(address) {
-  if (isEoaAddress(address) || isScoreAddress(address)) {
-    return true;
-  }
-
-  return false;
+  return isEoaAddress(address) || isScoreAddress(address);
 }
 
 /**
@@ -94,7 +90,7 @@ export function hasBlank(value) {
  * @param {any} value - the input value.
  * @return {boolean} returns true if the input value is a block number.
  */
-export function isNonNegative(value: string | BigNumber): boolean {
+export function isNonNegative(value: string | BigNumber | number): boolean {
   try {
     if (hasUppercase(value.toString()) || hasBlank(value)) {
       return false;

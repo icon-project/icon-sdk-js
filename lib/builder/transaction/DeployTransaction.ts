@@ -79,7 +79,7 @@ export default class DeployTransactionBuilder extends IcxTransactionBuilder {
    * @param {string} contentType - The content type of content
    * @return {DeployTransactionBuilder} this.
    */
-  contentType(contentType: string): DeployTransactionBuilder {
+  contentType(contentType: string) {
     this.private(this).contentType = contentType;
 
     return this;
@@ -90,7 +90,7 @@ export default class DeployTransactionBuilder extends IcxTransactionBuilder {
    * @param {string} content - The content to deploy.
    * @return {DeployTransactionBuilder} this.
    */
-  content(content: string): DeployTransactionBuilder {
+  content(content: string) {
     this.private(this).content = content;
 
     return this;
@@ -101,7 +101,7 @@ export default class DeployTransactionBuilder extends IcxTransactionBuilder {
    * @param {object} params - The input params for deploying content
    * @return {DeployTransactionBuilder} this.
    */
-  params(params: any): DeployTransactionBuilder {
+  params(params: any) {
     this.private(this).params = params;
 
     return this;
@@ -111,7 +111,7 @@ export default class DeployTransactionBuilder extends IcxTransactionBuilder {
    * Build 'DeployTransaction' object
    * @return {DeployTransaction} 'DeployTransaction' instance exported by 'DeployTransactionBuilder'
    */
-  build(): DeployTransaction {
+  build() {
     return new DeployTransaction(
       this.private(this).to,
       this.private(this).from,

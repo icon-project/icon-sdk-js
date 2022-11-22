@@ -10,14 +10,14 @@ import { addHxPrefix } from "./data/Hexadecimal";
 import { sign } from "./data/Util";
 import { isPrivateKey } from "./data/Validator";
 import { WalletError } from "./Exception";
-import { isString, isObject } from "./data/Type";
+import { isString } from "./data/Type";
 
 const secp256k1 = require("secp256k1");
 
 // eslint-disable-next-line no-unused-vars
 type Keccak256 = { toString(str: string): string };
 
-interface KeyStore {
+export interface KeyStore {
   version: 3;
   id: string;
   address: string;
@@ -121,13 +121,14 @@ export default class Wallet {
       throw error.toString();
     }
 
-    const json: KeyStore = isObject(keystore)
-      ? keystore
-      : JSON.parse(
-          nonStrict
-            ? ((keystore as unknown) as string).toLowerCase()
-            : (keystore as string)
-        );
+    const json: KeyStore =
+      typeof keystore === "object"
+        ? keystore
+        : JSON.parse(
+            nonStrict
+              ? ((keystore as unknown) as string).toLowerCase()
+              : (keystore as string)
+          );
 
     if (json.version !== 3) {
       const error = new WalletError("This is not a V3 wallet.");
@@ -280,10 +281,10 @@ export default class Wallet {
 
   /**
    * Generate signature string by signing transaction object.
-   * @param {Buffer} data - The serialized transaction object.
+   * @param {string} data - The serialized transaction object.
    * @return {string} The signature string.
    */
-  sign(data: typeof Buffer): string {
+  sign(data: string): string {
     const signature = sign(data, this.privKey);
     return Buffer.from(signature).toString("base64");
   }

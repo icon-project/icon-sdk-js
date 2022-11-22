@@ -81,7 +81,7 @@ export class CallTransactionBuilder extends IcxTransactionBuilder {
    * @param {string} method - The method name of SCORE API
    * @return {CallTransactionBuilder} this.
    */
-  method(method: string): CallTransactionBuilder {
+  method(method: string) {
     this.private(this).method = method;
 
     return this;
@@ -92,7 +92,7 @@ export class CallTransactionBuilder extends IcxTransactionBuilder {
    * @param {object} params - The input params for method
    * @return {CallTransactionBuilder} this.
    */
-  params(params: any): CallTransactionBuilder {
+  params(params: any) {
     this.private(this).params = params;
 
     return this;
@@ -102,7 +102,7 @@ export class CallTransactionBuilder extends IcxTransactionBuilder {
    * Build 'CallTransaction' object
    * @return {CallTransaction} 'CallTransaction' instance exported by 'CallTransactionBuilder'.
    */
-  build(): CallTransaction {
+  build() {
     return new CallTransaction(
       this.private(this).to,
       this.private(this).from,

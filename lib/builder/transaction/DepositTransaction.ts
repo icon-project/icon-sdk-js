@@ -82,7 +82,7 @@ export default class DepositTransactionBuilder extends IcxTransactionBuilder {
    * @param {string} action - add | withdraw
    * @return {DepositTransactionBuilder} this.
    */
-  action(action: string): DepositTransactionBuilder {
+  action(action: string) {
     this.private(this).action = action;
 
     return this;
@@ -93,7 +93,7 @@ export default class DepositTransactionBuilder extends IcxTransactionBuilder {
    * @param {string} id - Identifier of deposit to withdraw
    * @return {DepositTransactionBuilder} this.
    */
-  id(id: string): DepositTransactionBuilder {
+  id(id: string) {
     this.private(this).id = id;
 
     return this;
@@ -104,7 +104,7 @@ export default class DepositTransactionBuilder extends IcxTransactionBuilder {
    * @param {string} amount - amount of deposit to withdraw
    * @return {DepositTransactionBuilder} this.
    */
-  amount(amount: Hash): DepositTransactionBuilder {
+  amount(amount: Hash) {
     this.private(this).amount = amount;
     return this;
   }
@@ -114,7 +114,7 @@ export default class DepositTransactionBuilder extends IcxTransactionBuilder {
    * @return {DepositTransaction} 'DepositTransaction'
    * instance exported by 'DepositTransactionBuilder'
    */
-  build(): DepositTransaction {
+  build() {
     return new DepositTransaction(
       this.private(this).to,
       this.private(this).from,

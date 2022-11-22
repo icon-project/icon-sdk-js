@@ -15,7 +15,6 @@
  */
 
 import BigNumber from "bignumber.js";
-import { Hash } from "../types/hash";
 
 export function isString(value) {
   return typeof value === "string" || value instanceof String;
@@ -25,21 +24,15 @@ export function isByte(value) {
   return Boolean(value) && value.byteLength !== undefined;
 }
 
-export function isObject(obj) {
-  return typeof obj === "object";
-}
-
 export function isArray(obj) {
   return Array.isArray(obj);
 }
 
-export function isBigNumber(
-  value: string | number | BigNumber
-): value is BigNumber {
+export function isBigNumber(value): value is BigNumber {
   return BigNumber.isBigNumber(value);
 }
 
-export function isHex(value: Hash): boolean {
+export function isHex(value: string): boolean {
   return /^(0x)[0-9a-f]+$/g.test(<string>value);
 }
 
