@@ -14,23 +14,19 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: install node v18
-        uses: actions/setup-node@v1
-        with:
-          node-version: 18
-      - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
           node-version: 18
           registry-url: https://registry.npmjs.org/
-      - uses: borales/actions-yarn@v3.0.0
-        with:
-          cmd: install
-      - uses: borales/actions-yarn@v3.0.0
-        with:
-          cmd: build
-      - uses: borales/actions-yarn@v3.0.0
-        with:
-          cmd: build:type
+      - name: Install
+        run: yarn install
+
+      - name: Build
+        run: yarn build
+
+      - name: build types
+        run: yarn build:type
+
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
