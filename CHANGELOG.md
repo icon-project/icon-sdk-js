@@ -1,5 +1,10 @@
 # Changelog
 
+### Version 1.2.11 - Dec 09, 2022 ([NPM](https://www.npmjs.com/package/icon-sdk-js), [CDN](https://cdn.jsdelivr.net/npm/icon-sdk-js@1.2.11))
+
+#### Changes
+- fix serializing transaction function(objTraverse)
+
 ### Version 1.2.7 - Oct 26, 2022 ([NPM](https://www.npmjs.com/package/icon-sdk-js), [CDN](https://cdn.jsdelivr.net/npm/icon-sdk-js@1.2.7))
 
 #### Changes
