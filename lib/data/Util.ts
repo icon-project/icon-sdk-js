@@ -96,7 +96,7 @@ export function arrTraverse(arr) {
   result += "[";
   for (let j = 0; j < arr.length; j += 1) {
     const value = arr[j];
-
+    if (value === undefined) continue;
     switch (true) {
       case value === null: {
         result += String.raw`\0`;
