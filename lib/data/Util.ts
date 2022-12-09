@@ -140,6 +140,7 @@ export function objTraverse(obj) {
     for (let i = 0; i < keys.length; i += 1) {
       const key = keys[i];
       const value = obj[key];
+      if (value === undefined) continue;
       switch (true) {
         case value === null: {
           result += `${key}.`;
