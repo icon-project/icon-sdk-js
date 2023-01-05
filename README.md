@@ -501,7 +501,7 @@ getBlockHeaderByHeight(height: string | BigNumber) => HttpCall // .execute() => 
 
 | Parameter       | Type | Description |
 | ------------- | ----------- | ----------- |
-| height | `string | BigNumber` | The height of the block in hex string |
+| height | `string\|BigNumber` | The height of the block in hex string |
 
 #### Returns
 `HttpCall` - The HttpCall instance for `icx_getBlockHeaderByHeight` JSON-RPC API request. If `execute()` successfully, it returns base64 encoded data
@@ -524,7 +524,7 @@ getVotesByHeight(height: string | BigNumber) => HttpCall // .execute() => string
 
 | Parameter       | Type | Description |
 | ------------- | ----------- | ----------- |
-| height | `string | BigNumber` | The height of the block in hex string |
+| height | `string\|BigNumber` | The height of the block in hex string |
 
 #### Returns
 `HttpCall` - The HttpCall instance for `icx_getVotesByHeight` JSON-RPC API request. If `execute()` successfully, it returns base64 encoded votes data
@@ -548,7 +548,7 @@ getProofForResult(hash: string | BigNumber, index: string | BigNumber) => HttpCa
 | Parameter       | Type | Description |
 | ------------- | ----------- | ----------- |
 | hash | `string` | The hash value of the block including the result. |
-| index | `string | BigNumber` | Index of the receipt in the block.<br/> 0 for the first. |
+| index | `string\|BigNumber` | Index of the receipt in the block.<br/> 0 for the first. |
 
 #### Returns
 `HttpCall` - The HttpCall instance for `icx_getProofForResult` JSON-RPC API request. If `execute()` successfully, it returns List of base64 encoded proof including the receipt
@@ -572,8 +572,8 @@ getProofForEvents(hash: string | BigNumber, index: string | BigNumber, events: A
 | Parameter       | Type | Description |
 | ------------- | ----------- | ----------- |
 | hash | `string` | The hash value of the block including the result. |
-| index | `string | BigNumber` | Index of the receipt in the block.<br/> 0 for the first. |
-| events | Array  | false    | List of indexes of the events in the receipt.            |
+| index | `string \| BigNumber` | Index of the receipt in the block.<br/> 0 for the first. |
+| events | Array | List of indexes of the events in the receipt.            |
 
 #### Returns
 `HttpCall` - The HttpCall instance for `icx_getProofForEvents` JSON-RPC API request. If `execute()` successfully, it returns List of List of base64 encoded proof including the receipt and the events
@@ -583,6 +583,116 @@ getProofForEvents(hash: string | BigNumber, index: string | BigNumber, events: A
 // Returns the tx hash of transaction.
 const data = await iconService.getProofForEvents(hash, index, events).execute();
 ```
+
+```javascript
+getBTPNetworkInfo(id: string | BigNumber, height?: string | BigNumber) => HttpCall // .execute() => Map<string, string>
+```
+
+#### Parameters
+
+| Parameter       | Type | Description |
+| ------------- | ----------- | ----------- |
+| id | `string` | BigNumber | Network ID |
+| height | `string\|BigNumber`    | Main block height(Optional) |
+
+#### Returns
+`HttpCall` - The HttpCall instance for `btp_getNetworkInfo` JSON-RPC API request.
+
+#### Example
+```javascript
+// Returns the tx hash of transaction.
+const data = await iconService.getBTPNetworkInfo(id, height).execute();
+```
+
+```javascript
+getBTPNetworkTypeInfo(id: string | BigNumber, height?: string | BigNumber) => HttpCall // .execute() => Map<string, any>
+```
+
+#### Parameters
+
+| Parameter       | Type | Description |
+| ------------- | ----------- | ----------- |
+| id | `string` | BigNumber | Network ID |
+| height | `string\|BigNumber`    | Main block height(Optional) |
+
+#### Returns
+`HttpCall` - The HttpCall instance for `btp_getNetworkTypeInfo` JSON-RPC API request.
+
+#### Example
+```javascript
+// Returns the tx hash of transaction.
+const data = await iconService.getBTPNetworkTypeInfo(id, height).execute();
+```
+
+```javascript
+getBTPMessages(id: string | BigNumber, height: string | BigNumber) => HttpCall // .execute() => Array<string>
+```
+
+#### Parameters
+
+| Parameter       | Type | Description |
+| ------------- | ----------- | ----------- |
+| networkID | `string` | BigNumber | BTP network ID |
+| height | `string\|BigNumber`    | Main block height |
+
+#### Returns
+`HttpCall` - The HttpCall instance for `btp_getMessages` JSON-RPC API request.
+
+#### Example
+```javascript
+// Returns the tx hash of transaction.
+const data = await iconService.getBTPMessages(networkID, height).execute();
+```
+
+```javascript
+getBTPHeader(networkID: string | BigNumber, height: string | BigNumber) => HttpCall // .execute() => string
+```
+
+#### Parameters
+
+| Parameter       | Type | Description |
+| ------------- | ----------- | ----------- |
+| networkID | `string` | BigNumber | BTP network ID |
+| height | `string\|BigNumber`    | Main block height |
+
+#### Returns
+`HttpCall` - The HttpCall instance for `btp_getHeader` JSON-RPC API request.
+
+#### Example
+```javascript
+// Returns the tx hash of transaction.
+const data = await iconService.getBTPHeader(networkID, height).execute();
+```
+
+```javascript
+getBTPProof(networkID: string | BigNumber, height: string | BigNumber) => HttpCall // .execute() => string
+```
+
+#### Parameters
+
+| Parameter       | Type | Description |
+| ------------- | ----------- | ----------- |
+| networkID | `string` | BigNumber | BTP network ID |
+| height | `string\|BigNumber`    | Main block height |
+
+#### Returns
+`HttpCall` - The HttpCall instance for `btp_getProof` JSON-RPC API request.
+
+#### Example
+```javascript
+// Returns the tx hash of transaction.
+const data = await iconService.getBTPProof(networkID, height).execute();
+```
+
+```javascript
+getBTPSourceInformation() => HttpCall // .execute() => Array<string>
+```
+
+#### Parameters
+None
+
+#### Returns
+`HttpCall` - The HttpCall instance for `btp_getSourceInformation` JSON-RPC API request.
 
 ### call()
 
