@@ -39,6 +39,9 @@ import { DepositTransaction } from "./builder/transaction/DepositTransaction";
 import { DeployTransaction } from "./builder/transaction/DeployTransaction";
 import { CallTransaction } from "./builder/transaction/CallTransaction";
 import { Hash } from "./types/hash";
+import BTPNetworkInfo from "./data/Formatter/BTPNetworkInfo";
+import BTPNetworkTypeInfo from "./data/Formatter/BTPNetworkTypeInfo";
+import BTPSourceInformation from "./data/Formatter/BTPSourceInformation";
 
 /**
  * Class which provides APIs of ICON network.
@@ -475,10 +478,10 @@ export default class IconService {
    * @param height - Main block height
    * @return {HttpCall} The HttpCall instance for btp_getNetworkInfo JSON-RPC API request.
    */
-  getBTPNetworkInfo(
+  btpGetNetworkInfo(
     id: string | BigNumber,
     height?: string | BigNumber
-  ): HttpCall<Map<string, string>> {
+  ): HttpCall<BTPNetworkInfo> {
     let params;
     if (height == undefined) params = { id };
     else params = { id, height };
@@ -486,7 +489,7 @@ export default class IconService {
     const requestId = Util.getCurrentTime();
     const request = new Request(requestId, "btp_getNetworkInfo", params);
 
-    return this.provider.request<Map<string, string>>(request);
+    return this.provider.request<BTPNetworkInfo>(request);
   }
 
   /***
@@ -495,10 +498,10 @@ export default class IconService {
    * @param height - Main block height
    * @return {HttpCall} The HttpCall instance for btp_getNetworkTypeInfo JSON-RPC API request.
    */
-  getBTPNetworkTypeInfo(
+  btpGetNetworkTypeInfo(
     id: string | BigNumber,
     height?: string | BigNumber
-  ): HttpCall<Map<string, any>> {
+  ): HttpCall<BTPNetworkTypeInfo> {
     let params;
     if (height == undefined) params = { id };
     else params = { id, height };
@@ -506,7 +509,7 @@ export default class IconService {
     const requestId = Util.getCurrentTime();
     const request = new Request(requestId, "btp_getNetworkTypeInfo", params);
 
-    return this.provider.request<Map<string, any>>(request);
+    return this.provider.request<BTPNetworkTypeInfo>(request);
   }
 
   /***
@@ -515,7 +518,7 @@ export default class IconService {
    * @param height - Main block height
    * @return {HttpCall} The HttpCall instance for btp_getMessages JSON-RPC API request.
    */
-  getBTPMessages(
+  btpGetMessages(
     networkID: string | BigNumber,
     height: string | BigNumber
   ): HttpCall<Array<string>> {
@@ -531,7 +534,7 @@ export default class IconService {
    * @param height - Main block height
    * @return {HttpCall} The HttpCall instance for btp_getHeader JSON-RPC API request.
    */
-  getBTPHeader(
+  btpGetHeader(
     networkID: string | BigNumber,
     height: string | BigNumber
   ): HttpCall<string> {
@@ -547,7 +550,7 @@ export default class IconService {
    * @param height - Main block height
    * @return {HttpCall} The HttpCall instance for btp_getProof JSON-RPC API request.
    */
-  getBTPProof(
+  btpGetProof(
     networkID: string | BigNumber,
     height: string | BigNumber
   ): HttpCall<string> {
@@ -561,10 +564,10 @@ export default class IconService {
    * Get source network information
    * @return {HttpCall} The HttpCall instance for btp_getSourceInformation JSON-RPC API request.
    */
-  getBTPSourceInformation(): HttpCall<Array<string>> {
+  btpGetSourceInformation(): HttpCall<BTPSourceInformation> {
     const requestId = Util.getCurrentTime();
     const request = new Request(requestId, "btp_getSourceInformation", null);
-    return this.provider.request<Array<string>>(request);
+    return this.provider.request<BTPSourceInformation>(request);
   }
 
   /**
