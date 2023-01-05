@@ -584,6 +584,10 @@ getProofForEvents(hash: string | BigNumber, index: string | BigNumber, events: A
 const data = await iconService.getProofForEvents(hash, index, events).execute();
 ```
 
+### getBTPNetworkInfo()
+
+Get BTP network information.
+
 ```javascript
 getBTPNetworkInfo(id: string | BigNumber, height?: string | BigNumber) => HttpCall // .execute() => Map<string, string>
 ```
@@ -603,6 +607,10 @@ getBTPNetworkInfo(id: string | BigNumber, height?: string | BigNumber) => HttpCa
 // Returns the tx hash of transaction.
 const data = await iconService.getBTPNetworkInfo(id, height).execute();
 ```
+
+### getBTPNetworkTypeInfo()
+
+Get BTP network type information.
 
 ```javascript
 getBTPNetworkTypeInfo(id: string | BigNumber, height?: string | BigNumber) => HttpCall // .execute() => Map<string, any>
@@ -624,6 +632,10 @@ getBTPNetworkTypeInfo(id: string | BigNumber, height?: string | BigNumber) => Ht
 const data = await iconService.getBTPNetworkTypeInfo(id, height).execute();
 ```
 
+### getBTPMessages()
+
+Get BTP messages.
+
 ```javascript
 getBTPMessages(id: string | BigNumber, height: string | BigNumber) => HttpCall // .execute() => Array<string>
 ```
@@ -643,6 +655,10 @@ getBTPMessages(id: string | BigNumber, height: string | BigNumber) => HttpCall /
 // Returns the tx hash of transaction.
 const data = await iconService.getBTPMessages(networkID, height).execute();
 ```
+
+### getBTPHeader()
+
+Get BTP block header
 
 ```javascript
 getBTPHeader(networkID: string | BigNumber, height: string | BigNumber) => HttpCall // .execute() => string
@@ -664,6 +680,10 @@ getBTPHeader(networkID: string | BigNumber, height: string | BigNumber) => HttpC
 const data = await iconService.getBTPHeader(networkID, height).execute();
 ```
 
+### getBTPProof()
+
+Get BTP block proof
+
 ```javascript
 getBTPProof(networkID: string | BigNumber, height: string | BigNumber) => HttpCall // .execute() => string
 ```
@@ -683,6 +703,10 @@ getBTPProof(networkID: string | BigNumber, height: string | BigNumber) => HttpCa
 // Returns the tx hash of transaction.
 const data = await iconService.getBTPProof(networkID, height).execute();
 ```
+
+### getBTPSourceInformation()
+
+Get source network information
 
 ```javascript
 getBTPSourceInformation() => HttpCall // .execute() => Array<string>
