@@ -18,6 +18,7 @@ import BigNumber from "bignumber.js";
 import { addHxPrefix, add0xPrefix, addCxPrefix } from "../Hexadecimal";
 import { toNumber, toBigNumber } from "../Converter";
 import { Hash } from "../../types/hash";
+import Failure from "./Failure";
 
 export default class TransactionResult {
   status: Hash;
@@ -32,7 +33,7 @@ export default class TransactionResult {
   scoreAddress?: string;
   eventLogs?: unknown;
   logsBloom?: unknown;
-  failure?: unknown;
+  failure?: Failure;
 
   constructor(data) {
     this.status = toNumber(data.status);
@@ -58,7 +59,7 @@ export default class TransactionResult {
     }
 
     if (data.failure) {
-      this.failure = data.failure;
+      this.failure = new Failure(data.failure);
     }
   }
 }
