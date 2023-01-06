@@ -416,7 +416,7 @@ It sends a transaction like `icx_sendTransaction`, then it will wait for the
 result.
 
 ```javascript
-sendTransactionAndWait(signedTransaction: SignedTransaction) => HttpCall // .execute() => object
+.sendTransactionAndWait(signedTransaction: SignedTransaction) => HttpCall // .execute() => object
 ```
 
 #### Parameters
@@ -439,7 +439,7 @@ const result = await iconService.sendTransactionAndWait(signedTransaction).execu
 It will wait for the result of the transaction for specified time.
 
 ```javascript
-waitTransactionResult(hash: string) => HttpCall // .execute() => object
+.waitTransactionResult(hash: string) => HttpCall // .execute() => object
 ```
 
 #### Parameters
@@ -471,7 +471,7 @@ Following data can be retrieved by a hash.
 * etc…
 
 ```javascript
-getDataByHash(hash: string) => HttpCall // .execute() => string
+.getDataByHash(hash: string) => HttpCall // .execute() => string
 ```
 
 #### Parameters
@@ -494,7 +494,7 @@ const data = await iconService.getDataByHash(hash).execute();
 Get block header for specified height.
 
 ```javascript
-getBlockHeaderByHeight(height: string | BigNumber) => HttpCall // .execute() => string
+.getBlockHeaderByHeight(height: string | BigNumber) => HttpCall // .execute() => string
 ```
 
 #### Parameters
@@ -517,7 +517,7 @@ const data = await iconService.getBlockHeaderByHeight(height).execute();
 Get votes for the block specified by height.
 
 ```javascript
-getVotesByHeight(height: string | BigNumber) => HttpCall // .execute() => string
+.getVotesByHeight(height: string | BigNumber) => HttpCall // .execute() => string
 ```
 
 #### Parameters
@@ -540,7 +540,7 @@ const data = await iconService.getVotesByHeight(height).execute();
 Get proof for the receipt. Proof, itself, may include the receipt.
 
 ```javascript
-getProofForResult(hash: string | BigNumber, index: string | BigNumber) => HttpCall // .execute() => Array<string>
+.getProofForResult(hash: string | BigNumber, index: string | BigNumber) => HttpCall // .execute() => Array<string>
 ```
 
 #### Parameters
@@ -564,7 +564,7 @@ const data = await iconService.getProofForResult(hash, index).execute();
 Get proof for the receipt and the events in it. The proof may include the data itself.
 
 ```javascript
-getProofForEvents(hash: string | BigNumber, index: string | BigNumber, events: Array<string | BigNumber>) => HttpCall // .execute() => Array<string>
+.getProofForEvents(hash: string | BigNumber, index: string | BigNumber, events: Array<string | BigNumber>) => HttpCall // .execute() => Array<string>
 ```
 
 #### Parameters
@@ -589,7 +589,7 @@ const data = await iconService.getProofForEvents(hash, index, events).execute();
 Get BTP network information.
 
 ```javascript
-btpGetNetworkInfo(id: string | BigNumber, height?: string | BigNumber) => HttpCall // .execute() => BTPNetworkInfo
+.btpGetNetworkInfo(id: string | BigNumber, height?: string | BigNumber) => HttpCall // .execute() => BTPNetworkInfo
 ```
 
 #### Parameters
@@ -612,7 +612,7 @@ const data = await iconService.btpGetNetworkInfo(id, height).execute();
 Get BTP network type information.
 
 ```javascript
-btpGetNetworkTypeInfo(id: string | BigNumber, height?: string | BigNumber) => HttpCall // .execute() => BTPNetworkTypeInfo
+.btpGetNetworkTypeInfo(id: string | BigNumber, height?: string | BigNumber) => HttpCall // .execute() => BTPNetworkTypeInfo
 ```
 
 #### Parameters
@@ -635,7 +635,7 @@ const data = await iconService.btpGetNetworkTypeInfo(id, height).execute();
 Get BTP messages.
 
 ```javascript
-btpGetMessages(id: string | BigNumber, height: string | BigNumber) => HttpCall // .execute() => Array<string>
+.btpGetMessages(id: string | BigNumber, height: string | BigNumber) => HttpCall // .execute() => Array<string>
 ```
 
 #### Parameters
@@ -658,7 +658,7 @@ const data = await iconService.btpGetMessages(networkID, height).execute();
 Get BTP block header
 
 ```javascript
-btpGetHeader(networkID: string | BigNumber, height: string | BigNumber) => HttpCall // .execute() => string
+.btpGetHeader(networkID: string | BigNumber, height: string | BigNumber) => HttpCall // .execute() => string
 ```
 
 #### Parameters
@@ -681,7 +681,7 @@ const data = await iconService.btpGetHeader(networkID, height).execute();
 Get BTP block proof
 
 ```javascript
-btpGetProof(networkID: string | BigNumber, height: string | BigNumber) => HttpCall // .execute() => string
+.btpGetProof(networkID: string | BigNumber, height: string | BigNumber) => HttpCall // .execute() => string
 ```
 
 #### Parameters
@@ -704,7 +704,7 @@ const data = await iconService.btpGetProof(networkID, height).execute();
 Get source network information
 
 ```javascript
-btpGetSourceInformation() => HttpCall // .execute() => BTPSourceInformation
+.btpGetSourceInformation() => HttpCall // .execute() => BTPSourceInformation
 ```
 
 #### Parameters

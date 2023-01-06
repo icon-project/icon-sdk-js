@@ -49,13 +49,13 @@ module.exports = {
 			use: {
 				loader: 'babel-loader',
 				options: {
-					presets: ['env'],
+					presets: ['@babel/preset-env'],
 				},
 			},
 		}],
 	},
 	plugins: [
-		new CleanWebpackPlugin(['dist'], {root: process.cwd()}),
+		new CleanWebpackPlugin.CleanWebpackPlugin(),
 	].concat(htmlPlugins),
 
 	optimization: {

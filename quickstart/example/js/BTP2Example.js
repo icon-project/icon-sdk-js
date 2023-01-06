@@ -1,7 +1,7 @@
 /* eslint-disable */
 
 import IconService from 'icon-sdk-js';
-const { IconAmount, IconConverter, HttpProvider, IconWallet, IconBuilder, SignedTransaction } = IconService;
+const { HttpProvider } = IconService;
 import MockData from '../../mockData/index.js';
 
 let btpExample;
