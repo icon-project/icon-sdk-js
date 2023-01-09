@@ -16,6 +16,7 @@
 
 export default class HttpRequest {
   public url: string;
+
   public body: string;
 
   constructor(url: string, body: string) {

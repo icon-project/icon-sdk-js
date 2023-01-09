@@ -48,13 +48,21 @@ import BTPSourceInformation from "./data/Formatter/BTPSourceInformation";
  */
 export default class IconService {
   public static IconAmount = Amount;
+
   public static IconBuilder = Builder;
+
   public static IconConverter = Converter;
+
   public static IconWallet = Wallet;
+
   public static IconUtil = Util;
+
   public static SignedTransaction = SignedTransaction;
+
   public static HttpProvider = HttpProvider;
+
   public static IconHexadecimal = Hexadecimal;
+
   public static IconValidator = Validator;
 
   private provider: HttpProvider;
@@ -290,6 +298,7 @@ export default class IconService {
       return this.provider.request(request);
     }
   }
+
   /**
    * Calls a SCORE API just for reading.
    * @param {Call} call - The call instance exported by CallBuilder
@@ -366,7 +375,7 @@ export default class IconService {
       throw error.toString();
     }
     const requestId = Util.getCurrentTime();
-    const params = { hash: hash };
+    const params = { hash };
     const request = new Request(requestId, "icx_getDataByHash", params);
     return this.provider.request(request);
   }
@@ -412,6 +421,7 @@ export default class IconService {
     const request = new Request(requestId, "icx_getVotesByHeight", params);
     return this.provider.request(request);
   }
+
   /**
    * Get proof for the receipt
    * @param {string} hash - The hash value of the block including the result
@@ -431,7 +441,7 @@ export default class IconService {
       throw error.toString();
     }
     const requestId = Util.getCurrentTime();
-    const params = { hash: hash, index: Converter.toHex(index) };
+    const params = { hash, index: Converter.toHex(index) };
     const request = new Request(requestId, "icx_getProofForResult", params);
     return this.provider.request(request);
   }
@@ -464,7 +474,7 @@ export default class IconService {
     }
     const requestId = Util.getCurrentTime();
     const params = {
-      hash: hash,
+      hash,
       index: Converter.toHex(index),
       events: events.map(Converter.toHex),
     };
@@ -472,7 +482,7 @@ export default class IconService {
     return this.provider.request(request);
   }
 
-  /***
+  /** *
    * Get BTP network information.
    * @param id - network id
    * @param height - Main block height
@@ -492,7 +502,7 @@ export default class IconService {
     return this.provider.request<BTPNetworkInfo>(request);
   }
 
-  /***
+  /** *
    * Get BTP network type information.
    * @param id - Network type id
    * @param height - Main block height
@@ -512,7 +522,7 @@ export default class IconService {
     return this.provider.request<BTPNetworkTypeInfo>(request);
   }
 
-  /***
+  /** *
    * Get BTP messages
    * @param networkID - BTP network ID
    * @param height - Main block height
@@ -528,7 +538,7 @@ export default class IconService {
     return this.provider.request<Array<string>>(request);
   }
 
-  /***
+  /** *
    * Get BTP block header
    * @param networkID - Network id
    * @param height - Main block height
@@ -544,7 +554,7 @@ export default class IconService {
     return this.provider.request<string>(request);
   }
 
-  /***
+  /** *
    * Get BTP block proof
    * @param networkID - Network id
    * @param height - Main block height
@@ -560,7 +570,7 @@ export default class IconService {
     return this.provider.request<string>(request);
   }
 
-  /***
+  /** *
    * Get source network information
    * @return {HttpCall} The HttpCall instance for btp_getSourceInformation JSON-RPC API request.
    */

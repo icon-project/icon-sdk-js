@@ -18,6 +18,7 @@ import BigNumber from "bignumber.js";
 
 export default class BTPSourceInformation {
   srcNetworkUID: string;
+
   networkTypeIDs: Array<BigNumber>;
 
   constructor(data) {

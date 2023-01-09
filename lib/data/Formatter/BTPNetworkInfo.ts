@@ -18,13 +18,21 @@ import BigNumber from "bignumber.js";
 
 export default class BTPNetworkInfo {
   startHeight: BigNumber;
+
   networkTypeID: BigNumber;
+
   networkTypeName: string;
+
   networkID: BigNumber;
+
   networkName: string;
+
   open: BigNumber;
+
   nextMessageSN: BigNumber;
+
   prevNSHash: string;
+
   lastNSHash: string;
 
   constructor(data) {

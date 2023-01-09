@@ -18,8 +18,11 @@ import BigNumber from "bignumber.js";
 
 export default class BTPNetworkTypeInfo {
   networkTypeID: BigNumber;
+
   networkTypeName: string;
+
   openNetworkIDs: Array<BigNumber>;
+
   nextProofContext: string;
 
   constructor(data) {

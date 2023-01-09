@@ -18,6 +18,7 @@ import { Exception } from "../../Exception";
 
 export default class Response<T> {
   result: T;
+
   error: Exception;
 
   constructor(
@@ -31,7 +32,7 @@ export default class Response<T> {
       this.result =
         typeof converter === "function"
           ? converter(result as string)
-          : ((result as unknown) as T);
+          : (result as unknown as T);
     }
 
     if (error) {

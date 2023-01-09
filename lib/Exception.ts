@@ -28,6 +28,7 @@ const ExceptionCode = {
  */
 export class Exception {
   code: string;
+
   message: string;
 
   /**

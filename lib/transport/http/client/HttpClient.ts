@@ -33,7 +33,7 @@ export default class HttpClient {
           try {
             const response = await fetch(url, {
               method: "POST",
-              body: body,
+              body,
             });
 
             if (response.ok) {

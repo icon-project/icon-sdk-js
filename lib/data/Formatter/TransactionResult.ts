@@ -22,17 +22,29 @@ import Failure from "./Failure";
 
 export default class TransactionResult {
   status: Hash;
+
   to: string;
+
   txHash: string;
+
   txIndex: number;
+
   blockHeight: number;
+
   blockHash: string;
+
   cumulativeStepUsed: BigNumber;
+
   stepUsed: BigNumber;
+
   stepPrice: BigNumber;
+
   scoreAddress?: string;
+
   eventLogs?: unknown;
+
   logsBloom?: unknown;
+
   failure?: Failure;
 
   constructor(data) {

@@ -16,6 +16,7 @@
 
 export default class Failure {
   code: string;
+
   message: string;
 
   constructor(data) {

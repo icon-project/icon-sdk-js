@@ -47,8 +47,11 @@ export interface KeyStore {
  */
 export default class Wallet {
   private _privKey: any;
+
   private privKey: any;
+
   private pubKey: any;
+
   private address: string;
 
   /**
@@ -126,7 +129,7 @@ export default class Wallet {
         ? keystore
         : JSON.parse(
             nonStrict
-              ? ((keystore as unknown) as string).toLowerCase()
+              ? (keystore as unknown as string).toLowerCase()
               : (keystore as string)
           );
 
