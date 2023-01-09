@@ -29,6 +29,7 @@ export default class HttpClient {
       sendAsync<T>(): Promise<T> {
         const { url, body } = httpRequest;
 
+        // eslint-disable-next-line no-async-promise-executor
         return new Promise<T>(async (resolve, reject) => {
           try {
             const response = await fetch(url, {

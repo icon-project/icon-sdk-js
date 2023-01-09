@@ -17,5 +17,6 @@
 import IconService from "./IconService";
 import Builder from "./builder";
 
+// eslint-disable-next-line no-restricted-exports
 export { IconService as default, Builder };
 export * from "./data";

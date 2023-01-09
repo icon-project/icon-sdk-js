@@ -82,7 +82,7 @@ export default class IconService {
    */
   getTotalSupply(height?: Hash): HttpCall<BigNumber> {
     let params;
-    if (height == undefined) {
+    if (height === undefined) {
       params = null;
     } else {
       params = { height };
@@ -101,7 +101,7 @@ export default class IconService {
    */
   getBalance(address: string, height?: Hash): HttpCall<BigNumber> {
     let params;
-    if (height == undefined) {
+    if (height === undefined) {
       params = { address };
     } else {
       params = { address, height };
@@ -172,7 +172,7 @@ export default class IconService {
    */
   getScoreApi(address: string, height?: Hash): HttpCall<ScoreApiList> {
     let params;
-    if (height == undefined) {
+    if (height === undefined) {
       params = { address };
     } else {
       params = { address, height };
@@ -196,7 +196,7 @@ export default class IconService {
    */
   getScoreStatus(address: string, height?: Hash): HttpCall<ScoreApiList> {
     let params;
-    if (height == undefined) {
+    if (height === undefined) {
       params = { address };
     } else {
       params = { address, height };
@@ -493,7 +493,7 @@ export default class IconService {
     height?: string | BigNumber
   ): HttpCall<BTPNetworkInfo> {
     let params;
-    if (height == undefined) params = { id };
+    if (height === undefined) params = { id };
     else params = { id, height };
 
     const requestId = Util.getCurrentTime();
@@ -513,7 +513,7 @@ export default class IconService {
     height?: string | BigNumber
   ): HttpCall<BTPNetworkTypeInfo> {
     let params;
-    if (height == undefined) params = { id };
+    if (height === undefined) params = { id };
     else params = { id, height };
 
     const requestId = Util.getCurrentTime();

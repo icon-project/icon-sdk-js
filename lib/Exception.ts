@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+// eslint-disable-next-line max-classes-per-file
 const ExceptionCode = {
   0: "DATA ERROR",
   1: "FORMAT ERROR",
