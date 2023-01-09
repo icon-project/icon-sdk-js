@@ -3,7 +3,6 @@
 
 const webpack = require('webpack');
 const path = require('path');
-const { CheckerPlugin } = require('awesome-typescript-loader');
 const { env } = require('yargs').argv; // use --env with webpack 2
 const LIBRARY_NAME = 'icon-sdk-js';
 const MODE = {
@@ -23,7 +22,9 @@ const setLibraryName = (libraryName, target, mode) =>
 const setPlugin = target =>
   target === 'web'
     ? [
-        new CheckerPlugin(),
+      new webpack.ProvidePlugin({
+        Buffer: ['buffer', 'Buffer'],
+      }),
         new webpack.NormalModuleReplacementPlugin(
           /(.*)\/module\/node$/,
           function(resource) {
@@ -31,7 +32,7 @@ const setPlugin = target =>
           }
         )
       ]
-    : [new CheckerPlugin()];
+    : [];
 
 const config = target => ({
   mode,
@@ -52,12 +53,9 @@ const config = target => ({
   module: {
     rules: [
       {
-        loader: 'awesome-typescript-loader',
+        loader: 'ts-loader',
         test: /\.(t|j)s$/,
         exclude: /(node_modules|bower_components|quickstart)/,
-        options: {
-          declaration: true
-        }
       }
     ]
   },

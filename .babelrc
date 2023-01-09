@@ -1,4 +1,17 @@
 {
-  "presets": ["env"],
-  "plugins": ["syntax-class-properties", "transform-class-properties", "babel-plugin-add-module-exports", "transform-object-rest-spread", "@babel/plugin-transform-runtime"]
+  "presets": [
+    "@babel/preset-env"
+  ],
+  "plugins": [
+    "syntax-class-properties",
+    "transform-class-properties",
+    "babel-plugin-add-module-exports",
+    "transform-object-rest-spread",
+    [
+      "@babel/plugin-transform-runtime",
+      {
+        "corejs": 3
+      }
+    ]
+  ]
 }

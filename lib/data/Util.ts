@@ -189,7 +189,10 @@ export function escapeString(value) {
 }
 
 export function sign(data, privKey) {
-  const signing = (secp256k1 as any).sign(Buffer.from(data, "hex"), privKey);
+  const signing = (secp256k1 as any).ecdsaSign(
+    Buffer.from(data, "hex"),
+    privKey
+  );
   const recovery = new Uint8Array(1);
   recovery[0] = signing.recovery;
   return concatTypedArrays(signing.signature, recovery);

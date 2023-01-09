@@ -94,6 +94,8 @@ class BTPExample {
 
 }
 
-btpExample = new BTPExample();
+if (document.getElementById('Q01')) {
+  btpExample = new BTPExample();
+}
 
 export default BTPExample;
