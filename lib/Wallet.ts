@@ -302,7 +302,7 @@ export default class Wallet {
    * @return {string} The public key.
    */
   getPublicKey(): string {
-    return this.pubKey.toString("hex");
+    return Buffer.from(this.pubKey).toString("hex");
   }
 
   /**

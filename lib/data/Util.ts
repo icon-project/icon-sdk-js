@@ -86,7 +86,7 @@ export function serialize(trasaction) {
 
 export function generateHashKey(obj) {
   const resultStr = objTraverse(obj);
-  let resultStrReplaced: string = resultStr.substring(1).slice(0, -1);
+  const resultStrReplaced: string = resultStr.substring(1).slice(0, -1);
   return `icx_sendTransaction.${resultStrReplaced}`;
 }
 
@@ -194,6 +194,6 @@ export function sign(data, privKey) {
     privKey
   );
   const recovery = new Uint8Array(1);
-  recovery[0] = signing.recovery;
+  recovery[0] = signing.recid;
   return concatTypedArrays(signing.signature, recovery);
 }
