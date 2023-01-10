@@ -55,6 +55,13 @@ class BTPExample {
     document.getElementById("Q01-3").innerHTML = `networkTypeID : ${networkInfo.networkTypeID}`
     document.getElementById("Q01-4").innerHTML = `networkID : ${networkInfo.networkID}`
     document.getElementById("Q01-5").innerHTML = `networkTypeName : ${networkInfo.networkTypeName}`
+    document.getElementById("Q01-6").innerHTML = `networkName : ${networkInfo.networkName}`
+    document.getElementById("Q01-7").innerHTML = `startHeight : ${networkInfo.startHeight}`
+    document.getElementById("Q01-8").innerHTML = `open : ${networkInfo.open}`
+    document.getElementById("Q01-9").innerHTML = `prevNSHash : ${networkInfo.prevNSHash}`
+    document.getElementById("Q01-10").innerHTML = `lastNSHash : ${networkInfo.lastNSHash}`
+    document.getElementById("Q01-11").innerHTML = `nextMessageSN : ${networkInfo.nextMessageSN}`
+    document.getElementById("Q01-12").innerHTML = `nextProofContextChanged : ${networkInfo.nextProofContextChanged}`
   }
 
   async getNetworkTypeInfo() {
@@ -63,6 +70,7 @@ class BTPExample {
     document.getElementById("Q02-3").innerHTML = `networkTypeID : ${networkTypeInfo.networkTypeID}`
     document.getElementById("Q02-4").innerHTML = `networkTypeName : ${networkTypeInfo.networkTypeName}`
     document.getElementById("Q02-5").innerHTML = `nextProofContext : ${networkTypeInfo.nextProofContext}`
+    document.getElementById("Q02-6").innerHTML = `openNetworkIDs : ${networkTypeInfo.openNetworkIDs}`
   }
 
   async getMessages() {
@@ -76,14 +84,14 @@ class BTPExample {
     const id = document.getElementById("Q04").value;
     const height = document.getElementById("Q04-2").value;
     const header = await this.iconService.btpGetHeader(id, height).execute();
-    document.getElementById("Q03-4").innerHTML = `header : ${header}`
+    document.getElementById("Q04-4").innerHTML = `header : ${header}`
   }
 
   async getProof() {
     const id = document.getElementById("Q05").value;
     const height = document.getElementById("Q05-2").value;
     const proof = await this.iconService.btpGetProof(id, height).execute();
-    document.getElementById("Q03-4").innerHTML = `proof : ${proof}`
+    document.getElementById("Q05-4").innerHTML = `proof : ${proof}`
   }
 
   async getSourceInformation() {

@@ -31,6 +31,8 @@ export default class BTPNetworkInfo {
 
   nextMessageSN: BigNumber;
 
+  nextProofContextChanged: BigNumber;
+
   prevNSHash: string;
 
   lastNSHash: string;
@@ -38,11 +40,12 @@ export default class BTPNetworkInfo {
   constructor(data) {
     this.startHeight = data.startHeight;
     this.networkTypeID = data.networkTypeID;
-    this.networkName = data.networkName;
+    this.networkTypeName = data.networkTypeName;
     this.networkID = data.networkID;
     this.networkName = data.networkName;
     this.open = data.open;
     this.nextMessageSN = data.nextMessageSN;
+    this.nextProofContextChanged = data.nextProofContextChanged;
     this.prevNSHash = data.prevNSHash;
     this.lastNSHash = data.lastNSHash;
   }
