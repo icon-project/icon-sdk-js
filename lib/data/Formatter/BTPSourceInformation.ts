@@ -15,6 +15,7 @@
  */
 
 import BigNumber from "bignumber.js";
+import { toBigNumber } from "../Converter";
 
 export default class BTPSourceInformation {
   srcNetworkUID: string;
@@ -23,6 +24,8 @@ export default class BTPSourceInformation {
 
   constructor(data) {
     this.srcNetworkUID = data.srcNetworkUID;
-    this.networkTypeIDs = data.networkTypeIDs;
+    this.networkTypeIDs = (data.networkTypeIDs || []).map((networkTypeID) =>
+      toBigNumber(networkTypeID)
+    );
   }
 }

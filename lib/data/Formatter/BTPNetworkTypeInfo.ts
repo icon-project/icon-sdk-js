@@ -15,6 +15,7 @@
  */
 
 import BigNumber from "bignumber.js";
+import { toBigNumber } from "../Converter";
 
 export default class BTPNetworkTypeInfo {
   networkTypeID: BigNumber;
@@ -26,9 +27,11 @@ export default class BTPNetworkTypeInfo {
   nextProofContext: string;
 
   constructor(data) {
-    this.networkTypeID = data.networkTypeID;
+    this.networkTypeID = toBigNumber(data.networkTypeID);
     this.networkTypeName = data.networkTypeName;
-    this.openNetworkIDs = data.openNetworkIDs;
+    this.openNetworkIDs = (data.openNetworkIDs || []).map((openNetworkID) =>
+      toBigNumber(openNetworkID)
+    );
     this.nextProofContext = data.nextProofContext;
   }
 }

@@ -15,6 +15,7 @@
  */
 
 import BigNumber from "bignumber.js";
+import { toBigNumber, toBoolean } from "../Converter";
 
 export default class BTPNetworkInfo {
   startHeight: BigNumber;
@@ -27,25 +28,28 @@ export default class BTPNetworkInfo {
 
   networkName: string;
 
-  open: BigNumber;
+  open: boolean;
+
+  owner: string;
 
   nextMessageSN: BigNumber;
 
-  nextProofContextChanged: BigNumber;
+  nextProofContextChanged: boolean;
 
   prevNSHash: string;
 
   lastNSHash: string;
 
   constructor(data) {
-    this.startHeight = data.startHeight;
-    this.networkTypeID = data.networkTypeID;
+    this.startHeight = toBigNumber(data.startHeight);
+    this.networkTypeID = toBigNumber(data.networkTypeID);
     this.networkTypeName = data.networkTypeName;
-    this.networkID = data.networkID;
+    this.networkID = toBigNumber(data.networkID);
     this.networkName = data.networkName;
-    this.open = data.open;
-    this.nextMessageSN = data.nextMessageSN;
-    this.nextProofContextChanged = data.nextProofContextChanged;
+    this.open = toBoolean(data.open);
+    this.owner = data.owner;
+    this.nextMessageSN = toBigNumber(data.nextMessageSN);
+    this.nextProofContextChanged = toBoolean(data.nextProofContextChanged);
     this.prevNSHash = data.prevNSHash;
     this.lastNSHash = data.lastNSHash;
   }

@@ -499,7 +499,7 @@ export default class IconService {
     const requestId = Util.getCurrentTime();
     const request = new Request(requestId, "btp_getNetworkInfo", params);
 
-    return this.provider.request<BTPNetworkInfo>(request);
+    return this.provider.request(request, (data) => new BTPNetworkInfo(data));
   }
 
   /** *
@@ -519,7 +519,10 @@ export default class IconService {
     const requestId = Util.getCurrentTime();
     const request = new Request(requestId, "btp_getNetworkTypeInfo", params);
 
-    return this.provider.request<BTPNetworkTypeInfo>(request);
+    return this.provider.request(
+      request,
+      (data) => new BTPNetworkTypeInfo(data)
+    );
   }
 
   /** *
@@ -577,7 +580,10 @@ export default class IconService {
   btpGetSourceInformation(): HttpCall<BTPSourceInformation> {
     const requestId = Util.getCurrentTime();
     const request = new Request(requestId, "btp_getSourceInformation", null);
-    return this.provider.request<BTPSourceInformation>(request);
+    return this.provider.request(
+      request,
+      (data) => new BTPSourceInformation(data)
+    );
   }
 
   /**
