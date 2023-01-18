@@ -584,12 +584,12 @@ Get proof for the receipt and the events in it. The proof may include the data i
 const data = await iconService.getProofForEvents(hash, index, events).execute();
 ```
 
-### btpGetNetworkInfo()
+### getBTPNetworkInfo()
 
 Get BTP network information.
 
 ```javascript
-.btpGetNetworkInfo(id: string | BigNumber, height?: string | BigNumber) => HttpCall // .execute() => BTPNetworkInfo
+.getBTPNetworkInfo(id: string | BigNumber, height?: string | BigNumber) => HttpCall // .execute() => BTPNetworkInfo
 ```
 
 #### Parameters
@@ -604,15 +604,15 @@ Get BTP network information.
 
 #### Example
 ```javascript
-const data = await iconService.btpGetNetworkInfo(id, height).execute();
+const data = await iconService.getBTPNetworkInfo(id, height).execute();
 ```
 
-### btpGetNetworkTypeInfo()
+### getBTPNetworkTypeInfo()
 
 Get BTP network type information.
 
 ```javascript
-.btpGetNetworkTypeInfo(id: string | BigNumber, height?: string | BigNumber) => HttpCall // .execute() => BTPNetworkTypeInfo
+.getBTPNetworkTypeInfo(id: string | BigNumber, height?: string | BigNumber) => HttpCall // .execute() => BTPNetworkTypeInfo
 ```
 
 #### Parameters
@@ -627,15 +627,15 @@ Get BTP network type information.
 
 #### Example
 ```javascript
-const data = await iconService.btpGetNetworkTypeInfo(id, height).execute();
+const data = await iconService.getBTPNetworkTypeInfo(id, height).execute();
 ```
 
-### btpGetMessages()
+### getBTPMessages()
 
 Get BTP messages.
 
 ```javascript
-.btpGetMessages(id: string | BigNumber, height: string | BigNumber) => HttpCall // .execute() => Array<string>
+.getBTPMessages(id: string | BigNumber, height: string | BigNumber) => HttpCall // .execute() => Array<string>
 ```
 
 #### Parameters
@@ -650,15 +650,15 @@ Get BTP messages.
 
 #### Example
 ```javascript
-const data = await iconService.btpGetMessages(networkID, height).execute();
+const data = await iconService.getBTPMessages(networkID, height).execute();
 ```
 
-### btpGetHeader()
+### getBTPHeader()
 
 Get BTP block header
 
 ```javascript
-.btpGetHeader(networkID: string | BigNumber, height: string | BigNumber) => HttpCall // .execute() => string
+.getBTPHeader(networkID: string | BigNumber, height: string | BigNumber) => HttpCall // .execute() => string
 ```
 
 #### Parameters
@@ -673,15 +673,15 @@ Get BTP block header
 
 #### Example
 ```javascript
-const data = await iconService.btpGetHeader(networkID, height).execute();
+const data = await iconService.getBTPHeader(networkID, height).execute();
 ```
 
-### btpGetProof()
+### getBTPProof()
 
 Get BTP block proof
 
 ```javascript
-.btpGetProof(networkID: string | BigNumber, height: string | BigNumber) => HttpCall // .execute() => string
+.getBTPProof(networkID: string | BigNumber, height: string | BigNumber) => HttpCall // .execute() => string
 ```
 
 #### Parameters
@@ -696,15 +696,15 @@ Get BTP block proof
 
 #### Example
 ```javascript
-const data = await iconService.btpGetProof(networkID, height).execute();
+const data = await iconService.getBTPProof(networkID, height).execute();
 ```
 
-### btpGetSourceInformation()
+### getBTPSourceInformation()
 
 Get source network information
 
 ```javascript
-.btpGetSourceInformation() => HttpCall // .execute() => BTPSourceInformation
+.getBTPSourceInformation() => HttpCall // .execute() => BTPSourceInformation
 ```
 
 #### Parameters
@@ -715,7 +715,7 @@ None
 
 #### Example
 ```javascript
-const data = await iconService.btpGetSourceInformation().execute();
+const data = await iconService.getBTPSourceInformation().execute();
 ```
 
 ### call()

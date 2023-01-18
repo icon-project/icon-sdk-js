@@ -488,7 +488,7 @@ export default class IconService {
    * @param height - Main block height
    * @return {HttpCall} The HttpCall instance for btp_getNetworkInfo JSON-RPC API request.
    */
-  btpGetNetworkInfo(
+  getBTPNetworkInfo(
     id: string | BigNumber,
     height?: string | BigNumber
   ): HttpCall<BTPNetworkInfo> {
@@ -508,7 +508,7 @@ export default class IconService {
    * @param height - Main block height
    * @return {HttpCall} The HttpCall instance for btp_getNetworkTypeInfo JSON-RPC API request.
    */
-  btpGetNetworkTypeInfo(
+  getBTPNetworkTypeInfo(
     id: string | BigNumber,
     height?: string | BigNumber
   ): HttpCall<BTPNetworkTypeInfo> {
@@ -531,7 +531,7 @@ export default class IconService {
    * @param height - Main block height
    * @return {HttpCall} The HttpCall instance for btp_getMessages JSON-RPC API request.
    */
-  btpGetMessages(
+  getBTPMessages(
     networkID: string | BigNumber,
     height: string | BigNumber
   ): HttpCall<Array<string>> {
@@ -547,7 +547,7 @@ export default class IconService {
    * @param height - Main block height
    * @return {HttpCall} The HttpCall instance for btp_getHeader JSON-RPC API request.
    */
-  btpGetHeader(
+  getBTPHeader(
     networkID: string | BigNumber,
     height: string | BigNumber
   ): HttpCall<string> {
@@ -563,7 +563,7 @@ export default class IconService {
    * @param height - Main block height
    * @return {HttpCall} The HttpCall instance for btp_getProof JSON-RPC API request.
    */
-  btpGetProof(
+  getBTPProof(
     networkID: string | BigNumber,
     height: string | BigNumber
   ): HttpCall<string> {
@@ -577,7 +577,7 @@ export default class IconService {
    * Get source network information
    * @return {HttpCall} The HttpCall instance for btp_getSourceInformation JSON-RPC API request.
    */
-  btpGetSourceInformation(): HttpCall<BTPSourceInformation> {
+  getBTPSourceInformation(): HttpCall<BTPSourceInformation> {
     const requestId = Util.getCurrentTime();
     const request = new Request(requestId, "btp_getSourceInformation", null);
     return this.provider.request(
