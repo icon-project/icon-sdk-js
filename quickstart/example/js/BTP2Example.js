@@ -58,10 +58,11 @@ class BTPExample {
     document.getElementById("Q01-6").innerHTML = `networkName : ${networkInfo.networkName}`
     document.getElementById("Q01-7").innerHTML = `startHeight : ${networkInfo.startHeight}`
     document.getElementById("Q01-8").innerHTML = `open : ${networkInfo.open}`
-    document.getElementById("Q01-9").innerHTML = `prevNSHash : ${networkInfo.prevNSHash}`
-    document.getElementById("Q01-10").innerHTML = `lastNSHash : ${networkInfo.lastNSHash}`
-    document.getElementById("Q01-11").innerHTML = `nextMessageSN : ${networkInfo.nextMessageSN}`
-    document.getElementById("Q01-12").innerHTML = `nextProofContextChanged : ${networkInfo.nextProofContextChanged}`
+    document.getElementById("Q01-9").innerHTML = `owner : ${networkInfo.owner}`
+    document.getElementById("Q01-10").innerHTML = `prevNSHash : ${networkInfo.prevNSHash}`
+    document.getElementById("Q01-11").innerHTML = `lastNSHash : ${networkInfo.lastNSHash}`
+    document.getElementById("Q01-12").innerHTML = `nextMessageSN : ${networkInfo.nextMessageSN}`
+    document.getElementById("Q01-13").innerHTML = `nextProofContextChanged : ${networkInfo.nextProofContextChanged}`
   }
 
   async getNetworkTypeInfo() {
@@ -96,10 +97,9 @@ class BTPExample {
 
   async getSourceInformation() {
     const info = await this.iconService.btpGetSourceInformation().execute();
-    document.getElementById("Q06-1").innerHTML = `srcNetworkID : ${info.srcNetworkUID}`
-    document.getElementById("Q06-2").innerHTML = `networkIDs : ${info.networkTypeIDs}`
+    document.getElementById("Q06-1").innerHTML = `srcNetworkUID : ${info.srcNetworkUID}`
+    document.getElementById("Q06-2").innerHTML = `networkTypeIDs : ${info.networkTypeIDs}`
   }
-
 }
 
 if (document.getElementById('Q01')) {
