@@ -45,16 +45,27 @@ function createProperties(
  */
 export default class SignedTransaction {
   private private: any;
+
   to: string;
+
   from: string;
+
   value: string;
+
   stepLimit: BigNumber;
+
   nid: BigNumber;
+
   nonce: string;
+
   version: BigNumber;
+
   timestamp: number;
+
   signature: string;
+
   dataType: string;
+
   data: any;
 
   /**

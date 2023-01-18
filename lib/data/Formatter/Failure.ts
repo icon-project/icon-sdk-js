@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-export default class HttpRequest {
-  public url: string;
+export default class Failure {
+  code: string;
 
-  public body: string;
+  message: string;
 
-  constructor(url: string, body: string) {
-    this.url = url;
-    this.body = body;
+  constructor(data) {
+    this.code = data.code;
+    this.message = data.message;
   }
 }

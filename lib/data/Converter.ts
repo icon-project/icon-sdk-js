@@ -158,6 +158,14 @@ export function toHex(value: Hash): string {
   throw error.toString();
 }
 
+export function toBoolean(value: Hash): boolean {
+  const n = toBigNumber(value).toNumber();
+  if (n === 1) return true;
+  if (n === 0) return false;
+  const error = new DataError("Invalid value");
+  throw error.toString();
+}
+
 /**
  * Convert transaction object to raw transaction object.
  * @param {object} transaction - the transaction object.

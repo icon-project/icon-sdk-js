@@ -18,21 +18,34 @@ import BigNumber from "bignumber.js";
 import { addHxPrefix, add0xPrefix, addCxPrefix } from "../Hexadecimal";
 import { toNumber, toBigNumber } from "../Converter";
 import { Hash } from "../../types/hash";
+import Failure from "./Failure";
 
 export default class TransactionResult {
   status: Hash;
+
   to: string;
+
   txHash: string;
+
   txIndex: number;
+
   blockHeight: number;
+
   blockHash: string;
+
   cumulativeStepUsed: BigNumber;
+
   stepUsed: BigNumber;
+
   stepPrice: BigNumber;
+
   scoreAddress?: string;
+
   eventLogs?: unknown;
+
   logsBloom?: unknown;
-  failure?: unknown;
+
+  failure?: Failure;
 
   constructor(data) {
     this.status = toNumber(data.status);
@@ -58,7 +71,7 @@ export default class TransactionResult {
     }
 
     if (data.failure) {
-      this.failure = data.failure;
+      this.failure = new Failure(data.failure);
     }
   }
 }

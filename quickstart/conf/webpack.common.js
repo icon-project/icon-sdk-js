@@ -4,7 +4,6 @@ const webpack = require('webpack');
 const HTMLWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const fs = require('fs');
-require("babel-polyfill");
 
 function generateHtmlPlugins (templateDir) {
   const templateFiles = fs.readdirSync(path.resolve(__dirname, templateDir))
@@ -27,7 +26,7 @@ module.exports = {
 	devtool: 'source-map', // enhance debugging by adding meta info for the browser devtools
 
 	entry: {
-		app: ["babel-polyfill", './index.js'],
+		app: ['./index.js'],
 	},
 
 	output: {
@@ -49,13 +48,13 @@ module.exports = {
 			use: {
 				loader: 'babel-loader',
 				options: {
-					presets: ['env'],
+					presets: ['@babel/preset-env'],
 				},
 			},
 		}],
 	},
 	plugins: [
-		new CleanWebpackPlugin(['dist'], {root: process.cwd()}),
+		new CleanWebpackPlugin.CleanWebpackPlugin(),
 	].concat(htmlPlugins),
 
 	optimization: {

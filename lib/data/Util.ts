@@ -86,7 +86,7 @@ export function serialize(trasaction) {
 
 export function generateHashKey(obj) {
   const resultStr = objTraverse(obj);
-  let resultStrReplaced: string = resultStr.substring(1).slice(0, -1);
+  const resultStrReplaced: string = resultStr.substring(1).slice(0, -1);
   return `icx_sendTransaction.${resultStrReplaced}`;
 }
 
@@ -189,8 +189,11 @@ export function escapeString(value) {
 }
 
 export function sign(data, privKey) {
-  const signing = (secp256k1 as any).sign(Buffer.from(data, "hex"), privKey);
+  const signing = (secp256k1 as any).ecdsaSign(
+    Buffer.from(data, "hex"),
+    privKey
+  );
   const recovery = new Uint8Array(1);
-  recovery[0] = signing.recovery;
+  recovery[0] = signing.recid;
   return concatTypedArrays(signing.signature, recovery);
 }

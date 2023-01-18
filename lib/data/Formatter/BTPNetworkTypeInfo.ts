@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 ICON Foundation
+ * Copyright 2023 ICON Foundation
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,19 +14,24 @@
  * limitations under the License.
  */
 
-export default class Request {
-  jsonrpc: string;
+import BigNumber from "bignumber.js";
+import { toBigNumber } from "../Converter";
 
-  id: number;
+export default class BTPNetworkTypeInfo {
+  networkTypeID: BigNumber;
 
-  method: string;
+  networkTypeName: string;
 
-  params: any;
+  openNetworkIDs: Array<BigNumber>;
 
-  constructor(id: number, method: string, params: any) {
-    this.jsonrpc = "2.0";
-    this.id = id;
-    this.method = method;
-    this.params = params;
+  nextProofContext: string;
+
+  constructor(data) {
+    this.networkTypeID = toBigNumber(data.networkTypeID);
+    this.networkTypeName = data.networkTypeName;
+    this.openNetworkIDs = (data.openNetworkIDs || []).map((openNetworkID) =>
+      toBigNumber(openNetworkID)
+    );
+    this.nextProofContext = data.nextProofContext;
   }
 }

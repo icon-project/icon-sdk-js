@@ -39,19 +39,30 @@ import { DepositTransaction } from "./builder/transaction/DepositTransaction";
 import { DeployTransaction } from "./builder/transaction/DeployTransaction";
 import { CallTransaction } from "./builder/transaction/CallTransaction";
 import { Hash } from "./types/hash";
+import BTPNetworkInfo from "./data/Formatter/BTPNetworkInfo";
+import BTPNetworkTypeInfo from "./data/Formatter/BTPNetworkTypeInfo";
+import BTPSourceInformation from "./data/Formatter/BTPSourceInformation";
 
 /**
  * Class which provides APIs of ICON network.
  */
 export default class IconService {
   public static IconAmount = Amount;
+
   public static IconBuilder = Builder;
+
   public static IconConverter = Converter;
+
   public static IconWallet = Wallet;
+
   public static IconUtil = Util;
+
   public static SignedTransaction = SignedTransaction;
+
   public static HttpProvider = HttpProvider;
+
   public static IconHexadecimal = Hexadecimal;
+
   public static IconValidator = Validator;
 
   private provider: HttpProvider;
@@ -71,7 +82,7 @@ export default class IconService {
    */
   getTotalSupply(height?: Hash): HttpCall<BigNumber> {
     let params;
-    if (height == undefined) {
+    if (height === undefined) {
       params = null;
     } else {
       params = { height };
@@ -90,7 +101,7 @@ export default class IconService {
    */
   getBalance(address: string, height?: Hash): HttpCall<BigNumber> {
     let params;
-    if (height == undefined) {
+    if (height === undefined) {
       params = { address };
     } else {
       params = { address, height };
@@ -109,7 +120,7 @@ export default class IconService {
   /**
    * @description Get the block information.
    * @param {BigNumber} value The value of block number
-   * @return {object} The Block object
+   * @return {object} The HttpCall instance for icx_getBlockByHeight JSON-RPC API request.
    */
   getBlockByHeight(value: BigNumber): HttpCall<Block> {
     if (Validator.isNonNegative(value)) {
@@ -127,7 +138,7 @@ export default class IconService {
   /**
    * @description Get the block information.
    * @param {string} value The value of block hash
-   * @return {object} The Block object
+   * @return {object} The HttpCall instance for icx_getBlockByHash JSON-RPC API request.
    */
   getBlockByHash(value: string): HttpCall<Block> {
     if (Validator.isValidHash(value)) {
@@ -144,7 +155,7 @@ export default class IconService {
 
   /**
    * @description Get the last block information.
-   * @return {object} The Block object
+   * @return {object} The HttpCall instance for icx_getLastBlock JSON-RPC API request.
    */
   getLastBlock(): HttpCall<Block> {
     const requestId = Util.getCurrentTime();
@@ -157,11 +168,11 @@ export default class IconService {
    * @description Get the SCORE API list.
    * @param {string} address SCORE address
    * @param {Hash} [height] block Height
-   * @return {array} The list of SCORE API
+   * @return {array} The HttpCall instance for icx_getScoreApi JSON-RPC API request.
    */
   getScoreApi(address: string, height?: Hash): HttpCall<ScoreApiList> {
     let params;
-    if (height == undefined) {
+    if (height === undefined) {
       params = { address };
     } else {
       params = { address, height };
@@ -181,11 +192,11 @@ export default class IconService {
    * @description Get the SCORE status
    * @param {string} address SCORE address
    * @param {Hash} [height] block Height
-   * @return {array} status of SCORE
+   * @return {array} The HttpCall instance for icx_getScoreStatus JSON-RPC API request.
    */
   getScoreStatus(address: string, height?: Hash): HttpCall<ScoreApiList> {
     let params;
-    if (height == undefined) {
+    if (height === undefined) {
       params = { address };
     } else {
       params = { address, height };
@@ -287,6 +298,7 @@ export default class IconService {
       return this.provider.request(request);
     }
   }
+
   /**
    * Calls a SCORE API just for reading.
    * @param {Call} call - The call instance exported by CallBuilder
@@ -309,7 +321,7 @@ export default class IconService {
    result of it for specified time.  If the timeout isn't set by user, it uses
    `defaultWaitTimeout` of icon node.
    * @param {SignedTransaction} signedTransaction - Parameters including signature.
-   * @return {HttpCall} The HttpCall instance for icx_sendTransaction JSON-RPC API request.
+   * @return {HttpCall} The HttpCall instance for icx_sendTransactionAndWait JSON-RPC API request.
    */
   sendTransactionAndWait(
     signedTransaction: SignedTransaction
@@ -332,7 +344,7 @@ export default class IconService {
    * It will wait for the result of the transaction for specified time.
    * If the timeout isn't set by user, it uses `defaultWaitTimeout` of icon node.
    * @param {string} hash - The transaction hash.
-   * @return {HttpCall} The HttpCall instance for icx_getTransactionResult JSON-RPC API request.
+   * @return {HttpCall} The HttpCall instance for icx_waitTransactionResult JSON-RPC API request.
    */
   waitTransactionResult(hash: string): HttpCall<TransactionResult> {
     if (!Validator.isValidHash(hash)) {
@@ -355,7 +367,7 @@ export default class IconService {
    * Votes with BlockHeader.VotesHash
    * etc…
    * @param {string} hash - The hash value of the data to retrieve
-   * @return {HttpCall} The HttpCall instance for icx_getTransactionResult JSON-RPC API request.
+   * @return {HttpCall} The HttpCall instance for icx_getDataByHash JSON-RPC API request.
    */
   getDataByHash(hash: string): HttpCall<TransactionResult> {
     if (!Validator.isValidHash(hash)) {
@@ -363,7 +375,7 @@ export default class IconService {
       throw error.toString();
     }
     const requestId = Util.getCurrentTime();
-    const params = { hash: hash };
+    const params = { hash };
     const request = new Request(requestId, "icx_getDataByHash", params);
     return this.provider.request(request);
   }
@@ -371,7 +383,7 @@ export default class IconService {
   /**
    * Get block header for specified height.
    * @param {BigNumber | string} height - The height of the block.
-   * @return {HttpCall} The HttpCall instance for icx_getTransactionResult JSON-RPC API request.
+   * @return {HttpCall} The HttpCall instance for icx_getBlockHeaderByHeight JSON-RPC API request.
    */
   getBlockHeaderByHeight(
     height: string | BigNumber
@@ -395,7 +407,7 @@ export default class IconService {
   /**
    * Get votes for the block specified by height.
    * @param {BigNumber} height - The height of the block.
-   * @return {HttpCall} The HttpCall instance for icx_getTransactionResult JSON-RPC API request.
+   * @return {HttpCall} The HttpCall instance for icx_getVotesByHeight JSON-RPC API request.
    */
   getVotesByHeight(height: string | BigNumber): HttpCall<TransactionResult> {
     if (!Validator.isNonNegative(height)) {
@@ -409,11 +421,12 @@ export default class IconService {
     const request = new Request(requestId, "icx_getVotesByHeight", params);
     return this.provider.request(request);
   }
+
   /**
    * Get proof for the receipt
    * @param {string} hash - The hash value of the block including the result
    * @param {string} index - Index of the receipt in the block
-   * @return {HttpCall} The HttpCall instance for icx_getTransactionResult JSON-RPC API request.
+   * @return {HttpCall} The HttpCall instance for icx_getProofForResult JSON-RPC API request.
    */
   getProofForResult(
     hash: string,
@@ -428,7 +441,7 @@ export default class IconService {
       throw error.toString();
     }
     const requestId = Util.getCurrentTime();
-    const params = { hash: hash, index: Converter.toHex(index) };
+    const params = { hash, index: Converter.toHex(index) };
     const request = new Request(requestId, "icx_getProofForResult", params);
     return this.provider.request(request);
   }
@@ -438,7 +451,7 @@ export default class IconService {
    * @param {string} hash - The hash value of the block including the result
    * @param index - Index of the receipt in the block
    * @param events - List of indexes of the events in the receipt
-   * @return {HttpCall} The HttpCall instance for icx_getTransactionResult JSON-RPC API request.
+   * @return {HttpCall} The HttpCall instance for icx_getProofForEvents JSON-RPC API request.
    */
   getProofForEvents(
     hash: string,
@@ -461,12 +474,116 @@ export default class IconService {
     }
     const requestId = Util.getCurrentTime();
     const params = {
-      hash: hash,
+      hash,
       index: Converter.toHex(index),
       events: events.map(Converter.toHex),
     };
     const request = new Request(requestId, "icx_getProofForEvents", params);
     return this.provider.request(request);
+  }
+
+  /** *
+   * Get BTP network information.
+   * @param id - network id
+   * @param height - Main block height
+   * @return {HttpCall} The HttpCall instance for btp_getNetworkInfo JSON-RPC API request.
+   */
+  getBTPNetworkInfo(
+    id: string | BigNumber,
+    height?: string | BigNumber
+  ): HttpCall<BTPNetworkInfo> {
+    let params;
+    if (height === undefined) params = { id };
+    else params = { id, height };
+
+    const requestId = Util.getCurrentTime();
+    const request = new Request(requestId, "btp_getNetworkInfo", params);
+
+    return this.provider.request(request, (data) => new BTPNetworkInfo(data));
+  }
+
+  /** *
+   * Get BTP network type information.
+   * @param id - Network type id
+   * @param height - Main block height
+   * @return {HttpCall} The HttpCall instance for btp_getNetworkTypeInfo JSON-RPC API request.
+   */
+  getBTPNetworkTypeInfo(
+    id: string | BigNumber,
+    height?: string | BigNumber
+  ): HttpCall<BTPNetworkTypeInfo> {
+    let params;
+    if (height === undefined) params = { id };
+    else params = { id, height };
+
+    const requestId = Util.getCurrentTime();
+    const request = new Request(requestId, "btp_getNetworkTypeInfo", params);
+
+    return this.provider.request(
+      request,
+      (data) => new BTPNetworkTypeInfo(data)
+    );
+  }
+
+  /** *
+   * Get BTP messages
+   * @param networkID - BTP network ID
+   * @param height - Main block height
+   * @return {HttpCall} The HttpCall instance for btp_getMessages JSON-RPC API request.
+   */
+  getBTPMessages(
+    networkID: string | BigNumber,
+    height: string | BigNumber
+  ): HttpCall<Array<string>> {
+    const params = { networkID, height };
+    const requestId = Util.getCurrentTime();
+    const request = new Request(requestId, "btp_getMessages", params);
+    return this.provider.request<Array<string>>(request);
+  }
+
+  /** *
+   * Get BTP block header
+   * @param networkID - Network id
+   * @param height - Main block height
+   * @return {HttpCall} The HttpCall instance for btp_getHeader JSON-RPC API request.
+   */
+  getBTPHeader(
+    networkID: string | BigNumber,
+    height: string | BigNumber
+  ): HttpCall<string> {
+    const params = { networkID, height };
+    const requestId = Util.getCurrentTime();
+    const request = new Request(requestId, "btp_getHeader", params);
+    return this.provider.request<string>(request);
+  }
+
+  /** *
+   * Get BTP block proof
+   * @param networkID - Network id
+   * @param height - Main block height
+   * @return {HttpCall} The HttpCall instance for btp_getProof JSON-RPC API request.
+   */
+  getBTPProof(
+    networkID: string | BigNumber,
+    height: string | BigNumber
+  ): HttpCall<string> {
+    const params = { networkID, height };
+    const requestId = Util.getCurrentTime();
+    const request = new Request(requestId, "btp_getProof", params);
+    return this.provider.request<string>(request);
+  }
+
+  /** *
+   * Get source network information
+   * @return {HttpCall} The HttpCall instance for btp_getSourceInformation JSON-RPC API request.
+   */
+  getBTPSourceInformation(): HttpCall<BTPSourceInformation> {
+    const requestId = Util.getCurrentTime();
+    const request = new Request(requestId, "btp_getSourceInformation", null);
+    return this.provider.request(
+      request,
+      (data) => new BTPSourceInformation(data)
+    );
   }
 
   /**

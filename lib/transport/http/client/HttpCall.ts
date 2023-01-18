@@ -19,6 +19,7 @@ import { RpcError } from "../../../Exception";
 
 export default class HttpCall<T> {
   httpCall: HttpCall<T>;
+
   // eslint-disable-next-line no-unused-vars
   converter?: (result: string) => T;
 

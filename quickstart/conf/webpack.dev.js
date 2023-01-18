@@ -4,7 +4,7 @@ const path = require('path');
 const Merge = require('webpack-merge');
 const CommonConfig = require('./webpack.common.js');
 
-module.exports = Merge(CommonConfig, {
+module.exports = Merge.merge(CommonConfig, {
 	plugins: [
 		new webpack.HotModuleReplacementPlugin(),
 	],

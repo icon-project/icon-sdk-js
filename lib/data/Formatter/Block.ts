@@ -41,13 +41,21 @@ function toConfirmedTransaction(
 
 export default class Block {
   height: number;
+
   blockHash: string;
+
   merkleTreeRootHash: string;
+
   prevBlockHash: string;
+
   peerId: string;
+
   confirmedTransactionList: ConfirmedTransaction[];
+
   signature: string;
+
   timeStamp: Hash;
+
   version: Hash;
 
   constructor(data) {
@@ -56,12 +64,11 @@ export default class Block {
     this.merkleTreeRootHash = add0xPrefix(data.merkle_tree_root_hash);
     this.prevBlockHash = add0xPrefix(data.prev_block_hash);
     this.peerId = addHxPrefix(data.peer_id);
-    this.confirmedTransactionList = (
-      data.confirmed_transaction_list || []
-    ).map((transaction: ConfirmedTransaction) =>
-      isGenesisBlock(data.height)
-        ? transaction
-        : toConfirmedTransaction(transaction)
+    this.confirmedTransactionList = (data.confirmed_transaction_list || []).map(
+      (transaction: ConfirmedTransaction) =>
+        isGenesisBlock(data.height)
+          ? transaction
+          : toConfirmedTransaction(transaction)
     );
     this.signature = data.signature;
     this.timeStamp = toNumber(data.time_stamp);
