@@ -1,4 +1,4 @@
-[![unittest](https://img.shields.io/github/workflow/status/icon-project/icon-sdk-js/lint%20and%20test/master?label=unittest&logo=github)](https://github.com/icon-project/icon-sdk-js/actions/workflows/lint.yml)
+[![unittest](https://img.shields.io/github/actions/workflow/status/icon-project/icon-sdk-js/lint.yml?branch=master&label=unittest&logo=github)](https://github.com/icon-project/icon-sdk-js/actions/workflows/lint.yml)
 [![npm - package](https://img.shields.io/github/package-json/v/icon-project/icon-sdk-js)](https://www.npmjs.com/package/icon-sdk-js)
 ![node-current](https://img.shields.io/node/v/icon-sdk-js)
 ---
