@@ -482,7 +482,7 @@ export default class IconService {
     return this.provider.request(request);
   }
 
-  /** *
+  /**
    * Get BTP network information.
    * @param id - network id
    * @param height - Main block height
@@ -502,7 +502,7 @@ export default class IconService {
     return this.provider.request(request, (data) => new BTPNetworkInfo(data));
   }
 
-  /** *
+  /**
    * Get BTP network type information.
    * @param id - Network type id
    * @param height - Main block height
@@ -525,7 +525,7 @@ export default class IconService {
     );
   }
 
-  /** *
+  /**
    * Get BTP messages
    * @param networkID - BTP network ID
    * @param height - Main block height
@@ -541,7 +541,7 @@ export default class IconService {
     return this.provider.request<Array<string>>(request);
   }
 
-  /** *
+  /**
    * Get BTP block header
    * @param networkID - Network id
    * @param height - Main block height
@@ -557,7 +557,7 @@ export default class IconService {
     return this.provider.request<string>(request);
   }
 
-  /** *
+  /**
    * Get BTP block proof
    * @param networkID - Network id
    * @param height - Main block height
@@ -573,7 +573,7 @@ export default class IconService {
     return this.provider.request<string>(request);
   }
 
-  /** *
+  /**
    * Get source network information
    * @return {HttpCall} The HttpCall instance for btp_getSourceInformation JSON-RPC API request.
    */

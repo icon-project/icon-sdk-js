@@ -1,5 +1,11 @@
 # Changelog
 
+### Version 1.3.0 - Jan 19, 2023 ([NPM](https://www.npmjs.com/package/icon-sdk-js), [CDN](https://cdn.jsdelivr.net/npm/icon-sdk-js@1.3.0))
+
+#### Changes
+- Add btp extension APIs
+- Update dependencies
+
 ### Version 1.2.11 - Dec 09, 2022 ([NPM](https://www.npmjs.com/package/icon-sdk-js), [CDN](https://cdn.jsdelivr.net/npm/icon-sdk-js@1.2.11))
 
 #### Changes
