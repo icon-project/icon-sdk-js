@@ -7,7 +7,8 @@ const PRIVATE_KEY_2 =
 const TOKEN_ADDRESS = "cx4ae65c058d35b5bb8cef668be5113354448c0264";
 const GOVERNANCE_ADDRESS = "cx0000000000000000000000000000000000000001";
 const SCORE_INSTALL_ADDRESS = "cx0000000000000000000000000000000000000000";
-const NODE_URL = "http://localhost:9080/api/v3";
+// const NODE_URL = "http://localhost:9080/api/v3";
+const NODE_URL = "https://ctz.solidwallet.io/api/v3";
 const DEBUG_URL = "http://localhost:9080/api/v3d";
 const KEYSTORE_FILE = {
   version: 3,

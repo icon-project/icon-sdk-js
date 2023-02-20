@@ -42,6 +42,15 @@ import { Hash } from "./types/hash";
 import BTPNetworkInfo from "./data/Formatter/BTPNetworkInfo";
 import BTPNetworkTypeInfo from "./data/Formatter/BTPNetworkTypeInfo";
 import BTPSourceInformation from "./data/Formatter/BTPSourceInformation";
+import Monitor from "./transport/monitor/Monitor";
+import MonitorRequest from "./transport/monitor/MonitorSpec";
+import BlockNotification from "./data/Formatter/BlockNotification";
+import EventNotification from "./data/Formatter/EventNotification";
+import BTPNotification from "./data/Formatter/BTPNotification";
+import EventFilter from "./transport/monitor/EventFilter";
+import BlockMonitorSpec from "./transport/monitor/BlockMonitorSpec";
+import EventMonitorSpec from "./transport/monitor/EventMonitorSpec";
+import BTPMonitorSpec from "./transport/monitor/BTPMonitorSpec";
 
 /**
  * Class which provides APIs of ICON network.
@@ -601,5 +610,43 @@ export default class IconService {
       const request = new Request(requestId, "debug_getTrace", params);
       return this.provider.request(request);
     }
+  }
+
+  monitorBlock(
+    height: string | BigNumber,
+    eventFilters?: EventFilter[]
+  ): Monitor<BlockNotification> {
+    const monitorSpec = new BlockMonitorSpec(height, eventFilters);
+    return this.provider.monitor(
+      monitorSpec,
+      (data) => new BlockNotification(data)
+    );
+  }
+
+  monitorEvent(
+    height: string | BigNumber,
+    eventFilter: EventFilter
+  ): Monitor<EventNotification> {
+    const monitorSpec = new EventMonitorSpec(height, eventFilter);
+    return this.provider.monitor(
+      monitorSpec,
+      (data) => new EventNotification(data)
+    );
+  }
+
+  monitorBTP(
+    height: string | BigNumber,
+    networkID: string | BigNumber,
+    proofFlag: boolean
+  ): Monitor<BTPNotification> {
+    const monitorSpec = new BTPMonitorSpec(
+      Converter.toHex(height),
+      Converter.toHex(networkID),
+      proofFlag
+    );
+    return this.provider.monitor(
+      monitorSpec,
+      (data) => new BTPNotification(data)
+    );
   }
 }

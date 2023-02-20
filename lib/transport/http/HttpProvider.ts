@@ -18,6 +18,8 @@ import Request from "../jsonrpc/Request";
 import HttpClient from "./client/HttpClient";
 import HttpRequest from "./client/HttpRequest";
 import HttpCall from "./client/HttpCall";
+import MonitorRequest from "../monitor/MonitorSpec";
+import Monitor from "../monitor/Monitor";
 
 /**
  * Class representing HTTP-based provider
@@ -48,5 +50,10 @@ export default class HttpProvider {
     const httpRequest = new HttpRequest(this.url, body);
 
     return new HttpCall<T>(HttpClient.newCall(httpRequest) as any, converter);
+  }
+
+  monitor<T>(request: MonitorRequest, converter: (data: any) => T): Monitor<T> {
+    const url = this.url.replace("http", "ws");
+    return new Monitor(url, request, converter);
   }
 }

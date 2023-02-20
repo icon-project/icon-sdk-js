@@ -23,8 +23,8 @@
   "devDependencies": {
     "@babel/core": "^7.20.12",
     "@babel/eslint-parser": "^7.19.1",
-    "@babel/preset-env": "^7.20.2",
     "@babel/plugin-transform-runtime": "^7.19.6",
+    "@babel/preset-env": "^7.20.2",
     "babel-loader": "^9.1.2",
     "babel-plugin-transform-regenerator": "^7.0.0-beta.3",
     "clean-webpack-plugin": "4.0.0",

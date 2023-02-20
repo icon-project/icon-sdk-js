@@ -11,8 +11,7 @@ import { sign } from "./data/Util";
 import { isPrivateKey } from "./data/Validator";
 import { WalletError } from "./Exception";
 import { isString } from "./data/Type";
-
-const secp256k1 = require("secp256k1");
+import * as secp256k1 from "secp256k1";
 
 // eslint-disable-next-line no-unused-vars
 type Keccak256 = { toString(str: string): string };
