@@ -17,6 +17,7 @@ import MonitorSpec from "./MonitorSpec";
 import BigNumber from "bignumber.js";
 import EventFilter from "./EventFilter";
 import { Converter } from "../../data/index";
+import BlockNotification from "../../data/Formatter/BlockNotification";
 
 export default class BlockMonitorSpec implements MonitorSpec {
   readonly height: string | BigNumber;
@@ -40,5 +41,9 @@ export default class BlockMonitorSpec implements MonitorSpec {
       height: height,
       eventFilters: this.eventFilters.map((v) => v.toObject()),
     };
+  }
+
+  getConverter(): (data) => BlockNotification {
+    return (data) => new BlockNotification(data);
   }
 }

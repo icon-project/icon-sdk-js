@@ -613,40 +613,26 @@ export default class IconService {
   }
 
   monitorBlock(
-    height: string | BigNumber,
-    eventFilters?: EventFilter[]
-  ): Monitor<BlockNotification> {
-    const monitorSpec = new BlockMonitorSpec(height, eventFilters);
-    return this.provider.monitor(
-      monitorSpec,
-      (data) => new BlockNotification(data)
-    );
+    monitorSpec: BlockMonitorSpec,
+    ondata: (notification: BlockNotification) => void,
+    onerror
+  ): Monitor {
+    return this.provider.monitor(monitorSpec, ondata, onerror);
   }
 
   monitorEvent(
-    height: string | BigNumber,
-    eventFilter: EventFilter
-  ): Monitor<EventNotification> {
-    const monitorSpec = new EventMonitorSpec(height, eventFilter);
-    return this.provider.monitor(
-      monitorSpec,
-      (data) => new EventNotification(data)
-    );
+    monitorSpec: EventMonitorSpec,
+    ondata: (notification: EventNotification) => void,
+    onerror
+  ): Monitor {
+    return this.provider.monitor(monitorSpec, ondata, onerror);
   }
 
   monitorBTP(
-    height: string | BigNumber,
-    networkID: string | BigNumber,
-    proofFlag: boolean
-  ): Monitor<BTPNotification> {
-    const monitorSpec = new BTPMonitorSpec(
-      Converter.toHex(height),
-      Converter.toHex(networkID),
-      proofFlag
-    );
-    return this.provider.monitor(
-      monitorSpec,
-      (data) => new BTPNotification(data)
-    );
+    monitorSpec: BTPMonitorSpec,
+    ondata: (notification: BTPNotification) => void,
+    onerror
+  ): Monitor {
+    return this.provider.monitor(monitorSpec, ondata, onerror);
   }
 }

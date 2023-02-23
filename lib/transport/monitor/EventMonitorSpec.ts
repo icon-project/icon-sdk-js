@@ -17,6 +17,7 @@ import MonitorSpec from "./MonitorSpec";
 import BigNumber from "bignumber.js";
 import EventFilter from "./EventFilter";
 import { Converter } from "../../data/index";
+import EventNotification from "../../data/Formatter/EventNotification";
 
 export default class EventMonitorSpec implements MonitorSpec {
   readonly height: string | BigNumber;
@@ -44,5 +45,9 @@ export default class EventMonitorSpec implements MonitorSpec {
     if (this.eventFilter) ret["eventFilter"] = this.eventFilter.toObject();
     if (this.logs) ret["logs"] = "0x1";
     return ret;
+  }
+
+  getConverter(): (data) => EventNotification {
+    return (data) => new EventNotification(data);
   }
 }

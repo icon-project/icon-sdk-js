@@ -15,42 +15,44 @@
  */
 import MonitorSpec from "./MonitorSpec";
 
-enum state {
-  init = 0,
-  connect,
-  start,
+enum State {
+  INIT = 0,
+  CONNECT,
+  START,
 }
 
-export default class Monitor<T> {
+export default class Monitor {
   private ws: WebSocket;
   private readonly url: string;
   private request: MonitorSpec;
-  private state = state.init;
-  private readonly converter: (data: any) => T;
+  private state = State.INIT;
 
-  constructor(url: string, request: MonitorSpec, converter: (data: any) => T) {
+  constructor(
+    url: string,
+    request: MonitorSpec,
+    ondata: (data) => void,
+    onerror: (error) => void
+  ) {
     this.url = url;
     this.request = request;
-    this.converter = converter;
-  }
-
-  start(onEvent: (data: T) => void) {
     this.ws = new WebSocket(`${this.url}/${this.request.getPath()}`);
     this.ws.onopen = () => {
       this.ws.send(JSON.stringify(this.request.getParam()));
-      this.state = state.connect;
+      this.state = State.CONNECT;
     };
     this.ws.onmessage = (event) => {
-      if (this.state === state.connect) {
-        this.state = state.start;
-      } else if (this.state === state.start) {
-        const data = this.converter(JSON.parse(event.data));
-        onEvent(data);
+      if (this.state === State.CONNECT) {
+        this.state = State.START;
+      } else if (this.state === State.START) {
+        const converter = request.getConverter();
+        const data = converter(event.data);
+        ondata(data);
       }
     };
     this.ws.onclose = (event) => {
       this.ws.close(event.code);
     };
+    this.ws.onerror = onerror;
   }
 
   close() {

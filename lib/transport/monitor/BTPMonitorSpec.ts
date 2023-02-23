@@ -16,6 +16,7 @@
 import MonitorSpec from "./MonitorSpec";
 import BigNumber from "bignumber.js";
 import { Converter } from "../../data/index";
+import BTPNotification from "../../data/Formatter/BTPNotification";
 
 export default class BTPMonitorSpec implements MonitorSpec {
   readonly height: string | BigNumber;
@@ -43,5 +44,9 @@ export default class BTPMonitorSpec implements MonitorSpec {
       networkID: Converter.toHex(this.networkID),
       proofFlag: flag,
     };
+  }
+
+  getConverter(): (data) => BTPNotification {
+    return (data) => new BTPNotification(data);
   }
 }
