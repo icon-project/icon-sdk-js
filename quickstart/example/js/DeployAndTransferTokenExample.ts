@@ -1,6 +1,6 @@
 /* eslint-disable */
 
-import IconService from 'icon-sdk-js';
+import IconService, { Wallet } from 'icon-sdk-js';
 const { IconAmount, IconConverter, HttpProvider, IconWallet, IconBuilder, SignedTransaction } = IconService;
 import MockData from '../../mockData/index.js';
 
@@ -8,7 +8,7 @@ let deployAndTransferTokenExample;
 
 class DeployAndTransferTokenExample {
   private iconService: IconService;
-  private wallet;
+  private readonly wallet: Wallet;
   private deployTxHash: string;
   private content: string;
   private transactionTxHash: string;

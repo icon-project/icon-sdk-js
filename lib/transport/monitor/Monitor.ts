@@ -21,31 +21,31 @@ enum State {
   START,
 }
 
-export default class Monitor {
+export default class Monitor<T> {
   private ws: WebSocket;
   private readonly url: string;
-  private request: MonitorSpec;
+  private spec: MonitorSpec;
   private state = State.INIT;
 
   constructor(
     url: string,
-    request: MonitorSpec,
-    ondata: (data) => void,
+    spec: MonitorSpec,
+    ondata: (data: T) => void,
     onerror: (error) => void
   ) {
     this.url = url;
-    this.request = request;
-    this.ws = new WebSocket(`${this.url}/${this.request.getPath()}`);
+    this.spec = spec;
+    this.ws = new WebSocket(`${this.url}/${this.spec.getPath()}`);
     this.ws.onopen = () => {
-      this.ws.send(JSON.stringify(this.request.getParam()));
+      this.ws.send(JSON.stringify(this.spec.getParam()));
       this.state = State.CONNECT;
     };
     this.ws.onmessage = (event) => {
       if (this.state === State.CONNECT) {
         this.state = State.START;
       } else if (this.state === State.START) {
-        const converter = request.getConverter();
-        const data = converter(event.data);
+        const converter = spec.getConverter();
+        const data: T = converter(JSON.parse(event.data));
         ondata(data);
       }
     };

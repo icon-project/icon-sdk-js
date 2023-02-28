@@ -43,11 +43,9 @@ import BTPNetworkInfo from "./data/Formatter/BTPNetworkInfo";
 import BTPNetworkTypeInfo from "./data/Formatter/BTPNetworkTypeInfo";
 import BTPSourceInformation from "./data/Formatter/BTPSourceInformation";
 import Monitor from "./transport/monitor/Monitor";
-import MonitorRequest from "./transport/monitor/MonitorSpec";
 import BlockNotification from "./data/Formatter/BlockNotification";
 import EventNotification from "./data/Formatter/EventNotification";
 import BTPNotification from "./data/Formatter/BTPNotification";
-import EventFilter from "./transport/monitor/EventFilter";
 import BlockMonitorSpec from "./transport/monitor/BlockMonitorSpec";
 import EventMonitorSpec from "./transport/monitor/EventMonitorSpec";
 import BTPMonitorSpec from "./transport/monitor/BTPMonitorSpec";
@@ -616,7 +614,7 @@ export default class IconService {
     monitorSpec: BlockMonitorSpec,
     ondata: (notification: BlockNotification) => void,
     onerror
-  ): Monitor {
+  ): Monitor<BlockNotification> {
     return this.provider.monitor(monitorSpec, ondata, onerror);
   }
 
@@ -624,7 +622,7 @@ export default class IconService {
     monitorSpec: EventMonitorSpec,
     ondata: (notification: EventNotification) => void,
     onerror
-  ): Monitor {
+  ): Monitor<EventNotification> {
     return this.provider.monitor(monitorSpec, ondata, onerror);
   }
 
@@ -632,7 +630,7 @@ export default class IconService {
     monitorSpec: BTPMonitorSpec,
     ondata: (notification: BTPNotification) => void,
     onerror
-  ): Monitor {
+  ): Monitor<BTPNotification> {
     return this.provider.monitor(monitorSpec, ondata, onerror);
   }
 }

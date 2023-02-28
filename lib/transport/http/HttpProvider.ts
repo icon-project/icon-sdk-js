@@ -52,12 +52,12 @@ export default class HttpProvider {
     return new HttpCall<T>(HttpClient.newCall(httpRequest) as any, converter);
   }
 
-  monitor(
+  monitor<T>(
     request: MonitorSpec,
-    ondata: (data) => void,
+    ondata: (data: T) => void,
     onerror: (error) => void
-  ): Monitor {
+  ): Monitor<T> {
     const url = this.url.replace("http", "ws");
-    return new Monitor(url, request, ondata, onerror);
+    return new Monitor<T>(url, request, ondata, onerror);
   }
 }
