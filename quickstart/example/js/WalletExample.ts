@@ -1,7 +1,8 @@
 /* eslint-disable */
 
 import IconService from 'icon-sdk-js';
-import MockData from '../../mockData/index.js';
+import MockData from '../../mockData';
+import { KeyStore } from "icon-sdk-js";
 
 let walletExample;
 
@@ -29,7 +30,7 @@ class WalletExample {
 
     // 3. Load Wallet By Keystore File
     document.getElementById('W03').addEventListener('click', () => {
-      const walletLoadedByKeystoreFile = IconService.IconWallet.loadKeystore(MockData.KEYSTORE_FILE, MockData.PASSWORD);
+      const walletLoadedByKeystoreFile = IconService.IconWallet.loadKeystore(MockData.KEYSTORE_FILE as KeyStore, MockData.PASSWORD, false);
 
       document.getElementById('W03-1').innerHTML = `Address: ${walletLoadedByKeystoreFile.getAddress()}`;
       document.getElementById('W03-2').innerHTML = `Successfully loaded.`;

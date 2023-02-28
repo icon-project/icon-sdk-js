@@ -37,20 +37,15 @@ module.exports = {
 	},
 
 	resolve: {
-		extensions: ['.js'],
+		extensions: ['.js', 'ts'],
 		modules: [path.join(process.cwd(), './'), 'node_modules'], // directories where to look for modules
 	},
 
 	module: {
 		rules: [{
-			test: /\.js$/,
+      test: /\.(t|j)s$/,
 			exclude: /node_modules/,
-			use: {
-				loader: 'babel-loader',
-				options: {
-					presets: ['@babel/preset-env'],
-				},
-			},
+      loader: 'ts-loader',
 		}],
 	},
 	plugins: [

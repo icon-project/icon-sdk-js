@@ -7,24 +7,30 @@ import MockData from '../../mockData/index.js';
 let deployAndTransferTokenExample;
 
 class DeployAndTransferTokenExample {
+  private iconService: IconService;
+  private wallet;
+  private deployTxHash: string;
+  private content: string;
+  private transactionTxHash: string;
+  private scoreAddress: string;
   constructor() {
     // HttpProvider is used to communicate with http.
-    this.provider = new HttpProvider(MockData.NODE_URL);
+    const provider = new HttpProvider(MockData.NODE_URL);
 
     // Create IconService instance
-        this.iconService = new IconService(this.provider);
+    this.iconService = new IconService(provider);
 
-        // Load wallet
-        this.wallet = IconWallet.loadPrivateKey(MockData.PRIVATE_KEY_1);
+    // Load wallet
+    this.wallet = IconWallet.loadPrivateKey(MockData.PRIVATE_KEY_1);
 
-        this.deployTxHash = '';
-        this.transactionTxHash = '';
-        this.content = '';
+    this.deployTxHash = '';
+    this.transactionTxHash = '';
+    this.content = '';
 
-        this.scoreAddress = '';
+    this.scoreAddress = '';
 
-        this.addListener();
-    }
+    this.addListener();
+  }
 
     addListener() {
         // 1. Upload Score File
