@@ -12,6 +12,7 @@ export default class EventNotification {
     this.height = Converter.toBigNumber(data.height);
     this.index = Converter.toBigNumber(data.index);
     if (data.events) {
+      this.events = [];
       for (let i = 0; i < data.events; i++)
         this.events[i] = Converter.toBigNumber(data.events[i]);
     }

@@ -39,11 +39,10 @@ export default class EventMonitorSpec implements MonitorSpec {
   }
 
   getParam(): object {
-    const ret = {
-      height: Converter.toHex(this.height),
-    };
-    if (this.eventFilter) ret["eventFilter"] = this.eventFilter.toObject();
+    let ret = {};
+    if (this.eventFilter) ret = this.eventFilter.toObject();
     if (this.logs) ret["logs"] = "0x1";
+    ret["height"] = Converter.toHex(this.height);
     return ret;
   }
 

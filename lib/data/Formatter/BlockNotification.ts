@@ -11,15 +11,23 @@ export default class BlockNotification {
     this.hash = data.hash;
     this.height = Converter.toBigNumber(data.height);
     if (data.indexes) {
-      for (let i = 0; i < data.indexes.length; i++)
+      this.indexes = [];
+      for (let i = 0; i < data.indexes.length; i++) {
+        this.indexes[i] = [];
         for (let j = 0; j < data.indexes[i].length; j++)
           this.indexes[i][j] = Converter.toBigNumber(data.indexes[i][j]);
+      }
     }
     if (data.events) {
-      for (let i = 0; i < data.events.length; i++)
-        for (let j = 0; j < data.events[i].length; j++)
+      this.events = [];
+      for (let i = 0; i < data.events.length; i++) {
+        this.events[i] = [];
+        for (let j = 0; j < data.events[i].length; j++) {
+          this.events[i][j] = [];
           for (let k = 0; k < data.events[i][j].length; k++)
             this.events[i][j][k] = Converter.toBigNumber(data.events[i][j][k]);
+        }
+      }
     }
   }
 }

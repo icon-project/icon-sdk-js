@@ -21,6 +21,7 @@ import BlockMonitorSpec from "./transport/monitor/BlockMonitorSpec";
 import EventMonitorSpec from "./transport/monitor/EventMonitorSpec";
 import BTPMonitorSpec from "./transport/monitor/BTPMonitorSpec";
 import Monitor from "./transport/monitor/Monitor";
+import EventFilter from "./transport/monitor/EventFilter";
 
 import { KeyStore } from "./Wallet";
 
@@ -34,5 +35,6 @@ export {
   BTPMonitorSpec,
   KeyStore,
   Monitor,
+  EventFilter,
 };
 export * from "./data";
