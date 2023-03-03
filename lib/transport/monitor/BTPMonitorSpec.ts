@@ -19,15 +19,11 @@ import { Converter } from "../../data/index";
 import BTPNotification from "../../data/Formatter/BTPNotification";
 
 export default class BTPMonitorSpec implements MonitorSpec {
-  readonly height: string | BigNumber;
-  readonly networkID: string | BigNumber;
+  readonly height: BigNumber;
+  readonly networkID: BigNumber;
   readonly proofFlag: boolean;
 
-  constructor(
-    height: string | BigNumber,
-    networkID: string | BigNumber,
-    proofFlag: boolean
-  ) {
+  constructor(height: BigNumber, networkID: BigNumber, proofFlag: boolean) {
     this.height = height;
     this.networkID = networkID;
     this.proofFlag = proofFlag;

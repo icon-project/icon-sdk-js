@@ -31,7 +31,7 @@ class MonitorExample {
   async startMonitorBlock() {
     const block = await this.iconService.getLastBlock().execute();
     const height = block.height;
-    const spec = new BlockMonitorSpec(IconService.IconConverter.toHex(height + 1));
+    const spec = new BlockMonitorSpec(IconService.IconConverter.toBigNumber(height + 1));
     const onevent = (data: BlockNotification) => {
       document.getElementById("M01-3").innerHTML = `block height : ${data.height}, block hash : ${data.hash}`;
     }

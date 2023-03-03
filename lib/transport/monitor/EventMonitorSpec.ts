@@ -20,15 +20,11 @@ import { Converter } from "../../data/index";
 import EventNotification from "../../data/Formatter/EventNotification";
 
 export default class EventMonitorSpec implements MonitorSpec {
-  readonly height: string | BigNumber;
+  readonly height: BigNumber;
   readonly eventFilter: EventFilter;
   readonly logs: boolean;
 
-  constructor(
-    height: string | BigNumber,
-    eventFilter?: EventFilter,
-    logs?: boolean
-  ) {
+  constructor(height: BigNumber, eventFilter?: EventFilter, logs?: boolean) {
     this.height = height;
     this.eventFilter = eventFilter;
     this.logs = logs;

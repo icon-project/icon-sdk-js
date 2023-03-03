@@ -20,10 +20,10 @@ import { Converter } from "../../data/index";
 import BlockNotification from "../../data/Formatter/BlockNotification";
 
 export default class BlockMonitorSpec implements MonitorSpec {
-  readonly height: string | BigNumber;
+  readonly height: BigNumber;
   readonly eventFilters?: EventFilter[];
 
-  constructor(height: string | BigNumber, eventFilters?: EventFilter[]) {
+  constructor(height: BigNumber, eventFilters?: EventFilter[]) {
     this.height = height;
     this.eventFilters = eventFilters;
   }

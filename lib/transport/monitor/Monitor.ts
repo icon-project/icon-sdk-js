@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 import MonitorSpec from "./MonitorSpec";
+import { RpcError } from "../../Exception";
 
 enum State {
   INIT = 0,
@@ -42,7 +43,12 @@ export default class Monitor<T> {
     };
     this.ws.onmessage = (event) => {
       if (this.state === State.CONNECT) {
-        this.state = State.START;
+        const res = JSON.parse(event.data);
+        if (res.code != 0) {
+          throw new RpcError(event.data.message).toString();
+        } else {
+          this.state = State.START;
+        }
       } else if (this.state === State.START) {
         const converter = spec.getConverter();
         const data: T = converter(JSON.parse(event.data));
