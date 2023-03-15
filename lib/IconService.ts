@@ -610,6 +610,13 @@ export default class IconService {
     }
   }
 
+  /***
+   * Get monitor for block.
+   * @param monitorSpec
+   * @param ondata - Callback to be called when Monitor successfully got messages
+   * @param onerror - Callback to be called when a network error or os error occurs
+   * @return {Monitor<BlockNotification>} The Monitor instance for `block` websocket API
+   */
   monitorBlock(
     monitorSpec: BlockMonitorSpec,
     ondata: (notification: BlockNotification) => void,
@@ -618,6 +625,13 @@ export default class IconService {
     return this.provider.monitor(monitorSpec, ondata, onerror);
   }
 
+  /***
+   * Get monitor for event
+   * @param monitorSpec
+   * @param ondata - Callback to be called when Monitor successfully got messages
+   * @param onerror - Callback to be called when a network error or os error occurs
+   * @return {Monitor<EventNotification>} The Monitor instance for `event` websocket API
+   */
   monitorEvent(
     monitorSpec: EventMonitorSpec,
     ondata: (notification: EventNotification) => void,
@@ -626,6 +640,13 @@ export default class IconService {
     return this.provider.monitor(monitorSpec, ondata, onerror);
   }
 
+  /***
+   * Get monitor for btp
+   * @param monitorSpec
+   * @param ondata - Callback to be called when Monitor successfully got messages
+   * @param onerror - Callback to be called when a network error or os error occurs
+   * @return {Monitor<BTPNotification>} The Monitor instance for `btp` websocket API
+   */
   monitorBTP(
     monitorSpec: BTPMonitorSpec,
     ondata: (notification: BTPNotification) => void,
