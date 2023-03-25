@@ -620,7 +620,7 @@ export default class IconService {
   monitorBlock(
     monitorSpec: BlockMonitorSpec,
     ondata: (notification: BlockNotification) => void,
-    onerror
+    onerror: (error) => void
   ): Monitor<BlockNotification> {
     return this.provider.monitor(monitorSpec, ondata, onerror);
   }
@@ -635,7 +635,7 @@ export default class IconService {
   monitorEvent(
     monitorSpec: EventMonitorSpec,
     ondata: (notification: EventNotification) => void,
-    onerror
+    onerror: (error) => void
   ): Monitor<EventNotification> {
     return this.provider.monitor(monitorSpec, ondata, onerror);
   }
@@ -650,7 +650,7 @@ export default class IconService {
   monitorBTP(
     monitorSpec: BTPMonitorSpec,
     ondata: (notification: BTPNotification) => void,
-    onerror
+    onerror: (error) => void
   ): Monitor<BTPNotification> {
     return this.provider.monitor(monitorSpec, ondata, onerror);
   }

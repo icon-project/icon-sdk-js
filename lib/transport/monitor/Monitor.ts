@@ -42,21 +42,22 @@ export default class Monitor<T> {
       this.state = State.CONNECT;
     };
     this.ws.onmessage = (event) => {
-      if (this.state === State.CONNECT) {
-        const res = JSON.parse(event.data);
-        if (res.code != 0) {
-          throw new RpcError(event.data.message).toString();
-        } else {
-          this.state = State.START;
+      try {
+        if (this.state === State.CONNECT) {
+          const res = JSON.parse(event.data);
+          if (res.code != 0) {
+            throw new RpcError(res.message).toString();
+          } else {
+            this.state = State.START;
+          }
+        } else if (this.state === State.START) {
+          const converter = spec.getConverter();
+          const data: T = converter(JSON.parse(event.data));
+          ondata(data);
         }
-      } else if (this.state === State.START) {
-        const converter = spec.getConverter();
-        const data: T = converter(JSON.parse(event.data));
-        ondata(data);
+      } catch (e) {
+        this.ws.onerror(e);
       }
-    };
-    this.ws.onclose = (event) => {
-      this.ws.close(event.code);
     };
     this.ws.onerror = onerror;
   }

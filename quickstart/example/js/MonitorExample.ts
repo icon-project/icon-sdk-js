@@ -35,7 +35,10 @@ class MonitorExample {
     const onevent = (data: BlockNotification) => {
       document.getElementById("M01-3").innerHTML = `block height : ${data.height}, block hash : ${data.hash}`;
     }
-    this.monitor = this.iconService.monitorBlock(spec, onevent, null);
+    const onerror = (error) => {
+      console.log(error);
+    }
+    this.monitor = this.iconService.monitorBlock(spec, onevent, onerror);
   }
 }
 
