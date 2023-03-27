@@ -34,18 +34,13 @@ Please go to `quickstart` directory and install dependency to use `icon-sdk-js`.
 
 npm
 ```
-npm install   // install dependencies for executing the quickstart project (including icon-sdk-js package)
+yarn install   // install dependencies for executing the quickstart project (including icon-sdk-js package)
 ```
 
 ### Run example file
 Run example file.
 ```
-npm start   // open http://localhost:3000/ in browser
-```
-
-If you want to rebuild icon-sdk-js library and run quickstart project, go to icon-sdk-js root directory and run `npm run quickstart:rebuild` command.
-```
-npm run quickstart:rebuild   // open http://localhost:3000/ in browser
+yarn start   // open http://localhost:3000/ in browser
 ```
 
 ### Set Node URL

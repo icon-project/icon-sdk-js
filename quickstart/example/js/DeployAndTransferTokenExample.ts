@@ -3,6 +3,7 @@
 import IconService, { Wallet } from 'icon-sdk-js';
 const { IconAmount, IconConverter, HttpProvider, IconWallet, IconBuilder, SignedTransaction } = IconService;
 import MockData from '../../mockData/index.js';
+import BigNumber from "bignumber.js";
 
 let deployAndTransferTokenExample;
 
@@ -156,7 +157,7 @@ class DeployAndTransferTokenExample {
         return transaction;
     }
 
-    async getMaxStepLimit() {
+    async getMaxStepLimit(): Promise<BigNumber> {
         const { CallBuilder } = IconBuilder;
 
         const governanceApi = await this.iconService.getScoreApi(MockData.GOVERNANCE_ADDRESS).execute();
@@ -255,7 +256,7 @@ class DeployAndTransferTokenExample {
         return transaction;
     }
 
-    async getDefaultStepCost() {
+    async getDefaultStepCost(): Promise<BigNumber> {
         const { CallBuilder } = IconBuilder;
 
         // Get governance score api list
