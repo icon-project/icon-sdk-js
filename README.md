@@ -32,10 +32,10 @@ ICON supports JavaScript SDK for 3rd party or user services development. You can
 
 ### Usage in Node.js
 
-Install `icon-sdk-js` module using `npm`.
+Install `icon-sdk-js` module using `yarn`.
 
 ```bash
-npm install --save icon-sdk-js
+yarn add icon-sdk-js
 ```
 
 Import `icon-sdk-js` module.
@@ -46,10 +46,10 @@ const IconService = require('icon-sdk-js');
 
 ### Usage in browser
 
-Install `icon-sdk-js` module using `npm`,
+Install `icon-sdk-js` module using `yarn`,
 
 ```bash
-npm install --save icon-sdk-js
+yarn add icon-sdk-js
 ```
 
 or using CDN.
@@ -67,10 +67,10 @@ import IconService from 'icon-sdk-js';
 
 ### Usage in react-native environment
 
-Install `icon-sdk-js` module using `npm`,
+Install `icon-sdk-js` module using `yarn`,
 
 ```bash
-npm install --save icon-sdk-js
+yarn add icon-sdk-js
 ```
 
 Then, import `icon-sdk-js/build/icon-sdk-js.web.min.js` module.
