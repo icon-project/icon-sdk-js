@@ -49,6 +49,7 @@ import BTPNotification from "./data/Formatter/BTPNotification";
 import BlockMonitorSpec from "./transport/monitor/BlockMonitorSpec";
 import EventMonitorSpec from "./transport/monitor/EventMonitorSpec";
 import BTPMonitorSpec from "./transport/monitor/BTPMonitorSpec";
+import ScoreStatus from "./data/Formatter/ScoreStatus";
 
 /**
  * Class which provides APIs of ICON network.
@@ -199,9 +200,9 @@ export default class IconService {
    * @description Get the SCORE status
    * @param {string} address SCORE address
    * @param {Hash} [height] block Height
-   * @return {array} The HttpCall instance for icx_getScoreStatus JSON-RPC API request.
+   * @return {object} The HttpCall instance for icx_getScoreStatus JSON-RPC API request.
    */
-  getScoreStatus(address: string, height?: Hash): HttpCall<ScoreApiList> {
+  getScoreStatus(address: string, height?: Hash): HttpCall<ScoreStatus> {
     let params;
     if (height === undefined) {
       params = { address };
@@ -215,7 +216,7 @@ export default class IconService {
       const requestId = Util.getCurrentTime();
       const request = new Request(requestId, "icx_getScoreStatus", params);
 
-      return this.provider.request(request);
+      return this.provider.request(request, (data) => new ScoreStatus(data));
     }
   }
 
