@@ -42,6 +42,13 @@ import { Hash } from "./types/hash";
 import BTPNetworkInfo from "./data/Formatter/BTPNetworkInfo";
 import BTPNetworkTypeInfo from "./data/Formatter/BTPNetworkTypeInfo";
 import BTPSourceInformation from "./data/Formatter/BTPSourceInformation";
+import Monitor from "./transport/monitor/Monitor";
+import BlockNotification from "./data/Formatter/BlockNotification";
+import EventNotification from "./data/Formatter/EventNotification";
+import BTPNotification from "./data/Formatter/BTPNotification";
+import BlockMonitorSpec from "./transport/monitor/BlockMonitorSpec";
+import EventMonitorSpec from "./transport/monitor/EventMonitorSpec";
+import BTPMonitorSpec from "./transport/monitor/BTPMonitorSpec";
 
 /**
  * Class which provides APIs of ICON network.
@@ -601,5 +608,50 @@ export default class IconService {
       const request = new Request(requestId, "debug_getTrace", params);
       return this.provider.request(request);
     }
+  }
+
+  /***
+   * Get monitor for block.
+   * @param monitorSpec
+   * @param ondata - Callback to be called when Monitor successfully got messages
+   * @param onerror - Callback to be called when a network error or os error occurs
+   * @return {Monitor<BlockNotification>} The Monitor instance for `block` websocket API
+   */
+  monitorBlock(
+    monitorSpec: BlockMonitorSpec,
+    ondata: (notification: BlockNotification) => void,
+    onerror: (error) => void
+  ): Monitor<BlockNotification> {
+    return this.provider.monitor(monitorSpec, ondata, onerror);
+  }
+
+  /***
+   * Get monitor for event
+   * @param monitorSpec
+   * @param ondata - Callback to be called when Monitor successfully got messages
+   * @param onerror - Callback to be called when a network error or os error occurs
+   * @return {Monitor<EventNotification>} The Monitor instance for `event` websocket API
+   */
+  monitorEvent(
+    monitorSpec: EventMonitorSpec,
+    ondata: (notification: EventNotification) => void,
+    onerror: (error) => void
+  ): Monitor<EventNotification> {
+    return this.provider.monitor(monitorSpec, ondata, onerror);
+  }
+
+  /***
+   * Get monitor for btp
+   * @param monitorSpec
+   * @param ondata - Callback to be called when Monitor successfully got messages
+   * @param onerror - Callback to be called when a network error or os error occurs
+   * @return {Monitor<BTPNotification>} The Monitor instance for `btp` websocket API
+   */
+  monitorBTP(
+    monitorSpec: BTPMonitorSpec,
+    ondata: (notification: BTPNotification) => void,
+    onerror: (error) => void
+  ): Monitor<BTPNotification> {
+    return this.provider.monitor(monitorSpec, ondata, onerror);
   }
 }

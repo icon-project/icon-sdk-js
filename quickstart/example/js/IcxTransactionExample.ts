@@ -1,6 +1,6 @@
 /* eslint-disable */
 
-import IconService from 'icon-sdk-js';
+import IconService, { Wallet } from 'icon-sdk-js';
 import MockData from '../../mockData/index.js';
 
 const { IconAmount, IconConverter, HttpProvider, IconWallet, IconBuilder, SignedTransaction } = IconService;
@@ -8,14 +8,18 @@ const { IconAmount, IconConverter, HttpProvider, IconWallet, IconBuilder, Signed
 let icxTransactionExample;
 
 class IcxTransactionExample {
+  private iconService: IconService;
+  private debugService: IconService;
+  private readonly wallet: Wallet;
+  private txHash: string;
   constructor() {
     // HttpProvider is used to communicate with http.
-    this.provider = new HttpProvider(MockData.NODE_URL);
-    this.debugProvider = new HttpProvider(MockData.DEBUG_URL);
+    const provider = new HttpProvider(MockData.NODE_URL);
+    const debugProvider = new HttpProvider(MockData.DEBUG_URL);
 
     // Create IconService instance
-    this.iconService = new IconService(this.provider);
-    this.debugService = new IconService(this.debugProvider);
+    this.iconService = new IconService(provider);
+    this.debugService = new IconService(debugProvider);
 
     // Load wallet
     this.wallet = IconWallet.loadPrivateKey(MockData.PRIVATE_KEY_1);
@@ -105,10 +109,10 @@ class IcxTransactionExample {
     const transactionProperties = JSON.stringify(IconConverter.toRawTransaction(transaction)).split(",").join(", \n")
     document.getElementById('I04-1').innerHTML = `<b>Transaction</b>: ${transactionProperties}`;
     // query step
-    this.estimatedStep = await this.debugService.estimateStep(transaction).execute();
-    console.log(this.estimatedStep);
+    const estimatedStep = await this.debugService.estimateStep(transaction).execute();
+    console.log(estimatedStep);
     // // Print estimated step
-    document.getElementById('I04-2').innerHTML = `<b> estimated step is ${this.estimatedStep}</b>`;
+    document.getElementById('I04-2').innerHTML = `<b> estimated step is ${estimatedStep}</b>`;
   }
 
   buildEstimationRequest() {

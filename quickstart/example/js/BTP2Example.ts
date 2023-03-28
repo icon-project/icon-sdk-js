@@ -7,12 +7,13 @@ import MockData from '../../mockData/index.js';
 let btpExample;
 
 class BTPExample {
+  private iconService: IconService;
   constructor() {
     // HttpProvider is used to communicate with http.
-    this.provider = new HttpProvider(MockData.NODE_URL);
+    const provider = new HttpProvider(MockData.NODE_URL);
 
     // Create IconService instance
-    this.iconService = new IconService(this.provider);
+    this.iconService = new IconService(provider);
 
     this.addListener();
   }
@@ -50,7 +51,7 @@ class BTPExample {
   }
 
   async getNetworkInfo() {
-    const id = document.getElementById("Q01").value;
+    const id = (<HTMLInputElement>document.getElementById("Q01")).value;
     const networkInfo = await this.iconService.getBTPNetworkInfo(id).execute();
     document.getElementById("Q01-3").innerHTML = `networkTypeID : ${networkInfo.networkTypeID}`
     document.getElementById("Q01-4").innerHTML = `networkID : ${networkInfo.networkID}`
@@ -66,7 +67,7 @@ class BTPExample {
   }
 
   async getNetworkTypeInfo() {
-    const id = document.getElementById("Q02").value;
+    const id = (<HTMLInputElement>document.getElementById("Q02")).value;
     const networkTypeInfo = await this.iconService.getBTPNetworkTypeInfo(id).execute();
     document.getElementById("Q02-3").innerHTML = `networkTypeID : ${networkTypeInfo.networkTypeID}`
     document.getElementById("Q02-4").innerHTML = `networkTypeName : ${networkTypeInfo.networkTypeName}`
@@ -75,22 +76,22 @@ class BTPExample {
   }
 
   async getMessages() {
-    const id = document.getElementById("Q03").value;
-    const height = document.getElementById("Q03-2").value;
+    const id = (<HTMLInputElement>document.getElementById("Q03")).value;
+    const height = (<HTMLInputElement>document.getElementById("Q03-2")).value;
     const messages = await this.iconService.getBTPMessages(id, height).execute();
     document.getElementById("Q03-4").innerHTML = `messages : ${messages}`
   }
 
   async getHeader() {
-    const id = document.getElementById("Q04").value;
-    const height = document.getElementById("Q04-2").value;
+    const id = (<HTMLInputElement>document.getElementById("Q04")).value;
+    const height = (<HTMLInputElement>document.getElementById("Q04-2")).value;
     const header = await this.iconService.getBTPHeader(id, height).execute();
     document.getElementById("Q04-4").innerHTML = `header : ${header}`
   }
 
   async getProof() {
-    const id = document.getElementById("Q05").value;
-    const height = document.getElementById("Q05-2").value;
+    const id = (<HTMLInputElement>document.getElementById("Q05")).value;
+    const height = (<HTMLInputElement>document.getElementById("Q05-2")).value;
     const proof = await this.iconService.getBTPProof(id, height).execute();
     document.getElementById("Q05-4").innerHTML = `proof : ${proof}`
   }

@@ -21,5 +21,19 @@ import * as Type from "./Type";
 import * as Util from "./Util";
 import * as Validator from "./Validator";
 import * as Formatter from "./Formatter";
+import BlockNotification from "./Formatter/BlockNotification";
+import EventNotification from "./Formatter/EventNotification";
+import BTPNotification from "./Formatter/BTPNotification";
 
-export { Amount, Converter, Hexadecimal, Type, Util, Validator, Formatter };
+export {
+  Amount,
+  Converter,
+  Hexadecimal,
+  Type,
+  Util,
+  Validator,
+  Formatter,
+  BlockNotification,
+  EventNotification,
+  BTPNotification,
+};

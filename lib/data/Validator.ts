@@ -20,8 +20,7 @@ import BigNumber from "bignumber.js";
 import { isHex, isArray } from "./Type";
 import { hasProperties } from "./Util";
 import { toBigNumber } from "./Converter";
-
-const secp256k1 = require("secp256k1");
+import * as secp256k1 from "secp256k1";
 
 /**
  * Check if input value is a private key.

@@ -19,8 +19,7 @@
 
 import { sha3_256 as sha3256 } from "js-sha3";
 import { isArray, isString } from "./Type";
-
-const secp256k1 = require("secp256k1");
+import * as secp256k1 from "secp256k1";
 
 export function getCurrentTime(): number {
   const date = new Date();

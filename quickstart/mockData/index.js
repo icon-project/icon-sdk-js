@@ -30,6 +30,7 @@ const KEYSTORE_FILE = {
     },
     mac: "43789e78de4744d06c14cf966b9609fadbcd815b5380caf3f778797f9824d9d7",
   },
+  coinType: "icx",
 };
 const PASSWORD = "qwer1234!";
 
