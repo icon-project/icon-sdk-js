@@ -1,7 +1,7 @@
 /* eslint-disable */
 
-import IconService from 'icon-sdk-js';
-const { IconConverter, HttpProvider } = IconService;
+import IconService, {Block, HttpProvider} from 'icon-sdk-js';
+const { IconConverter } = IconService;
 import MockData from '../../mockData/index.js';
 
 let syncBlockExample;
@@ -46,7 +46,7 @@ class SyncBlockExample {
     async getLatestBlock() {
         // Check the recent blocks
         console.log(this)
-        const block = await this.iconService.getLastBlock().execute();
+        const block: Block = await this.iconService.getLastBlock().execute();
         const nextHeight = block.height;
         document.getElementById('S03-1').innerHTML = `${nextHeight}`;
         console.log(this.prevHeight, nextHeight)
@@ -59,7 +59,7 @@ class SyncBlockExample {
             }
             Promise.all(
                 blockArr.map(async (block) => {
-                    var nextBlock = await this.iconService.getBlockByHeight(IconConverter.toBigNumber(block)).execute();
+                    const nextBlock: Block = await this.iconService.getBlockByHeight(IconConverter.toBigNumber(block)).execute();
                     await this.syncBlock(nextBlock);
                 })
             );
@@ -92,7 +92,6 @@ class SyncBlockExample {
                     if (method !== null && method === "transfer") {
                         const params = transaction.data.params;
                         const value = IconConverter.toBigNumber(params["_value"]); // value
-                        const toAddr = params["_to"];
 
                         const tokenName = await this.getTokenName(transaction.to);
                         const symbol = await this.getTokenSymbol(transaction.to);
@@ -115,8 +114,7 @@ class SyncBlockExample {
             .to(tokenAddress)
             .method("name")
             .build();
-        const result = await this.iconService.call(call).execute();
-        return result;
+        return await this.iconService.call(call).execute();
     }
 
     async getTokenSymbol(to) {
@@ -128,8 +126,7 @@ class SyncBlockExample {
             .to(tokenAddress)
             .method("symbol")
             .build();
-        const result = await this.iconService.call(call).execute();
-        return result;
+        return await this.iconService.call(call).execute();
     }
 }
 

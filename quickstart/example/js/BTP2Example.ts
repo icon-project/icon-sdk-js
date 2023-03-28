@@ -1,7 +1,6 @@
 /* eslint-disable */
 
-import IconService from 'icon-sdk-js';
-const { HttpProvider } = IconService;
+import IconService, {HttpProvider} from 'icon-sdk-js';
 import MockData from '../../mockData/index.js';
 
 let btpExample;
@@ -10,7 +9,7 @@ class BTPExample {
   private iconService: IconService;
   constructor() {
     // HttpProvider is used to communicate with http.
-    const provider = new HttpProvider(MockData.NODE_URL);
+    const provider: HttpProvider = new HttpProvider(MockData.NODE_URL);
 
     // Create IconService instance
     this.iconService = new IconService(provider);

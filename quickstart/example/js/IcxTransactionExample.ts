@@ -1,9 +1,9 @@
 /* eslint-disable */
 
-import IconService, { Wallet } from 'icon-sdk-js';
+import IconService, {HttpProvider, Wallet} from 'icon-sdk-js';
 import MockData from '../../mockData/index.js';
 
-const { IconAmount, IconConverter, HttpProvider, IconWallet, IconBuilder, SignedTransaction } = IconService;
+const { IconAmount, IconConverter, IconWallet, IconBuilder, SignedTransaction } = IconService;
 
 let icxTransactionExample;
 

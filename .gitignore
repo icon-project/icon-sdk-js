@@ -10,7 +10,6 @@ yarn-debug.log*
 yarn-error.log*
 *.zip
 .vscode
-yarn.lock
 .travis.yml
 .nvmrc
 .eslintrc
@@ -18,3 +17,4 @@ yarn.lock
 .babelrc
 
 build/
+

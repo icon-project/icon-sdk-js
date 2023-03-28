@@ -3,6 +3,7 @@
 import IconService, { Wallet } from 'icon-sdk-js';
 const { IconAmount, IconConverter, HttpProvider, IconWallet, IconBuilder, SignedTransaction } = IconService;
 import MockData from '../../mockData/index.js';
+import BigNumber from "bignumber.js";
 
 let deployAndTransferTokenExample;
 
@@ -142,7 +143,7 @@ class DeployAndTransferTokenExample {
 
         //Enter transaction information
         const deployTransactionBuilder = new DeployTransactionBuilder();
-        const transaction = deployTransactionBuilder
+        return deployTransactionBuilder
             .nid(networkId)
             .from(walletAddress)
             .to(installScore)
@@ -153,10 +154,9 @@ class DeployAndTransferTokenExample {
             .params(params)
             .version(version)
             .build();
-        return transaction;
     }
 
-    async getMaxStepLimit() {
+    async getMaxStepLimit(): Promise<BigNumber> {
         const { CallBuilder } = IconBuilder;
 
         const governanceApi = await this.iconService.getScoreApi(MockData.GOVERNANCE_ADDRESS).execute();
@@ -241,8 +241,7 @@ class DeployAndTransferTokenExample {
         }
 
         //Enter transaction information
-        const tokenTransactionBuilder = new CallTransactionBuilder();
-        const transaction = tokenTransactionBuilder
+        return new CallTransactionBuilder()
             .nid(networkId)
             .from(walletAddress)
             .to(this.scoreAddress)
@@ -252,10 +251,9 @@ class DeployAndTransferTokenExample {
             .params(params)
             .version(version)
             .build();
-        return transaction;
     }
 
-    async getDefaultStepCost() {
+    async getDefaultStepCost(): Promise<BigNumber> {
         const { CallBuilder } = IconBuilder;
 
         // Get governance score api list
