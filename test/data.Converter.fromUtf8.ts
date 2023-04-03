@@ -1,5 +1,5 @@
 import * as assert from 'assert';
-import IconService from '../lib/index';
+import IconService from '../lib';
 
 const tests = [
   { value: 'Game of Thrones', expected: '0x47616d65206f66205468726f6e6573' },

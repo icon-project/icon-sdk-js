@@ -25,6 +25,7 @@ import EventFilter from "./transport/monitor/EventFilter";
 import HttpProvider from "./transport/http/HttpProvider";
 import BigNumber from "bignumber.js";
 import { KeyStore } from "./Wallet";
+import SignedTransaction from "./SignedTransaction";
 
 // eslint-disable-next-line no-restricted-exports
 export {
@@ -39,5 +40,6 @@ export {
   EventFilter,
   HttpProvider,
   BigNumber,
+  SignedTransaction,
 };
 export * from "./data";

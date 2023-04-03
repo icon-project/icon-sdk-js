@@ -1,6 +1,6 @@
 import * as assert from 'assert';
-import BigNumber from 'bignumber.js';
-import IconService from '../lib/index';
+import {BigNumber} from "../lib";
+import IconService from '../lib';
 
 const tests = [
   { value: '0.00008', expected: new BigNumber(0.00008) },
