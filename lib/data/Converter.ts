@@ -209,7 +209,7 @@ export function toRawTransaction(transaction) {
     (rawTransaction as any).dataType = dataType;
   }
 
-  if (["call", "deploy", "message"].indexOf(dataType) !== -1 && data) {
+  if (data) {
     (rawTransaction as any).data = data;
   }
 

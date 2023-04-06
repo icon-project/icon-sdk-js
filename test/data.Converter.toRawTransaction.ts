@@ -138,6 +138,37 @@ const tests = [
       data: '0x41717561204d616e',
     },
   },
+  {
+    // Deposit Transaction
+    value: {
+      from: 'hx46293d558d3bd489c3715e7e3648de0e35086bfd',
+      to: 'cx87a90bfe8ed49e1a25184ce77fa0d9c4b0484d6a',
+      value: IconService.IconAmount.of(5000, IconService.IconAmount.Unit.ICX).toLoop(),
+      stepLimit: IconService.IconConverter.toBigNumber(100000),
+      nid: IconService.IconConverter.toBigNumber(3),
+      nonce: IconService.IconConverter.toBigNumber(1),
+      version: IconService.IconConverter.toBigNumber(3),
+      timestamp: 1544596599371000,
+      dataType: 'deposit',
+      data: {
+        action: 'add',
+      }
+    },
+    expected: {
+      from: 'hx46293d558d3bd489c3715e7e3648de0e35086bfd',
+      to: 'cx87a90bfe8ed49e1a25184ce77fa0d9c4b0484d6a',
+      value: '0x10f0cf064dd59200000',
+      stepLimit: '0x186a0',
+      nid: '0x3',
+      nonce: '0x1',
+      version: '0x3',
+      timestamp: '0x57ccd6ba074f8',
+      dataType: 'deposit',
+      data: {
+        action: 'add',
+      }
+    }
+  }
 ];
 
 describe('data/Converter', () => {
