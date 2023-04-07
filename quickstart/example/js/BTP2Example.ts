@@ -1,6 +1,6 @@
 /* eslint-disable */
 
-import IconService, {HttpProvider} from 'icon-sdk-js';
+import IconService, {BTPNetworkInfo, BTPNetworkTypeInfo, HttpProvider} from 'icon-sdk-js';
 import MockData from '../../mockData/index.js';
 
 let btpExample;
@@ -51,7 +51,7 @@ class BTPExample {
 
   async getNetworkInfo() {
     const id = (<HTMLInputElement>document.getElementById("Q01")).value;
-    const networkInfo = await this.iconService.getBTPNetworkInfo(id).execute();
+    const networkInfo: BTPNetworkInfo = await this.iconService.getBTPNetworkInfo(id).execute();
     document.getElementById("Q01-3").innerHTML = `networkTypeID : ${networkInfo.networkTypeID}`
     document.getElementById("Q01-4").innerHTML = `networkID : ${networkInfo.networkID}`
     document.getElementById("Q01-5").innerHTML = `networkTypeName : ${networkInfo.networkTypeName}`
@@ -67,7 +67,7 @@ class BTPExample {
 
   async getNetworkTypeInfo() {
     const id = (<HTMLInputElement>document.getElementById("Q02")).value;
-    const networkTypeInfo = await this.iconService.getBTPNetworkTypeInfo(id).execute();
+    const networkTypeInfo: BTPNetworkTypeInfo = await this.iconService.getBTPNetworkTypeInfo(id).execute();
     document.getElementById("Q02-3").innerHTML = `networkTypeID : ${networkTypeInfo.networkTypeID}`
     document.getElementById("Q02-4").innerHTML = `networkTypeName : ${networkTypeInfo.networkTypeName}`
     document.getElementById("Q02-5").innerHTML = `nextProofContext : ${networkTypeInfo.nextProofContext}`

@@ -1,6 +1,6 @@
 /* eslint-disable */
 
-import IconService, {Block, HttpProvider} from 'icon-sdk-js';
+import IconService, { Block, HttpProvider, CallBuilder } from 'icon-sdk-js';
 const { IconConverter } = IconService;
 import MockData from '../../mockData/index.js';
 
@@ -19,7 +19,7 @@ class SyncBlockExample {
   private prevHeight?: number;
   constructor() {
     // HttpProvider is used to communicate with http.
-    const provider = new HttpProvider(MockData.NODE_URL);
+    const provider: HttpProvider = new HttpProvider(MockData.NODE_URL);
 
     // Create IconService instance
         this.iconService = new IconService(provider);
@@ -106,10 +106,8 @@ class SyncBlockExample {
     }
 
     async getTokenName(to) {
-        const { IconBuilder } = IconService;
-        const { CallBuilder } = IconBuilder;
         const tokenAddress = to; // token address
-        const callBuilder = new CallBuilder();
+        const callBuilder: CallBuilder = new CallBuilder();
         const call = callBuilder
             .to(tokenAddress)
             .method("name")
@@ -118,8 +116,6 @@ class SyncBlockExample {
     }
 
     async getTokenSymbol(to) {
-        const { IconBuilder } = IconService;
-        const { CallBuilder } = IconBuilder;
         const tokenAddress = to; // token address
         const callBuilder = new CallBuilder();
         const call = callBuilder

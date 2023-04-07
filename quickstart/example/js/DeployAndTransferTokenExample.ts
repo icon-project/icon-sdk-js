@@ -1,7 +1,17 @@
 /* eslint-disable */
 
-import IconService, { Wallet } from 'icon-sdk-js';
-const { IconAmount, IconConverter, HttpProvider, IconWallet, IconBuilder, SignedTransaction } = IconService;
+import IconService, {
+  Wallet,
+  HttpProvider,
+  SignedTransaction,
+  DeployTransaction,
+  ScoreApiList,
+  Call,
+  DeployTransactionBuilder,
+  CallBuilder,
+  CallTransactionBuilder
+} from 'icon-sdk-js';
+const { IconAmount, IconConverter, IconWallet } = IconService;
 import MockData from '../../mockData/index.js';
 import BigNumber from "bignumber.js";
 
@@ -16,7 +26,7 @@ class DeployAndTransferTokenExample {
   private scoreAddress: string;
   constructor() {
     // HttpProvider is used to communicate with http.
-    const provider = new HttpProvider(MockData.NODE_URL);
+    const provider: HttpProvider = new HttpProvider(MockData.NODE_URL);
 
     // Create IconService instance
     this.iconService = new IconService(provider);
@@ -101,9 +111,9 @@ class DeployAndTransferTokenExample {
 
     async deployScore() {
         // Build raw transaction object
-        const transaction = await this.buildDeployTransaction();
+        const transaction: DeployTransaction = await this.buildDeployTransaction();
         // Create signature of the transaction
-        const signedTransaction = new SignedTransaction(transaction, this.wallet);
+        const signedTransaction: SignedTransaction = new SignedTransaction(transaction, this.wallet);
         // Read params to transfer to nodes
         const signedTransactionProperties = JSON.stringify(signedTransaction.getProperties()).split(",").join(", \n")
         document.getElementById('D01-2').innerHTML = `<b>Signed Transaction</b>: ${signedTransactionProperties}`;
@@ -115,8 +125,6 @@ class DeployAndTransferTokenExample {
     }
 
     async buildDeployTransaction() {
-        const { DeployTransactionBuilder } = IconBuilder;
-
         const initialSupply = IconConverter.toBigNumber("100000000000");
         const decimals = IconConverter.toBigNumber("18");
         const tokenName = "StandardToken";
@@ -157,9 +165,7 @@ class DeployAndTransferTokenExample {
     }
 
     async getMaxStepLimit(): Promise<BigNumber> {
-        const { CallBuilder } = IconBuilder;
-
-        const governanceApi = await this.iconService.getScoreApi(MockData.GOVERNANCE_ADDRESS).execute();
+        const governanceApi: ScoreApiList = await this.iconService.getScoreApi(MockData.GOVERNANCE_ADDRESS).execute();
         // "getMaxStepLimit" : the maximum step limit value that any SCORE execution should be bounded by.
         const methodName = 'getMaxStepLimit';
         // Check input and output parameters of api if you need
@@ -173,7 +179,7 @@ class DeployAndTransferTokenExample {
 
         // Get max step limit by iconService.call
         const callBuilder = new CallBuilder();
-        const call = callBuilder
+        const call: Call = callBuilder
             .to(MockData.GOVERNANCE_ADDRESS)
             .method(methodName)
             .params(params)
@@ -219,8 +225,6 @@ class DeployAndTransferTokenExample {
     }
 
     async buildTokenTransaction() {
-        const { CallTransactionBuilder } = IconBuilder;
-
         const walletAddress = this.wallet.getAddress();
         // You can use "governance score apis" to get step costs.
         const value = IconAmount.of(1, IconAmount.Unit.ICX).toLoop();
@@ -254,8 +258,6 @@ class DeployAndTransferTokenExample {
     }
 
     async getDefaultStepCost(): Promise<BigNumber> {
-        const { CallBuilder } = IconBuilder;
-
         // Get governance score api list
         const governanceApi = await this.iconService.getScoreApi(MockData.GOVERNANCE_ADDRESS).execute();
         console.log(governanceApi)
@@ -282,7 +284,6 @@ class DeployAndTransferTokenExample {
             document.getElementById('D04-1').innerHTML = 'Deploy ST Token and check deployment transaction first.';
         }
 
-        const { CallBuilder } = IconBuilder;
         const tokenAddress = this.scoreAddress;
         // Method name to check the balance
         const methodName = "balanceOf";

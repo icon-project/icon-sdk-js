@@ -20,6 +20,12 @@ import { CallTransactionBuilder } from "./transaction/CallTransaction";
 import DeployTransactionBuilder from "./transaction/DeployTransaction";
 import DepositTransactionBuilder from "./transaction/DepositTransaction";
 import MessageTransactionBuilder from "./transaction/MessageTransaction";
+import { CallTransaction } from "./transaction/CallTransaction";
+import { DepositTransaction } from "./transaction/DepositTransaction";
+import { DeployTransaction } from "./transaction/DeployTransaction";
+import { IcxTransaction } from "./transaction/IcxTransaction";
+import { MessageTransaction } from "./transaction/MessageTransaction";
+import { Call } from "./call/Call";
 
 const Builder = {
   CallBuilder,
@@ -31,3 +37,17 @@ const Builder = {
 };
 
 export default Builder;
+export {
+  CallTransaction,
+  DeployTransaction,
+  DepositTransaction,
+  IcxTransaction,
+  MessageTransaction,
+  Call,
+  CallBuilder,
+  IcxTransactionBuilder,
+  CallTransactionBuilder,
+  DeployTransactionBuilder,
+  DepositTransactionBuilder,
+  MessageTransactionBuilder,
+}

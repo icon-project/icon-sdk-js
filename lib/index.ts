@@ -43,3 +43,4 @@ export {
   SignedTransaction,
 };
 export * from "./data";
+export * from "./builder";
