@@ -1,6 +1,6 @@
 /* eslint-disable */
 
-import IconService, { Block, HttpProvider, CallBuilder } from 'icon-sdk-js';
+import { IconService, Block, HttpProvider, CallBuilder } from 'icon-sdk-js';
 const { IconConverter } = IconService;
 import MockData from '../../mockData/index.js';
 

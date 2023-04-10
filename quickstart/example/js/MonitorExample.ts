@@ -1,8 +1,7 @@
 /* eslint-disable */
 
-import IconService, {HttpProvider, BlockMonitorSpec, BlockNotification} from 'icon-sdk-js';
+import { IconService, HttpProvider, BlockMonitorSpec, BlockNotification, Monitor } from 'icon-sdk-js';
 import MockData from '../../mockData/index.js';
-import { Monitor } from "icon-sdk-js";
 
 let monitorExample;
 

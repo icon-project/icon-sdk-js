@@ -1,6 +1,6 @@
 /* eslint-disable */
 
-import IconService, {BTPNetworkInfo, BTPNetworkTypeInfo, HttpProvider} from 'icon-sdk-js';
+import { IconService, BTPNetworkInfo, BTPNetworkTypeInfo, HttpProvider} from 'icon-sdk-js';
 import MockData from '../../mockData/index.js';
 
 let btpExample;

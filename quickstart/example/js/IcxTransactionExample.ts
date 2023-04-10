@@ -1,6 +1,7 @@
 /* eslint-disable */
 
-import IconService, {
+import {
+  IconService,
   HttpProvider,
   Wallet,
   IcxTransaction,

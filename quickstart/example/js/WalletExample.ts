@@ -1,8 +1,7 @@
 /* eslint-disable */
 
-import IconService from 'icon-sdk-js';
+import { IconService, KeyStore } from 'icon-sdk-js';
 import MockData from '../../mockData';
-import { KeyStore } from "icon-sdk-js";
 
 let walletExample;
 

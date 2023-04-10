@@ -30,6 +30,7 @@ import SignedTransaction from "./SignedTransaction";
 // eslint-disable-next-line no-restricted-exports
 export {
   IconService as default,
+  IconService,
   Builder,
   Wallet,
   BlockMonitorSpec,
