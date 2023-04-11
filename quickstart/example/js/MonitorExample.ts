@@ -1,11 +1,7 @@
 /* eslint-disable */
 
-import IconService from 'icon-sdk-js';
-const { HttpProvider } = IconService;
+import { IconService, HttpProvider, BlockMonitorSpec, BlockNotification, Monitor } from 'icon-sdk-js';
 import MockData from '../../mockData/index.js';
-import { BlockMonitorSpec } from "icon-sdk-js";
-import { BlockNotification } from "icon-sdk-js";
-import { Monitor } from "icon-sdk-js";
 
 let monitorExample;
 
@@ -13,7 +9,7 @@ class MonitorExample {
   private monitor: Monitor<BlockNotification>;
   private iconService: IconService;
   constructor() {
-    const provider = new HttpProvider(MockData.NODE_URL + "/icon_dex");
+    const provider: HttpProvider = new HttpProvider(MockData.NODE_URL + "/icon_dex");
     this.iconService = new IconService(provider);
     this.addListener();
   }

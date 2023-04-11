@@ -1,5 +1,5 @@
 import * as assert from 'assert';
-import IconService from '../lib/index';
+import IconService from '../lib';
 
 const tests = [
   '14d922b2350a876877571d1cf5db835a575be1cb',

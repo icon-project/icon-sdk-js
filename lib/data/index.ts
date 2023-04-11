@@ -21,9 +21,21 @@ import * as Type from "./Type";
 import * as Util from "./Util";
 import * as Validator from "./Validator";
 import * as Formatter from "./Formatter";
+import Block from "./Formatter/Block";
 import BlockNotification from "./Formatter/BlockNotification";
-import EventNotification from "./Formatter/EventNotification";
+import BTPNetworkInfo from "./Formatter/BTPNetworkInfo";
+import BTPNetworkTypeInfo from "./Formatter/BTPNetworkTypeInfo";
 import BTPNotification from "./Formatter/BTPNotification";
+import BTPSourceInformation from "./Formatter/BTPSourceInformation";
+import ConfirmedTransaction from "./Formatter/ConfirmedTransaction";
+import DepositInfo from "./Formatter/DepositInfo";
+import EventNotification from "./Formatter/EventNotification";
+import Failure from "./Formatter/Failure";
+import ScoreApiList from "./Formatter/ScoreApiList";
+import ScoreInfo from "./Formatter/ScoreInfo";
+import ScoreStatus from "./Formatter/ScoreStatus";
+import Transaction from "./Formatter/Transaction";
+import TransactionResult from "./Formatter/TransactionResult";
 
 export {
   Amount,
@@ -36,4 +48,16 @@ export {
   BlockNotification,
   EventNotification,
   BTPNotification,
+  Block,
+  Transaction,
+  TransactionResult,
+  ScoreApiList,
+  ScoreStatus,
+  BTPNetworkInfo,
+  BTPNetworkTypeInfo,
+  BTPSourceInformation,
+  ConfirmedTransaction,
+  DepositInfo,
+  Failure,
+  ScoreInfo,
 };

@@ -1,5 +1,5 @@
 import * as assert from 'assert';
-import IconService from '../lib/index';
+import IconService from '../lib';
 import {IcxTransaction} from "../lib/builder/transaction/IcxTransaction";
 
 const wallet = IconService.IconWallet.loadPrivateKey('38f792b95a5202ab431bfc799f7e1e5c74ec0b9ede5c6142ee7364f2c84d72f6');

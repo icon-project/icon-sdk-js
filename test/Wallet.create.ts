@@ -1,5 +1,5 @@
 import * as assert from 'assert';
-import IconService from '../lib/index';
+import IconService from '../lib';
 
 const testWallet1 = IconService.IconWallet.create();
 const testWallet2 = IconService.IconWallet.create();

@@ -1,9 +1,18 @@
 /* eslint-disable */
 
-import IconService, { Wallet } from 'icon-sdk-js';
+import {
+  IconService,
+  HttpProvider,
+  Wallet,
+  IcxTransaction,
+  SignedTransaction,
+  BigNumber,
+  IcxTransactionBuilder,
+  CallBuilder
+} from 'icon-sdk-js';
 import MockData from '../../mockData/index.js';
 
-const { IconAmount, IconConverter, HttpProvider, IconWallet, IconBuilder, SignedTransaction } = IconService;
+const { IconAmount, IconConverter, IconWallet } = IconService;
 
 let icxTransactionExample;
 
@@ -14,8 +23,8 @@ class IcxTransactionExample {
   private txHash: string;
   constructor() {
     // HttpProvider is used to communicate with http.
-    const provider = new HttpProvider(MockData.NODE_URL);
-    const debugProvider = new HttpProvider(MockData.DEBUG_URL);
+    const provider: HttpProvider = new HttpProvider(MockData.NODE_URL);
+    const debugProvider: HttpProvider = new HttpProvider(MockData.DEBUG_URL);
 
     // Create IconService instance
     this.iconService = new IconService(provider);
@@ -61,9 +70,9 @@ class IcxTransactionExample {
 
     async sendTransaction() {
         // Build raw transaction object
-        const transaction = await this.buildICXTransaction();
+        const transaction: IcxTransaction = await this.buildICXTransaction();
         // Create signature of the transaction
-        const signedTransaction = new SignedTransaction(transaction, this.wallet);
+        const signedTransaction: SignedTransaction = new SignedTransaction(transaction, this.wallet);
         // Read params to transfer to nodes
         const signedTransactionProperties = JSON.stringify(signedTransaction.getProperties()).split(",").join(", \n")
         document.getElementById('I01-1').innerHTML = `<b>Signed Transaction</b>: ${signedTransactionProperties}`;
@@ -76,8 +85,6 @@ class IcxTransactionExample {
     }
 
     async buildICXTransaction() {
-      const { IcxTransactionBuilder } = IconBuilder;
-
       const walletAddress = this.wallet.getAddress();
       // 1 ICX -> 1000000000000000000 conversion
       const value = IconAmount.of(1, IconAmount.Unit.ICX).toLoop();
@@ -105,19 +112,16 @@ class IcxTransactionExample {
 
   async estimateStep() {
     // Build transaction object
-    const transaction = this.buildEstimationRequest();
+    const transaction: IcxTransaction = this.buildEstimationRequest();
     const transactionProperties = JSON.stringify(IconConverter.toRawTransaction(transaction)).split(",").join(", \n")
     document.getElementById('I04-1').innerHTML = `<b>Transaction</b>: ${transactionProperties}`;
     // query step
-    const estimatedStep = await this.debugService.estimateStep(transaction).execute();
-    console.log(estimatedStep);
+    const estimatedStep: BigNumber = await this.debugService.estimateStep(transaction).execute();
     // // Print estimated step
     document.getElementById('I04-2').innerHTML = `<b> estimated step is ${estimatedStep}</b>`;
   }
 
-  buildEstimationRequest() {
-    const { IcxTransactionBuilder } = IconBuilder;
-
+  buildEstimationRequest(): IcxTransaction {
     const walletAddress = this.wallet.getAddress();
     // 1 ICX -> 1000000000000000000 conversion
     const value = IconAmount.of(1, IconAmount.Unit.ICX).toLoop();
@@ -138,8 +142,6 @@ class IcxTransactionExample {
   }
 
   async getDefaultStepCost() {
-    const { CallBuilder } = IconBuilder;
-
     // Get governance score api list
     const governanceApi = await this.iconService.getScoreApi(MockData.GOVERNANCE_ADDRESS).execute();
         console.log(governanceApi)

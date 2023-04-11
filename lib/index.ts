@@ -22,12 +22,15 @@ import EventMonitorSpec from "./transport/monitor/EventMonitorSpec";
 import BTPMonitorSpec from "./transport/monitor/BTPMonitorSpec";
 import Monitor from "./transport/monitor/Monitor";
 import EventFilter from "./transport/monitor/EventFilter";
-
+import HttpProvider from "./transport/http/HttpProvider";
+import BigNumber from "bignumber.js";
 import { KeyStore } from "./Wallet";
+import SignedTransaction from "./SignedTransaction";
 
 // eslint-disable-next-line no-restricted-exports
 export {
   IconService as default,
+  IconService,
   Builder,
   Wallet,
   BlockMonitorSpec,
@@ -36,5 +39,9 @@ export {
   KeyStore,
   Monitor,
   EventFilter,
+  HttpProvider,
+  BigNumber,
+  SignedTransaction,
 };
 export * from "./data";
+export * from "./builder";

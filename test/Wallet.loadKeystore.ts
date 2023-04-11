@@ -1,6 +1,5 @@
 import * as assert from 'assert';
-import IconService from '../lib/index';
-import {KeyStore} from "../lib/Wallet";
+import IconService, {KeyStore} from '../lib';
 
 const tests: KeyStore[] = [
   {

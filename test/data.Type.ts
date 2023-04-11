@@ -1,6 +1,5 @@
 import * as assert from 'assert';
-import BigNumber from 'bignumber.js';
-import IconService, { Type } from '../lib/index';
+import IconService, { Type, BigNumber } from '../lib';
 
 const tests = [
   'End Game',
