@@ -1,5 +1,12 @@
 # Changelog
 
+### Version 1.4.0 - April 11, 2023([NPM](https://www.npmjs.com/package/icon-sdk-js), [CDN](https://cdn.jsdelivr.net/npm/icon-sdk-js@1.4.0))
+
+#### Changes
+- Add Monitor APIs
+- export modules on root
+- fix `toRawTransaction()`
+
 ### Version 1.3.0 - Jan 19, 2023 ([NPM](https://www.npmjs.com/package/icon-sdk-js), [CDN](https://cdn.jsdelivr.net/npm/icon-sdk-js@1.3.0))
 
 #### Changes
