@@ -22,11 +22,18 @@ export default class BTPMonitorSpec implements MonitorSpec {
   readonly height: BigNumber;
   readonly networkID: BigNumber;
   readonly proofFlag: boolean;
+  readonly progressInterval: number;
 
-  constructor(height: BigNumber, networkID: BigNumber, proofFlag: boolean) {
+  constructor(
+    height: BigNumber,
+    networkID: BigNumber,
+    proofFlag: boolean,
+    progressInterval?: number
+  ) {
     this.height = height;
     this.networkID = networkID;
     this.proofFlag = proofFlag;
+    this.progressInterval = progressInterval;
   }
 
   getPath(): string {
@@ -35,11 +42,17 @@ export default class BTPMonitorSpec implements MonitorSpec {
 
   getParam(): object {
     const flag = this.proofFlag ? "0x1" : "0x0";
-    return {
+    let ret = {
       height: Converter.toHex(this.height),
       networkID: Converter.toHex(this.networkID),
       proofFlag: flag,
     };
+    if (this.progressInterval > 0) {
+      ret = Object.assign(ret, {
+        progressInterval: Converter.toHex(this.progressInterval),
+      });
+    }
+    return ret;
   }
 
   getConverter(): (data) => BTPNotification {

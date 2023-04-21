@@ -4,7 +4,12 @@ export default class EventFilter {
   readonly indexed: string[];
   readonly data: string[];
 
-  constructor(event, addr, indexed, data) {
+  constructor(
+    event: string,
+    addr?: string,
+    indexed?: string[],
+    data?: string[]
+  ) {
     this.event = event;
     this.addr = addr;
     this.indexed = indexed;
@@ -12,11 +17,15 @@ export default class EventFilter {
   }
 
   toObject(): object {
-    return {
+    const obj = {
       event: this.event,
       addr: this.addr,
       indexed: this.indexed,
       data: this.data,
     };
+    Object.keys(obj).forEach((key) => {
+      if (obj[key] === undefined || obj[key] === null) delete obj[key];
+    });
+    return obj;
   }
 }

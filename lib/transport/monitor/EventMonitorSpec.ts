@@ -21,13 +21,24 @@ import EventNotification from "../../data/Formatter/EventNotification";
 
 export default class EventMonitorSpec implements MonitorSpec {
   readonly height: BigNumber;
-  readonly eventFilter: EventFilter;
+  readonly eventFilters: EventFilter[];
   readonly logs: boolean;
+  readonly progressInterval: number;
 
-  constructor(height: BigNumber, eventFilter?: EventFilter, logs?: boolean) {
+  constructor(
+    height: BigNumber,
+    eventFilter: EventFilter | EventFilter[],
+    logs?: boolean,
+    progressInterval?: number
+  ) {
     this.height = height;
-    this.eventFilter = eventFilter;
+    if (eventFilter instanceof EventFilter) {
+      this.eventFilters = [eventFilter];
+    } else {
+      this.eventFilters = eventFilter;
+    }
     this.logs = logs;
+    this.progressInterval = progressInterval;
   }
 
   getPath(): string {
@@ -36,9 +47,15 @@ export default class EventMonitorSpec implements MonitorSpec {
 
   getParam(): object {
     let ret = {};
-    if (this.eventFilter) ret = this.eventFilter.toObject();
+    if (this.eventFilters.length == 1) {
+      ret = Object.assign(ret, this.eventFilters[0].toObject());
+    } else {
+      ret["eventFilters"] = this.eventFilters.map((v) => v.toObject());
+    }
     if (this.logs) ret["logs"] = "0x1";
     ret["height"] = Converter.toHex(this.height);
+    if (this.progressInterval > 0)
+      ret["progressInterval"] = Converter.toHex(this.progressInterval);
     return ret;
   }
 

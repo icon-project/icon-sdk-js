@@ -20,12 +20,13 @@ import HttpRequest from "./client/HttpRequest";
 import HttpCall from "./client/HttpCall";
 import MonitorSpec from "../monitor/MonitorSpec";
 import Monitor from "../monitor/Monitor";
+import BigNumber from "bignumber.js";
 
 /**
  * Class representing HTTP-based provider
  */
 export default class HttpProvider {
-  private url: string;
+  readonly url: string;
 
   /**
    * Creates an instance of HttpProvider.
@@ -55,9 +56,10 @@ export default class HttpProvider {
   monitor<T>(
     request: MonitorSpec,
     ondata: (data: T) => void,
-    onerror: (error) => void
+    onerror: (error) => void,
+    onprogress?: (height: BigNumber) => void
   ): Monitor<T> {
     const url = this.url.replace("http", "ws");
-    return new Monitor<T>(url, request, ondata, onerror);
+    return new Monitor<T>(url, request, ondata, onerror, onprogress);
   }
 }
