@@ -176,9 +176,9 @@ Get the block information by block height.
 
 #### Parameters
 
-| Parameter       | Type | Description |
-| ------------- | ----------- | ----------- |
-| value | `number`, `BigNumber` | the height value of block.
+| Parameter | Type                  | Description                |
+|-----------|-----------------------|----------------------------|
+| value     | `number`, `BigNumber` | the height value of block. |
 
 #### Returns
 `HttpCall` - The HttpCall instance for `icx_getBlockByHeight` JSON-RPC API request. If `execute()` successfully, it returns a block `object`.
@@ -199,9 +199,9 @@ Get the block information by block hash.
 
 #### Parameters
 
-| Parameter       | Type | Description |
-| ------------- | ----------- | ----------- |
-| value | `string` | a block hash.
+| Parameter | Type     | Description   |
+|-----------|----------|---------------|
+| value     | `string` | a block hash. |
 
 #### Returns
 `HttpCall` - The HttpCall instance for `icx_getBlockByHash` JSON-RPC API request. If `execute()` successfully, it returns a block `object`.
@@ -739,6 +739,140 @@ Calls external function of SCORE.
 ```javascript
 // Returns the value returned by the executed SCORE function.
 const result = await iconService.call(call).execute();
+```
+
+### monitorBlock()
+
+Monitor events for every blocks.
+
+```javascript
+.monitorBlock(
+  monitorSpec: BlockMonitorSpec,
+  ondata: (notification: EventNotification) => void,
+  onerror: (error: any) => void,
+  onprogress?: (height: BigNumber) => void
+): Monitor<BlockNotification>
+```
+
+#### Parameters
+
+| Parameter   | Type                                | Description                         |
+|:------------|:------------------------------------|:------------------------------------|
+| monitorSpec | `BlockMonitorSpec`                  | Specification for monitoring events |
+| ondata      | `function(event:BlockNotification)` | Callback for receiving events       |  
+| onerror     | `function(err:any)`                 | Callback for receiving the error    |
+| onprogress  | `function(height:BigInteger)`       | Callback for receiving the progress |
+
+* [BlockMonitorSpec](#blockmonitorspec)
+* [BlockNotification]
+
+#### Returns
+`Monitor` - Monitor instance for websocket monitoring. It can be used to call `close()` for stopping monitoring
+* [Monitor](#monitor)
+
+### monitorEvent()
+
+Monitor events from the SCORE.
+
+```javascript
+.monitorEvent(
+  monitorSpec: EventMonitorSpec,
+  ondata: (notification: EventNotification) => void,
+  onerror: (error: any) => void,
+  onprogress?: (height: BigNumber) => void
+): Monitor<EventNotification>
+```
+
+#### Parameters
+
+| Parameter   | Type                                | Description                         |
+|:------------|:------------------------------------|:------------------------------------|
+| monitorSpec | `EventMonitorSpec`                  | Specification for monitoring events |
+| ondata      | `function(event:EventNotification)` | Callback for receiving events       |  
+| onerror     | `function(err:any)`                 | Callback for receiving the error    |
+| onprogress  | `function(height:BigInteger)`       | Callback for receiving the progress |
+
+* [EventMonitorSpec](#eventmonitorspec)
+* [EventNotification]
+
+#### Returns
+`Monitor` - Monitor instance for websocket monitoring. It can be used to call `close()` for stopping monitoring
+
+#### Example
+
+```javascript
+spec = new EventMonitorSpec(
+  BigNumber("0xabc"),
+  new EventFilter(
+    "BTPEvent(str,int,str,str)",
+    "cxf1b0808f09138fffdb890772315aeabb37072a8a",
+  ),
+  true,
+  20,
+)
+on_data(ev) {
+  console.log("Event", ev)
+}
+on_error(err) {
+  console.log("Error", err)
+}
+on_progress(height) {
+  console.log("Progress", height)
+}
+const monitor = iconservice.monitorEvent(spec,on_data,on_error,on_progress);
+
+monitor.close();
+```
+
+### monitorBTP()
+
+Monitor BTP events related with the network
+
+```javascript
+.monitorBTP(
+  monitorSpec: BTPMonitorSpec,
+  ondata: (notification: BTPNotification) => void
+  onerror: (error: any) => void,
+  onprogress?: (height: BigNumber) => void
+): Monitor<BTPNotification>
+```
+
+#### Parameters
+
+| Parameter   | Type                              | Description                         |
+|:------------|:----------------------------------|:------------------------------------|
+| monitorSpec | `BTPMonitorSpec`                  | Specification for monitoring events |
+| ondata      | `function(event:BTPNotification)` | Callback for receiving events       |  
+| onerror     | `function(err:any)`               | Callback for receiving the error    |
+| onprogress  | `function(height:BigInteger)`     | Callback for receiving the progress |
+
+* [BTPMonitorSpec](#btpmonitorspec)
+* [BTPNotification]
+
+#### Returns
+`Monitor` - Monitor instance for websocket monitoring. It can be used to call `close()` for stopping monitoring
+
+#### Example
+
+```javascript
+spec = new BTPMonitorSpec(
+  BigNumber("0xabc"),
+  BigNumber("0x1"),
+  false,
+  20
+);
+on_data(ev) {
+  console.log("Event", ev)
+}
+on_error(err) {
+  console.log("Error", err)
+}
+on_progress(height) {
+  console.log("Progress", height)
+}
+const monitor = iconservice.monitorBTP(spec,on_data,on_error,on_progress);
+
+monitor.close();
 ```
 
 ## IconService.IconWallet (Wallet)
@@ -2414,6 +2548,131 @@ IconValidator.isAddress(address: any) => boolean
 const isAddress = IconValidator.isAddress('cx1b32a...99f01')
 ```
 
+## BlockMonitorSpec
+
+It's used in [IconService.monitorBlock()](#monitorblock)
+
+### Constructor
+
+Create BlockMonitorSpec for monitoring events of the contracts.
+
+```javascript
+new BlockMonitorSpec(
+  height: BigNumber,
+  eventFilters?: EventFilter[]
+)
+```
+
+#### Parameters
+
+| Parameter    | Type            | Description                   |
+|:-------------|:----------------|:------------------------------|
+| height       | `BigNumber`     | Block Height to start monitor |
+| eventFilters | `EventFilter[]` | Event filters to monitor      |
+
+* [EventFilter](#eventfilter)
+
+## EventMonitorSpec
+
+It's used in [IconService.monitorEvent()](#monitorevent)
+
+### Constructor
+
+Create EventMonitorSpec for monitoring events of the contract.
+
+```javascript
+new EventMonitorSpec(
+  height: BigNumber,
+  eventFilter: EventFilter|EventFilter[],
+  logs?: boolean,
+  progressInterval?: number,
+);
+```
+
+#### Parameters
+
+| Parameter        | Type                           | Description                                    |
+|:-----------------|:-------------------------------|:-----------------------------------------------|
+| height           | `BigNumber`                    | Block Height to start monitor                  |
+| eventFilter      | `EventFilter`, `EventFilter[]` | Event filters to monitor                       |
+| logs             | `boolean`                      | Whether the notifications includes actual logs |
+| progressInterval | `number`                       | Block intervals to report progress             |
+
+## BTPMonitorSpec
+
+It's used in [IconService.monitorBTP()](#monitorbtp)
+
+### Constructor
+
+Create BTPMonitorSpec for monitoring events of the BTP blocks
+
+```javascript
+new BTPMonitorSpec(
+  height: BigNumber,
+  networkID: BigNumber,
+  proofFlag: boolean,
+  progressInterval: number
+);
+```
+
+#### Parameters
+
+| Parameter        | Type        | Description                                    |
+|:-----------------|:------------|:-----------------------------------------------|
+| height           | `BigNumber` | Block Height to start monitor                  |
+| networkID        | `BigNumber` | BTP Block Network ID                           |
+| proofFlag        | `boolean`   | Whether the notifications includes block proof |
+| progressInterval | `number`    | Block intervals to report progress             |
+
+## EventFilter
+
+### Constructor
+
+Create EventFilter for monitoring events from the contract.
+
+```javascript
+new EventFilter(
+  event: string,
+  addr?: string,
+  indexed?: string[],
+  data?: string[]
+);
+```
+
+#### Parameters
+
+| Parameter | Type       | Description                              |
+|:----------|:-----------|:-----------------------------------------|
+| event     | `string`   | Event signature including name and types |
+| addr      | `string`   | Address of the contract                  |
+| indexed   | `string[]` | List of indexed data in string           |
+| data      | `string[]` | List of extra data in string             |
+
+If the `addr` is omitted(as `undefined`) then events of all contracts will be monitored.
+You may use `null` for ignoring values for `indexed` and `data` parameters.
+
+#### Example
+
+```javascript
+const filter = new EventFilter(
+  "BTPEvent(str,int,str,str)",
+  undefined,
+  [ null, 0x1 ]
+)
+```
+
+## Monitor
+
+Handle to the monitor returned by some APIs
+* [IconService.monitorEvent](#monitorevent)
+* [IconService.monitorBlock](#monitorblock)
+* [IconService.monitorBTP](#monitorbtp)
+
+### close()
+
+It closes opened monitor.
+Then, it stops sending notifications and reporting progress.
+
 ## Error cases
 
 There are 6 types of error cases. Details are as below:
@@ -2429,7 +2688,7 @@ There are 6 types of error cases. Details are as below:
 
 ## References
 
-- [ICON JSON-RPC API v3](https://www.icondev.io/docs/icon-json-rpc-v3)
+- [ICON JSON-RPC API v3](https://github.com/icon-project/goloop/blob/master/doc/jsonrpc_v3.md)
 - [IRC2 Specification](https://github.com/icon-project/IIPs/blob/master/IIPS/iip-2.md)
 
 
@@ -2444,13 +2703,13 @@ Link:
 [estimateStep()]: #estimateStep
 [getTrace()]: #getTrace
 
-[icx_getBlockByHeight]: https://www.icondev.io/docs/icon-json-rpc-v3#section-icx-get-block-by-height
-[icx_getBlockByHash]: https://www.icondev.io/docs/icon-json-rpc-v3#section-icx-get-block-by-hash
-[icx_getLastBlock]: https://www.icondev.io/docs/icon-json-rpc-v3#section-icx-get-last-block
-[icx_getScoreApi]: https://www.icondev.io/docs/icon-json-rpc-v3#section-icx-get-score-api
-[icx_getTransactionByHash]: https://www.icondev.io/docs/icon-json-rpc-v3#section-icx-get-transaction-by-hash
-[icx_getTransactionResult]: https://www.icondev.io/docs/icon-json-rpc-v3#section-icx-get-transaction-result
-[ICON Networks]: https://www.icondev.io/docs/the-icon-network
+[icx_getBlockByHeight]: https://github.com/icon-project/goloop/blob/master/doc/jsonrpc_v3.md#icx_getblockbyheight
+[icx_getBlockByHash]: https://github.com/icon-project/goloop/blob/master/doc/jsonrpc_v3.md#icx_getblockbyhash
+[icx_getLastBlock]: https://github.com/icon-project/goloop/blob/master/doc/jsonrpc_v3.md#icx_getlastblock
+[icx_getScoreApi]: https://github.com/icon-project/goloop/blob/master/doc/jsonrpc_v3.md#icx_getscoreapi
+[icx_getTransactionByHash]: https://github.com/icon-project/goloop/blob/master/doc/jsonrpc_v3.md#icx_gettransactionbyhash
+[icx_getTransactionResult]: https://github.com/icon-project/goloop/blob/master/doc/jsonrpc_v3.md#icx_gettransactionresult
+[ICON Networks]: https://docs.icon.community/icon-stack/icon-networks
 
 [IconService]: #iconservice
 [IconService.IconWallet]: #iconserviceiconwallet-wallet
@@ -2477,3 +2736,6 @@ Link:
 [IconValidator]: #iconserviceiconvalidator
 [Error Cases]: #error-cases
 [References]: #references
+[BTPNotification]: https://github.com/icon-project/goloop/blob/master/doc/btp2_extension.md#block
+[BlockNotification]: https://github.com/icon-project/goloop/blob/master/doc/btp_extension.md#block
+[EventNotification]: https://github.com/icon-project/goloop/blob/master/doc/btp_extension.md#events

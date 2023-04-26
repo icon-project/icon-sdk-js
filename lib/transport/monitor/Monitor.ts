@@ -15,6 +15,8 @@
  */
 import MonitorSpec from "./MonitorSpec";
 import { RpcError } from "../../Exception";
+import BigNumber from "bignumber.js";
+import { Converter } from "../../data/index";
 
 enum State {
   INIT = 0,
@@ -32,7 +34,8 @@ export default class Monitor<T> {
     url: string,
     spec: MonitorSpec,
     ondata: (data: T) => void,
-    onerror: (error) => void
+    onerror: (error) => void,
+    onprogress?: (height: BigNumber) => void
   ) {
     this.url = url;
     this.spec = spec;
@@ -51,9 +54,16 @@ export default class Monitor<T> {
             this.state = State.START;
           }
         } else if (this.state === State.START) {
-          const converter = spec.getConverter();
-          const data: T = converter(JSON.parse(event.data));
-          ondata(data);
+          const obj = JSON.parse(event.data);
+          if (obj.progress !== undefined) {
+            if (onprogress !== undefined) {
+              onprogress(Converter.toBigNumber(obj.progress));
+            }
+          } else {
+            const converter = spec.getConverter();
+            const data: T = converter(obj);
+            ondata(data);
+          }
         }
       } catch (e) {
         this.ws.onerror(e);
