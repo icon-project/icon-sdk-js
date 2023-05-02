@@ -1,5 +1,10 @@
 # Changelog
 
+### Version 1.4.1 - May 2, 2023([NPM](https://www.npmjs.com/package/icon-sdk-js), [CDN](https://cdn.jsdelivr.net/npm/icon-sdk-js@1.4.1))
+
+#### Changes
+- Feature progress report 
+
 ### Version 1.4.0 - April 11, 2023([NPM](https://www.npmjs.com/package/icon-sdk-js), [CDN](https://cdn.jsdelivr.net/npm/icon-sdk-js@1.4.0))
 
 #### Changes
