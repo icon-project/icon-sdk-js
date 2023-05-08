@@ -166,12 +166,16 @@ export function toBoolean(value: Hash): boolean {
   throw error.toString();
 }
 
+export interface RawTransaction {
+  [key: string]: string | object;
+}
+
 /**
  * Convert transaction object to raw transaction object.
  * @param {object} transaction - the transaction object.
  * @return {object} the raw transaction object.
  */
-export function toRawTransaction(transaction) {
+export function toRawTransaction(transaction): RawTransaction {
   const {
     to,
     from,
@@ -194,24 +198,24 @@ export function toRawTransaction(transaction) {
   };
 
   if (stepLimit) {
-    (rawTransaction as any).stepLimit = toHexNumber(stepLimit);
+    rawTransaction["stepLimit"] = toHexNumber(stepLimit);
   }
 
   if (value) {
-    (rawTransaction as any).value = toHexNumber(value);
+    rawTransaction["value"] = toHexNumber(value);
   }
 
   if (nonce) {
-    (rawTransaction as any).nonce = toHexNumber(nonce);
+    rawTransaction["nonce"] = toHexNumber(nonce);
   }
 
   if (dataType) {
-    (rawTransaction as any).dataType = dataType;
+    rawTransaction["dataType"] = dataType;
   }
 
   if (data) {
-    (rawTransaction as any).data = data;
+    rawTransaction["data"] = data;
   }
 
-  return rawTransaction as any;
+  return rawTransaction;
 }

@@ -3,7 +3,7 @@ import { crypto } from "../../module/node";
 const MAX_VALUE = 0x7fffffff;
 
 // N = Cpu cost, r = Memory cost, p = parallelization cost
-function scrypt(key, salt, N, r, p, dkLen, progressCallback) {
+function scrypt(key: Buffer, salt: Buffer, N: number, r: number, p: number, dkLen: number, progressCallback?) {
   if (N === 0 || (N & (N - 1)) !== 0) {
     throw Error("N must be > 0 and a power of 2");
   }

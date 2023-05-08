@@ -19,7 +19,7 @@ import { ScoreError } from "../../Exception";
 import { createPrivate } from "../Util";
 
 export default class ScoreApiList {
-  public private: any;
+  public private;
 
   constructor(list) {
     this.private = createPrivate();
@@ -27,7 +27,7 @@ export default class ScoreApiList {
     this.private(this).properties = {};
 
     if (isArray(list)) {
-      list.forEach((item: any) => {
+      list.forEach((item) => {
         this.private(this).properties[item.name] = item;
       });
     }

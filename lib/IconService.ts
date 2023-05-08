@@ -599,7 +599,7 @@ export default class IconService {
    * @param {string} hash - The transaction hash.
    * @return {HttpCall} The HttpCall instance for debug_getTrace JSON-RPC API request.
    */
-  getTrace(hash: string): HttpCall<any> {
+  getTrace(hash: string): HttpCall<object> {
     if (!Validator.isValidHash(hash)) {
       const error = new DataError(`[${hash}] is an unrecognized hash value.`);
       throw error.toString();
