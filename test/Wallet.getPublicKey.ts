@@ -1,5 +1,6 @@
 import * as assert from 'assert';
-import IconService from '../lib';
+import { Wallet } from "../lib";
+import { convertPublicKeyFormat } from "../lib/Wallet";
 
 const tests = [{
   privateKey: '38f792b95a5202ab431bfc799f7e1e5c74ec0b9ede5c6142ee7364f2c84d72f6',
@@ -12,9 +13,17 @@ const tests = [{
 describe('Wallet', () => {
   describe('getPublicKey()', () => {
     tests.forEach((test) => {
-      const wallet = IconService.IconWallet.loadPrivateKey(test.privateKey);
+      const wallet = Wallet.loadPrivateKey(test.privateKey);
+      const uncompressedPublicKey = wallet.getPublicKey();
+      const compressedPublicKey = wallet.getPublicKey(true);
       it('should be same', () => {
-        assert.strictEqual(wallet.getPublicKey(), test.expectedPublicKey);
+        assert.strictEqual(uncompressedPublicKey, test.expectedPublicKey);
+      });
+      it('test compressed publicKey', () => {
+        //getPublicKey() actually returns slice(1) value of uncompressed PublicKey
+        assert.strictEqual(convertPublicKeyFormat(compressedPublicKey, false).slice(2), uncompressedPublicKey);
+        assert.strictEqual(convertPublicKeyFormat(uncompressedPublicKey, true), compressedPublicKey);
+        assert.strictEqual(convertPublicKeyFormat("04" + uncompressedPublicKey, true), compressedPublicKey);
       });
     });
   });

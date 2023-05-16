@@ -51,6 +51,8 @@ export default class Wallet {
 
   private pubKey: any;
 
+  private compressedPubKey: any;
+
   private address: string;
 
   /**
@@ -303,8 +305,9 @@ export default class Wallet {
    * Get public key of wallet instance.
    * @return {string} The public key.
    */
-  getPublicKey(): string {
-    return Buffer.from(this.pubKey).toString("hex");
+  getPublicKey(compressed = false): string {
+    if (!compressed) return Buffer.from(this.pubKey).toString("hex");
+    return Buffer.from(this.compressedPubKey).toString("hex");
   }
 
   /**
@@ -333,8 +336,27 @@ Object.defineProperty(Wallet.prototype, "pubKey", {
   },
 });
 
+Object.defineProperty(Wallet.prototype, "compressedPubKey", {
+  get: function get() {
+    return secp256k1.publicKeyCreate(this.privKey, true);
+  },
+});
+
 Object.defineProperty(Wallet.prototype, "address", {
   get: function get() {
     return addHxPrefix(sha3256(this.pubKey).slice(-40));
   },
 });
+
+export function convertPublicKeyFormat(
+  publicKey: string,
+  compressed: boolean
+): string {
+  if (publicKey.length == 128) {
+    publicKey = "04" + publicKey;
+  }
+  const bPubKey = Buffer.from(publicKey, "hex");
+  return Buffer.from(secp256k1.publicKeyConvert(bPubKey, compressed)).toString(
+    "hex"
+  );
+}
