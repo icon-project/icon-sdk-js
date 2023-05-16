@@ -22,6 +22,8 @@ describe('Wallet', () => {
       it('test compressed publicKey', () => {
         //getPublicKey() actually returns slice(1) value of uncompressed PublicKey
         assert.strictEqual(convertPublicKeyFormat(compressedPublicKey, false).slice(2), uncompressedPublicKey);
+        assert.strictEqual(convertPublicKeyFormat(uncompressedPublicKey, true), compressedPublicKey);
+        assert.strictEqual(convertPublicKeyFormat("04" + uncompressedPublicKey, true), compressedPublicKey);
       });
     });
   });

@@ -352,6 +352,9 @@ export function convertPublicKeyFormat(
   publicKey: string,
   compressed: boolean
 ): string {
+  if (publicKey.length == 128) {
+    publicKey = "04" + publicKey;
+  }
   const bPubKey = Buffer.from(publicKey, "hex");
   return Buffer.from(secp256k1.publicKeyConvert(bPubKey, compressed)).toString(
     "hex"
