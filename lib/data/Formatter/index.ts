@@ -25,7 +25,7 @@ import { checkDataInTransaction, isScoreApiList } from "../Validator";
 /**
  * @description Convert block data into the right format.
  */
-export function toBlock(data: Block): Block {
+export function toBlock(data): Block {
   if (
     !hasProperties(data, [
       "height",
@@ -49,7 +49,7 @@ export function toBlock(data: Block): Block {
 /**
  * @description Convert transaction data into the right format.
  */
-export function toTransaction(data: Transaction): Transaction {
+export function toTransaction(data): Transaction {
   if (
     !hasProperties(data, [
       ["txHash", "tx_hash"],
@@ -71,11 +71,7 @@ function checkStatusInTransaction(data: TransactionResult): boolean {
     return false;
   }
 
-  if (data.status === "0x0" && !hasProperties(data, ["failure"])) {
-    return false;
-  }
-
-  return true;
+  return !(data.status === "0x0" && !hasProperties(data, ["failure"]));
 }
 
 /**

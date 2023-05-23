@@ -159,7 +159,7 @@ class IcxTransactionExample {
             .method(methodName)
             .build();
         const stepCosts = await this.iconService.call(call).execute();
-        return stepCosts.default
+        return stepCosts["default"];
     }
 
     async getWalletBalance() {

@@ -186,7 +186,7 @@ class DeployAndTransferTokenExample {
             .params(params)
             .build();
         const maxStepLimit = await this.iconService.call(call).execute();
-        return IconConverter.toBigNumber(maxStepLimit)
+        return IconConverter.toBigNumber(maxStepLimit as string)
     }
 
     async checkDeployTxStatus() {
@@ -277,7 +277,7 @@ class DeployAndTransferTokenExample {
             .build();
         const stepCosts = await this.iconService.call(call).execute();
         // For sending token, it is about twice the default value.
-        return IconConverter.toBigNumber(stepCosts.default).times(2)
+        return IconConverter.toBigNumber(stepCosts["default"]).times(2)
     }
 
     async getTokenBalance(address) {
