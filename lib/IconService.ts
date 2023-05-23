@@ -312,7 +312,7 @@ export default class IconService {
    * @param {Call} call - The call instance exported by CallBuilder
    * @return {HttpCall} The HttpCall instance for icx_call JSON-RPC API request.
    */
-  call(call: Call): HttpCall<any> {
+  call(call: Call): HttpCall<object | string | []> {
     if (!Validator.isCall(call)) {
       const error = new DataError("Call object is invalid.");
       throw error.toString();
