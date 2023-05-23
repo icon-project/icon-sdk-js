@@ -10,7 +10,7 @@
     "email": "foo@icon.foundation"
   },
   "scripts": {
-    "lint": "eslint --fix ./lib/**/*.ts",
+    "lint": "eslint lib --ext .ts",
     "start": "yarn build:node && cd quickstart && yarn start",
     "build:type": "tsc --emitDeclarationOnly --outDir build",
     "build:node": "yarn build && cd quickstart && yarn",
