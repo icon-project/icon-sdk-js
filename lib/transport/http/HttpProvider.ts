@@ -38,8 +38,7 @@ export default class HttpProvider {
 
   request<T = unknown>(
     request: Request,
-    // eslint-disable-next-line no-unused-vars
-    converter?: (result: string | T) => T
+    converter?: (result) => T
   ): HttpCall<T> {
     const body = JSON.stringify(request, (_: string, value) => {
       if (value != null) {
@@ -50,7 +49,7 @@ export default class HttpProvider {
     });
     const httpRequest = new HttpRequest(this.url, body);
 
-    return new HttpCall<T>(HttpClient.newCall(httpRequest) as any, converter);
+    return new HttpCall<T>(HttpClient.newCall(httpRequest), converter);
   }
 
   monitor<T>(

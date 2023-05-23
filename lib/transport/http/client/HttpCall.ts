@@ -16,28 +16,27 @@
 
 import Response from "../../jsonrpc/Response";
 import { RpcError } from "../../../Exception";
+import { HttpCallInterface } from "./HttpClient";
 
 export default class HttpCall<T> {
-  httpCall: HttpCall<T>;
+  httpCall: HttpCallInterface<T>;
 
-  // eslint-disable-next-line no-unused-vars
-  converter?: (result: string) => T;
+  converter?: (result) => T;
 
-  // eslint-disable-next-line no-unused-vars
-  constructor(httpCall: HttpCall<T>, converter?: (result: string) => T) {
+  constructor(httpCall: HttpCallInterface<T>, converter?: (result) => T) {
     this.httpCall = httpCall;
     this.converter = converter;
   }
 
   execute() {
-    return this.callAsync<T>();
+    return this.callAsync();
   }
 
-  private async callAsync<T>(): Promise<T> {
+  private async callAsync(): Promise<T> {
     try {
       const response = await this.httpCall.execute();
 
-      return new Response<T>(response as any, this.converter as any).result;
+      return new Response<T>(response, this.converter).result;
     } catch (e) {
       if (typeof e.error === "object") {
         const rpcError = new RpcError(e.error.message);
