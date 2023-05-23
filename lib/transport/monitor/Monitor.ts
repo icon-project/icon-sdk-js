@@ -60,7 +60,7 @@ export default class Monitor<T> {
               onprogress(Converter.toBigNumber(obj.progress));
             }
           } else {
-            const converter = spec.getConverter();
+            const converter = spec.getConverter() as (data) => T;
             const data: T = converter(obj);
             ondata(data);
           }
