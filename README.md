@@ -1034,12 +1034,14 @@ const pk = wallet.getPrivateKey()
 
 Get a public key of `Wallet` instance.
 
-```javascript
-.getPublicKey() => string
+```typescript
+getPublicKey(compressed = false): string
 ```
 #### Parameters
 
-None
+| Parameter  | Type      | Description   |
+|------------|-----------|---------------|
+| compressed | `boolean` | compressed flag |
 
 #### Returns
 `string` - a public key.

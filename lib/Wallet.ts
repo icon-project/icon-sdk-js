@@ -304,6 +304,7 @@ export default class Wallet {
   /**
    * Get public key of wallet instance.
    * @return {string} The public key.
+   * returns compressed/uncompressed publicKey according to passed `compressed` argument
    */
   getPublicKey(compressed = false): string {
     if (!compressed) return Buffer.from(this.pubKey).toString("hex");
