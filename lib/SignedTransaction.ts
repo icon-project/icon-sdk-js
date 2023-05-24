@@ -15,24 +15,23 @@
  */
 
 import BigNumber from "bignumber.js";
-import { IcxTransaction } from "./builder/transaction/IcxTransaction";
-import { MessageTransaction } from "./builder/transaction/MessageTransaction";
-import { CallTransaction } from "./builder/transaction/CallTransaction";
-import { DeployTransaction } from "./builder/transaction/DeployTransaction";
-import { DepositTransaction } from "./builder/transaction/DepositTransaction";
+import {
+  IcxTransaction,
+  MessageTransaction,
+  CallTransaction,
+  DeployTransaction,
+  DepositTransaction,
+} from "./builder";
 import Wallet from "./Wallet";
 import { toRawTransaction } from "./data/Converter";
 import { createPrivate, serialize } from "./data/Util";
 
 function makeSignature(transaction: SignedTransaction, wallet: Wallet): string {
   const rawTransaction = toRawTransaction(transaction);
-  return wallet.sign(serialize(rawTransaction) as any);
+  return wallet.sign(serialize(rawTransaction));
 }
 
-function createProperties(
-  transaction: SignedTransaction,
-  wallet: Wallet
-): SignedTransaction {
+function createProperties(transaction: SignedTransaction, wallet: Wallet) {
   const rawTransaction = toRawTransaction(transaction);
 
   rawTransaction.signature = makeSignature(transaction, wallet);
@@ -44,7 +43,7 @@ function createProperties(
  * Class representing the signed transaction object.
  */
 export default class SignedTransaction {
-  private private: any;
+  private private;
 
   to: string;
 
@@ -66,7 +65,7 @@ export default class SignedTransaction {
 
   dataType: string;
 
-  data: any;
+  data: string | object;
 
   /**
    * Creates an instance of SignedTransaction.
@@ -92,7 +91,7 @@ export default class SignedTransaction {
    * Get raw transaction object of this.transaction.
    * @return {object} The raw transaction object.
    */
-  getRawTransaction(): SignedTransaction {
+  getRawTransaction() {
     return toRawTransaction(this.private(this).transaction);
   }
 
@@ -112,7 +111,7 @@ export default class SignedTransaction {
    *
    * @return {object} The signed transaction object.
    */
-  getProperties(): SignedTransaction {
+  getProperties() {
     return createProperties(
       this.private(this).transaction,
       this.private(this).wallet

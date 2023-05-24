@@ -26,7 +26,7 @@ export interface KeyStore {
       iv: string;
     };
     cipher: string;
-    kdf: any;
+    kdf: string;
     kdfparams: {
       dklen: number;
       salt: string;
@@ -45,13 +45,13 @@ export interface KeyStore {
  * Class which provides EOA functions.
  */
 export default class Wallet {
-  private _privKey: any;
+  private _privKey: Buffer;
 
-  private privKey: any;
+  private privKey: Buffer;
 
-  private pubKey: any;
+  private pubKey: Buffer;
 
-  private compressedPubKey: any;
+  private compressedPubKey: Buffer;
 
   private address: string;
 
@@ -59,7 +59,7 @@ export default class Wallet {
    * Creates an instance of Wallet.
    * @param {string} privKey - The private key.
    */
-  constructor(privKey: typeof Buffer) {
+  constructor(privKey: Buffer) {
     if (!privKey) {
       const error = new WalletError(
         "A private key must be supplied to the constructor."
@@ -67,7 +67,7 @@ export default class Wallet {
       throw error.toString();
     }
 
-    if (privKey && !isPrivateKey(privKey)) {
+    if (!isPrivateKey(privKey)) {
       const error = new WalletError(`[${privKey}] is not a valid private key.`);
       throw error.toString();
     }
@@ -81,13 +81,13 @@ export default class Wallet {
    * @return {Wallet} The wallet instance.
    */
   static create(): Wallet {
-    let privKey: string;
+    let privKey: Buffer;
 
     do {
       privKey = crypto.randomBytes(32);
-    } while (!secp256k1.privateKeyVerify(privKey as any));
+    } while (!secp256k1.privateKeyVerify(privKey));
 
-    return new Wallet(privKey as any);
+    return new Wallet(privKey);
   }
 
   /**
@@ -104,7 +104,7 @@ export default class Wallet {
 
     const pkBuffer = Buffer.from(privKey, "hex");
 
-    return new Wallet(pkBuffer as any);
+    return new Wallet(pkBuffer);
   }
 
   /**
@@ -139,14 +139,14 @@ export default class Wallet {
       throw error.toString();
     }
 
-    let derivedKey: any;
+    let derivedKey: Buffer;
     let kdfparams: KeyStore["crypto"]["kdfparams"];
 
     if (json.crypto.kdf === "scrypt") {
       kdfparams = json.crypto.kdfparams;
-      derivedKey = (scryptsy as any)(
-        Buffer.from(password) as any,
-        Buffer.from(kdfparams.salt, "hex") as any,
+      derivedKey = scryptsy(
+        Buffer.from(password),
+        Buffer.from(kdfparams.salt, "hex"),
         kdfparams.n,
         kdfparams.r,
         kdfparams.p,
@@ -196,7 +196,7 @@ export default class Wallet {
     );
     const seed = Buffer.concat([decipher.update(ciphertext), decipher.final()]);
 
-    return new Wallet(seed as any);
+    return new Wallet(seed);
   }
 
   /**
@@ -205,23 +205,23 @@ export default class Wallet {
    * @param {object=} opts - The custom options for encryption.
    * @return {object} A keystore object.
    */
-  store(password: string, opts: any = {}): KeyStore {
-    const salt = opts.salt || crypto.randomBytes(32);
-    const iv = opts.iv || crypto.randomBytes(16);
+  store(password: string, opts: object = {}): KeyStore {
+    const salt = opts["salt"] || crypto.randomBytes(32);
+    const iv = opts["iv"] || crypto.randomBytes(16);
 
-    let derivedKey: typeof Buffer;
-    const kdf = opts.kdf || "scrypt";
+    let derivedKey: Buffer;
+    const kdf = opts["kdf"] || "scrypt";
     const kdfparams: KeyStore["crypto"]["kdfparams"] = {
-      dklen: opts.dklen || 32,
+      dklen: opts["dklen"] || 32,
       salt: salt.toString("hex"),
     };
 
     if (kdf === "scrypt") {
-      kdfparams.n = opts.n || 16384;
-      kdfparams.r = opts.r || 8;
-      kdfparams.p = opts.p || 1;
-      derivedKey = (scryptsy as any)(
-        Buffer.from(password) as any,
+      kdfparams.n = opts["n"] || 16384;
+      kdfparams.r = opts["r"] || 8;
+      kdfparams.p = opts["p"] || 1;
+      derivedKey = scryptsy(
+        Buffer.from(password),
         salt,
         kdfparams.n,
         kdfparams.r,
@@ -229,7 +229,7 @@ export default class Wallet {
         kdfparams.dklen
       );
     } else if (kdf === "pbkdf2") {
-      kdfparams.c = opts.c || 16384;
+      kdfparams.c = opts["c"] || 16384;
       kdfparams.prf = "hmac-sha256";
       derivedKey = crypto.pbkdf2Sync(
         Buffer.from(password),
@@ -244,8 +244,8 @@ export default class Wallet {
     }
 
     const cipher = crypto.createCipheriv(
-      opts.cipher || "aes-128-ctr",
-      (derivedKey as any).slice(0, 16),
+      opts["cipher"] || "aes-128-ctr",
+      Buffer.from(derivedKey.buffer, derivedKey.byteOffset, 16),
       iv
     );
 
@@ -260,21 +260,21 @@ export default class Wallet {
     ]);
     const mac = keccak256(
       Buffer.concat([
-        (derivedKey as any).slice(16, 32),
-        Buffer.from(ciphertext as any, "hex"),
+        Buffer.from(derivedKey.buffer, derivedKey.byteOffset, 16),
+        ciphertext,
       ])
     ) as Keccak256;
 
     return {
       version: 3,
-      id: uuidv4({ random: opts.uuid || crypto.randomBytes(16) }),
+      id: uuidv4({ random: opts["uuid"] || crypto.randomBytes(16) }),
       address: this.getAddress(),
       crypto: {
         ciphertext: ciphertext.toString("hex"),
         cipherparams: {
           iv: iv.toString("hex"),
         },
-        cipher: opts.cipher || "aes-128-ctr",
+        cipher: opts["cipher"] || "aes-128-ctr",
         kdf,
         kdfparams,
         mac: mac.toString("hex"),

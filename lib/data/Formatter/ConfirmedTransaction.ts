@@ -17,13 +17,13 @@
 import BigNumber from "bignumber.js";
 import { addHxPrefix, add0xPrefix } from "../Hexadecimal";
 import { toBigNumber, toNumber } from "../Converter";
+import { Hash } from "../../types/hash";
 
 const assignParams = (
   _this: unknown,
   params: string[],
-  data: any,
-  // eslint-disable-next-line no-unused-vars
-  converter: (source: any) => any = (value) => value
+  data: object,
+  converter: (source: string) => Hash = (value) => value
 ) => {
   const convertedParams = {};
 

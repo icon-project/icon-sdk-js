@@ -13,8 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import {
+  BlockNotification,
+  BTPNotification,
+  EventNotification,
+} from "../../data";
+
 export default interface MonitorSpec {
   getPath(): string;
   getParam(): object;
-  getConverter(): (data) => any;
+  getConverter(): (
+    data
+  ) => BlockNotification | BTPNotification | EventNotification;
 }

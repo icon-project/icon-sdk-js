@@ -15,18 +15,16 @@
  */
 
 import HttpRequest from "./HttpRequest";
-import { NetworkError } from "../../../Exception";
+import { Exception, NetworkError } from "../../../Exception";
 
 export default class HttpClient {
-  static newCall<T = any>(
-    httpRequest: HttpRequest
-  ): { execute(): Promise<T>; sendAsync(): Promise<T> } {
+  static newCall<T>(httpRequest: HttpRequest): HttpCallInterface<T> {
     return {
-      execute(): Promise<T> {
+      execute(): Promise<HttpResponse> {
         return this.sendAsync();
       },
 
-      sendAsync<T>(): Promise<T> {
+      sendAsync(): Promise<T> {
         const { url, body } = httpRequest;
 
         // eslint-disable-next-line no-async-promise-executor
@@ -55,4 +53,14 @@ export default class HttpClient {
       },
     };
   }
+}
+
+export interface HttpResponse {
+  result: string;
+  error: Exception;
+}
+
+export interface HttpCallInterface<T> {
+  execute(): Promise<HttpResponse>;
+  sendAsync(): Promise<T>;
 }

@@ -23,16 +23,13 @@ export default class Response<T> {
 
   constructor(
     response: { result: string; error: Exception },
-    // eslint-disable-next-line no-unused-vars
-    converter?: (result: string) => T
+    converter?: (result) => T
   ) {
     const { result, error } = response;
 
     if (result) {
       this.result =
-        typeof converter === "function"
-          ? converter(result as string)
-          : (result as unknown as T);
+        typeof converter === "function" ? converter(result) : (result as T);
     }
 
     if (error) {
