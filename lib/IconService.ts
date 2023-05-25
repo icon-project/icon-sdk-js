@@ -312,7 +312,8 @@ export default class IconService {
    * @param {Call} call - The call instance exported by CallBuilder
    * @return {HttpCall} The HttpCall instance for icx_call JSON-RPC API request.
    */
-  call(call: Call): HttpCall<object | string | []> {
+  // eslint-disable-next-line
+  call(call: Call): HttpCall<any> {
     if (!Validator.isCall(call)) {
       const error = new DataError("Call object is invalid.");
       throw error.toString();
