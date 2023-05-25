@@ -1,5 +1,10 @@
 # Changelog
 
+### Version 1.4.3 - May 25, 2023([NPM](https://www.npmjs.com/package/icon-sdk-js), [CDN](https://cdn.jsdelivr.net/npm/icon-sdk-js@1.4.3))
+
+#### Changes
+- Revert IconService.call()'s return type to `HttpCall<any>`
+
 ### Version 1.4.2 - May 24, 2023([NPM](https://www.npmjs.com/package/icon-sdk-js), [CDN](https://cdn.jsdelivr.net/npm/icon-sdk-js@1.4.2))
 
 #### Changes
