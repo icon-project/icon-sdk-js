@@ -1,5 +1,11 @@
 # Changelog
 
+### Version 1.4.4 - May 31, 2023([NPM](https://www.npmjs.com/package/icon-sdk-js), [CDN](https://cdn.jsdelivr.net/npm/icon-sdk-js@1.4.4))
+
+#### Changes
+- Fix getBalance, getScoreApi, getScoreStatus(convert height to hex)
+- fix generics
+
 ### Version 1.4.3 - May 25, 2023([NPM](https://www.npmjs.com/package/icon-sdk-js), [CDN](https://cdn.jsdelivr.net/npm/icon-sdk-js@1.4.3))
 
 #### Changes
