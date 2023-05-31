@@ -32,12 +32,9 @@ import Block from "./data/Formatter/Block";
 import ScoreApiList from "./data/Formatter/ScoreApiList";
 import Transaction from "./data/Formatter/Transaction";
 import TransactionResult from "./data/Formatter/TransactionResult";
-import { Call } from "./builder/call/Call";
-import { IcxTransaction } from "./builder/transaction/IcxTransaction";
-import { MessageTransaction } from "./builder/transaction/MessageTransaction";
-import { DepositTransaction } from "./builder/transaction/DepositTransaction";
-import { DeployTransaction } from "./builder/transaction/DeployTransaction";
-import { CallTransaction } from "./builder/transaction/CallTransaction";
+import { IcxTransaction, MessageTransaction } from "./builder";
+import { DepositTransaction, DeployTransaction } from "./builder";
+import { Call, CallTransaction } from "./builder";
 import { Hash } from "./types/hash";
 import BTPNetworkInfo from "./data/Formatter/BTPNetworkInfo";
 import BTPNetworkTypeInfo from "./data/Formatter/BTPNetworkTypeInfo";
@@ -112,7 +109,7 @@ export default class IconService {
     if (height === undefined) {
       params = { address };
     } else {
-      params = { address, height };
+      params = { address, height: Converter.toHex(height) };
     }
     if (!Validator.isAddress(address)) {
       const error = new DataError(`[${address}] is not valid address.`);
@@ -183,7 +180,7 @@ export default class IconService {
     if (height === undefined) {
       params = { address };
     } else {
-      params = { address, height };
+      params = { address, height: Converter.toHex(height) };
     }
     if (!Validator.isScoreAddress(address)) {
       const error = new DataError(`[${address}] is not a valid SCORE address.`);
@@ -207,7 +204,7 @@ export default class IconService {
     if (height === undefined) {
       params = { address };
     } else {
-      params = { address, height };
+      params = { address, height: Converter.toHex(height) };
     }
     if (!Validator.isScoreAddress(address)) {
       const error = new DataError(`[${address}] is not a valid SCORE address.`);
@@ -303,7 +300,7 @@ export default class IconService {
       const requestId = Util.getCurrentTime();
       const request = new Request(requestId, "debug_estimateStep", rawTx);
 
-      return this.provider.request(request);
+      return this.provider.request(request, Converter.toBigNumber);
     }
   }
 
@@ -378,7 +375,7 @@ export default class IconService {
    * @param {string} hash - The hash value of the data to retrieve
    * @return {HttpCall} The HttpCall instance for icx_getDataByHash JSON-RPC API request.
    */
-  getDataByHash(hash: string): HttpCall<TransactionResult> {
+  getDataByHash(hash: string): HttpCall<string> {
     if (!Validator.isValidHash(hash)) {
       const error = new DataError(`[${hash}] is an unrecognized hash value.`);
       throw error.toString();
@@ -394,9 +391,7 @@ export default class IconService {
    * @param {BigNumber | string} height - The height of the block.
    * @return {HttpCall} The HttpCall instance for icx_getBlockHeaderByHeight JSON-RPC API request.
    */
-  getBlockHeaderByHeight(
-    height: string | BigNumber
-  ): HttpCall<TransactionResult> {
+  getBlockHeaderByHeight(height: string | BigNumber): HttpCall<string> {
     if (!Validator.isNonNegative(height)) {
       const error = new DataError(
         `[${height}] is an unrecognized block height`
@@ -418,7 +413,7 @@ export default class IconService {
    * @param {BigNumber} height - The height of the block.
    * @return {HttpCall} The HttpCall instance for icx_getVotesByHeight JSON-RPC API request.
    */
-  getVotesByHeight(height: string | BigNumber): HttpCall<TransactionResult> {
+  getVotesByHeight(height: string | BigNumber): HttpCall<string> {
     if (!Validator.isNonNegative(height)) {
       const error = new DataError(
         `[${height}] is an unrecognized block height`
@@ -440,7 +435,7 @@ export default class IconService {
   getProofForResult(
     hash: string,
     index: string | BigNumber
-  ): HttpCall<TransactionResult> {
+  ): HttpCall<string[]> {
     if (!Validator.isValidHash(hash)) {
       const error = new DataError(`[${hash}] is an unrecognized hash value.`);
       throw error.toString();
@@ -466,7 +461,7 @@ export default class IconService {
     hash: string,
     index: string | BigNumber,
     events: Array<string | BigNumber>
-  ): HttpCall<TransactionResult> {
+  ): HttpCall<string[][]> {
     if (!Validator.isValidHash(hash)) {
       const error = new DataError(`[${hash}] is an unrecognized hash value.`);
       throw error.toString();
