@@ -27,6 +27,9 @@ describe('Wallet', () => {
       const wallet = IconService.IconWallet.loadPrivateKey(test.privateKey);
       it('should be same', () => {
         assert.strictEqual(wallet.store('password').address, test.keystore.address);
+        const keystore = wallet.store('password');
+        const wallet2 = IconService.IconWallet.loadKeystore(keystore, 'password', true);
+        assert.strictEqual(test.keystore.address, wallet2.getAddress());
       });
     });
   });

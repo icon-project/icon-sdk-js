@@ -16,13 +16,13 @@ function scrypt(key: Buffer, salt: Buffer, N: number, r: number, p: number, dkLe
     throw Error("Parameter r is too large");
   }
 
-  const XY = new Buffer(256 * r);
-  const V = new Buffer(128 * r * N);
+  const XY = Buffer.alloc(256 * r);
+  const V = Buffer.alloc(128 * r * N);
 
   // pseudo global
   const B32 = new Int32Array(16); // salsa20_8
   const x = new Int32Array(16); // salsa20_8
-  const _X = new Buffer(64); // blockmix_salsa8
+  const _X = Buffer.alloc(64); // blockmix_salsa8
 
   // pseudo global
   const B = crypto.pbkdf2Sync(key, salt, 1, p * 128 * r, "sha256");
