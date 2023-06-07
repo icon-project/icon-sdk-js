@@ -245,7 +245,7 @@ export default class Wallet {
 
     const cipher = crypto.createCipheriv(
       opts["cipher"] || "aes-128-ctr",
-      Buffer.from(derivedKey.buffer, derivedKey.byteOffset, 16),
+      Buffer.from(derivedKey.buffer, 0, 16),
       iv
     );
 
@@ -259,10 +259,7 @@ export default class Wallet {
       cipher.final(),
     ]);
     const mac = keccak256(
-      Buffer.concat([
-        Buffer.from(derivedKey.buffer, derivedKey.byteOffset, 16),
-        ciphertext,
-      ])
+      Buffer.concat([Buffer.from(derivedKey.buffer, 16, 16), ciphertext])
     ) as Keccak256;
 
     return {
