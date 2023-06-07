@@ -1,5 +1,10 @@
 # Changelog
 
+### Version 1.4.5 - June 7, 2023([NPM](https://www.npmjs.com/package/icon-sdk-js), [CDN](https://cdn.jsdelivr.net/npm/icon-sdk-js@1.4.5))
+
+#### Changes
+- fix Wallet.store
+
 ### Version 1.4.4 - May 31, 2023([NPM](https://www.npmjs.com/package/icon-sdk-js), [CDN](https://cdn.jsdelivr.net/npm/icon-sdk-js@1.4.4))
 
 #### Changes
