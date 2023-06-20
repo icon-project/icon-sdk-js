@@ -47,6 +47,7 @@ import BlockMonitorSpec from "./transport/monitor/BlockMonitorSpec";
 import EventMonitorSpec from "./transport/monitor/EventMonitorSpec";
 import BTPMonitorSpec from "./transport/monitor/BTPMonitorSpec";
 import ScoreStatus from "./data/Formatter/ScoreStatus";
+import NetworkInfo from "./data/Formatter/NetworkInfo";
 
 /**
  * Class which provides APIs of ICON network.
@@ -588,6 +589,15 @@ export default class IconService {
       request,
       (data) => new BTPSourceInformation(data)
     );
+  }
+
+  /***
+   * Get basic network Information.
+   */
+  getNetworkInfo(): HttpCall<NetworkInfo> {
+    const requestId = Util.getCurrentTime();
+    const request = new Request(requestId, "icx_getNetworkInfo", null);
+    return this.provider.request(request, (data) => new NetworkInfo(data));
   }
 
   /**
