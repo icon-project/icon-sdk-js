@@ -20,36 +20,41 @@ class BTPExample {
   addListener() {
     // getNetworkInfo
     document.getElementById('Q01-2').addEventListener('click', async () => {
-      await this.getNetworkInfo();
+      await this.getBTPNetworkInfo();
     });
 
     // getNetworkTypeInfo
     document.getElementById('Q02-2').addEventListener('click', async () => {
-      await this.getNetworkTypeInfo();
+      await this.getBTPNetworkTypeInfo();
     });
 
     // get Messages
     document.getElementById('Q03-3').addEventListener('click', async () => {
-      await this.getMessages();
+      await this.getBTPMessages();
     });
 
     // get Header
     document.getElementById('Q04-3').addEventListener('click', async () => {
-      await this.getHeader();
+      await this.getBTPHeader();
     });
 
     // get proof
     document.getElementById('Q05-3').addEventListener('click', async () => {
-      await this.getProof();
+      await this.getBTPProof();
     });
 
     // get source information
     document.getElementById('Q06').addEventListener('click', async () => {
-      await this.getSourceInformation();
+      await this.getBTPSourceInformation();
+    });
+
+    // get basic network info
+    document.getElementById('Q07').addEventListener('click', async () => {
+      await this.getNetworkInfo();
     });
   }
 
-  async getNetworkInfo() {
+  async getBTPNetworkInfo() {
     const id = (<HTMLInputElement>document.getElementById("Q01")).value;
     const networkInfo: BTPNetworkInfo = await this.iconService.getBTPNetworkInfo(id).execute();
     document.getElementById("Q01-3").innerHTML = `networkTypeID : ${networkInfo.networkTypeID}`
@@ -65,7 +70,7 @@ class BTPExample {
     document.getElementById("Q01-13").innerHTML = `nextProofContextChanged : ${networkInfo.nextProofContextChanged}`
   }
 
-  async getNetworkTypeInfo() {
+  async getBTPNetworkTypeInfo() {
     const id = (<HTMLInputElement>document.getElementById("Q02")).value;
     const networkTypeInfo: BTPNetworkTypeInfo = await this.iconService.getBTPNetworkTypeInfo(id).execute();
     document.getElementById("Q02-3").innerHTML = `networkTypeID : ${networkTypeInfo.networkTypeID}`
@@ -74,31 +79,41 @@ class BTPExample {
     document.getElementById("Q02-6").innerHTML = `openNetworkIDs : ${networkTypeInfo.openNetworkIDs}`
   }
 
-  async getMessages() {
+  async getBTPMessages() {
     const id = (<HTMLInputElement>document.getElementById("Q03")).value;
     const height = (<HTMLInputElement>document.getElementById("Q03-2")).value;
     const messages = await this.iconService.getBTPMessages(id, height).execute();
     document.getElementById("Q03-4").innerHTML = `messages : ${messages}`
   }
 
-  async getHeader() {
+  async getBTPHeader() {
     const id = (<HTMLInputElement>document.getElementById("Q04")).value;
     const height = (<HTMLInputElement>document.getElementById("Q04-2")).value;
     const header = await this.iconService.getBTPHeader(id, height).execute();
     document.getElementById("Q04-4").innerHTML = `header : ${header}`
   }
 
-  async getProof() {
+  async getBTPProof() {
     const id = (<HTMLInputElement>document.getElementById("Q05")).value;
     const height = (<HTMLInputElement>document.getElementById("Q05-2")).value;
     const proof = await this.iconService.getBTPProof(id, height).execute();
     document.getElementById("Q05-4").innerHTML = `proof : ${proof}`
   }
 
-  async getSourceInformation() {
+  async getBTPSourceInformation() {
     const info = await this.iconService.getBTPSourceInformation().execute();
     document.getElementById("Q06-1").innerHTML = `srcNetworkUID : ${info.srcNetworkUID}`
     document.getElementById("Q06-2").innerHTML = `networkTypeIDs : ${info.networkTypeIDs}`
+  }
+
+  async getNetworkInfo() {
+    const info = await this.iconService.getNetworkInfo().execute();
+    document.getElementById("Q07-1").innerHTML = `platform : ${info.platform}`
+    document.getElementById("Q07-2").innerHTML = `nid : ${info.nid}`
+    document.getElementById("Q07-3").innerHTML = `channel : ${info.channel}`
+    document.getElementById("Q07-4").innerHTML = `earliest : ${info.earliest}`
+    document.getElementById("Q07-5").innerHTML = `latest : ${info.latest}`
+    document.getElementById("Q07-6").innerHTML = `stepPrice : ${info.stepPrice}`
   }
 }
 

@@ -718,6 +718,25 @@ None
 const data = await iconService.getBTPSourceInformation().execute();
 ```
 
+### getNetworkInfo()
+
+Get basic network Information
+
+```javascript
+.getNetworkInfo() => HttpCall // .execute() => NetworkInfo
+```
+
+#### Parameters
+None
+
+#### Returns
+`HttpCall` - The HttpCall instance for `icx_getNetworkInfo` JSON-RPC API request.
+
+#### Example
+```javascript
+const data = await iconService.getNetworkInfo().execute();
+```
+
 ### call()
 
 Calls external function of SCORE.
