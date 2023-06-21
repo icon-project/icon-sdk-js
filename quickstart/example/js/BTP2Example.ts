@@ -20,7 +20,7 @@ class BTPExample {
   addListener() {
     // getNetworkInfo
     document.getElementById('Q01-2').addEventListener('click', async () => {
-      await this.getBtpNetworkInfo();
+      await this.getBTPNetworkInfo();
     });
 
     // getNetworkTypeInfo
@@ -54,7 +54,7 @@ class BTPExample {
     });
   }
 
-  async getBtpNetworkInfo() {
+  async getBTPNetworkInfo() {
     const id = (<HTMLInputElement>document.getElementById("Q01")).value;
     const networkInfo: BTPNetworkInfo = await this.iconService.getBTPNetworkInfo(id).execute();
     document.getElementById("Q01-3").innerHTML = `networkTypeID : ${networkInfo.networkTypeID}`
