@@ -20,7 +20,7 @@ class BTPExample {
   addListener() {
     // getNetworkInfo
     document.getElementById('Q01-2').addEventListener('click', async () => {
-      await this.getNetworkInfo();
+      await this.getBtpNetworkInfo();
     });
 
     // getNetworkTypeInfo
@@ -47,9 +47,14 @@ class BTPExample {
     document.getElementById('Q06').addEventListener('click', async () => {
       await this.getSourceInformation();
     });
+
+    // get basic network info
+    document.getElementById('Q07').addEventListener('click', async () => {
+      await this.getNetworkInfo();
+    });
   }
 
-  async getNetworkInfo() {
+  async getBtpNetworkInfo() {
     const id = (<HTMLInputElement>document.getElementById("Q01")).value;
     const networkInfo: BTPNetworkInfo = await this.iconService.getBTPNetworkInfo(id).execute();
     document.getElementById("Q01-3").innerHTML = `networkTypeID : ${networkInfo.networkTypeID}`
@@ -99,6 +104,16 @@ class BTPExample {
     const info = await this.iconService.getBTPSourceInformation().execute();
     document.getElementById("Q06-1").innerHTML = `srcNetworkUID : ${info.srcNetworkUID}`
     document.getElementById("Q06-2").innerHTML = `networkTypeIDs : ${info.networkTypeIDs}`
+  }
+
+  async getNetworkInfo() {
+    const info = await this.iconService.getNetworkInfo().execute();
+    document.getElementById("Q07-1").innerHTML = `platform : ${info.platform}`
+    document.getElementById("Q07-2").innerHTML = `nid : ${info.nid}`
+    document.getElementById("Q07-3").innerHTML = `channel : ${info.channel}`
+    document.getElementById("Q07-4").innerHTML = `earliest : ${info.earliest}`
+    document.getElementById("Q07-5").innerHTML = `latest : ${info.latest}`
+    document.getElementById("Q07-6").innerHTML = `stepPrice : ${info.stepPrice}`
   }
 }
 
