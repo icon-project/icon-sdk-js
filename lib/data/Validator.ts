@@ -168,10 +168,7 @@ export function checkDataInTransaction(transaction) {
       );
     }
     case "base": {
-      return (
-        Object.prototype.hasOwnProperty.call(transaction, "data") &&
-        hasProperties(transaction.data, ["result"])
-      );
+      return Object.prototype.hasOwnProperty.call(transaction, "data");
     }
     case "deposit": {
       return (
