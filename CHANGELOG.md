@@ -1,5 +1,10 @@
 # Changelog
 
+### Version 1.5.1 - July 25, 2023([NPM](https://www.npmjs.com/package/icon-sdk-js), [CDN](https://cdn.jsdelivr.net/npm/icon-sdk-js@1.5.1))
+
+#### Changes
+- Fix validation failure on base tx
+
 ### Version 1.5.0 - July 17, 2023([NPM](https://www.npmjs.com/package/icon-sdk-js), [CDN](https://cdn.jsdelivr.net/npm/icon-sdk-js@1.5.0))
 
 #### Changes
