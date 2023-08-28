@@ -4,7 +4,6 @@ const { HttpProvider, BlockMonitorSpec, Converter, IconService } = pkg;
 const NODE_URL = "http://localhost:9090/api/v3";
 const provider = new HttpProvider(NODE_URL + "/icon_dex");
 const iconService = new IconService(provider);
-console.log(iconService);
 async function main() {
   const lastBlock = await iconService.getLastBlock().execute();
   const height = lastBlock.height;
