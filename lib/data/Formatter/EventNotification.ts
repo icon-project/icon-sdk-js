@@ -1,12 +1,13 @@
 import BigNumber from "bignumber.js";
 import { Converter } from "../index";
+import EventLog from "./EventLog";
 
 export default class EventNotification {
   readonly hash: string;
   readonly height: BigNumber;
   readonly index: BigNumber;
   readonly events: BigNumber[];
-  readonly logs: object[];
+  readonly logs: EventLog[];
 
   constructor(data) {
     this.hash = data.hash;
