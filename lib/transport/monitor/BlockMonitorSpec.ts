@@ -22,10 +22,12 @@ import { Converter } from "../../data";
 export default class BlockMonitorSpec implements MonitorSpec {
   readonly height: BigNumber;
   readonly eventFilters?: EventFilter[];
+  readonly logs?: boolean;
 
-  constructor(height: BigNumber, eventFilters?: EventFilter[]) {
+  constructor(height: BigNumber, eventFilters?: EventFilter[], logs?: boolean) {
     this.height = height;
     this.eventFilters = eventFilters;
+    this.logs = logs;
   }
 
   getPath(): string {
@@ -34,11 +36,13 @@ export default class BlockMonitorSpec implements MonitorSpec {
 
   getParam(): object {
     const height = Converter.toHex(this.height);
+    const params = { height };
+    if (this.logs) params["logs"] = "0x1";
     if (!this.eventFilters || this.eventFilters.length === 0) {
-      return { height };
+      return params;
     }
     return {
-      height: height,
+      ...params,
       eventFilters: this.eventFilters.map((v) => v.toObject()),
     };
   }
