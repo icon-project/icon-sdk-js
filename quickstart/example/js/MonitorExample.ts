@@ -37,10 +37,15 @@ class MonitorExample {
   }
 
   async startMonitorBlock() {
+    const url = getInputValue('M01-url');
+    const addr = getInputValue('M01-addr');
+    const event = getInputValue('M01-event');
+    const provider: HttpProvider = new HttpProvider(url);
+    this.iconService = new IconService(provider);
     const block = await this.iconService.getLastBlock().execute();
     const height = block.height;
-    const spec = new BlockMonitorSpec(Converter.toBigNumber(height + 1),
-      [new EventFilter("ICXIssued(int,int,int,int)", "cx0000000000000000000000000000000000000000")], true);
+    const eventFilter = new EventFilter(event, addr);
+    const spec = new BlockMonitorSpec(Converter.toBigNumber(height + 1), [eventFilter], true);
     const onevent = (data: BlockNotification) => {
       document.getElementById("M01-3").innerHTML = JSON.stringify(data);
     }
