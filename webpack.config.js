@@ -32,7 +32,11 @@ const setPlugin = target =>
           }
         )
       ]
-    : [];
+    : [
+      new webpack.ProvidePlugin({
+        WebSocket: ['ws', "WebSocket"]
+      })
+    ];
 
 const config = target => ({
   mode,
