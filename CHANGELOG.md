@@ -1,5 +1,11 @@
 # Changelog
 
+### Version 1.5.2 - August 30, 2023
+
+#### Changes
+- Polyfill websocket for nodejs
+- Fix the monitor notification handling
+
 ### Version 1.5.1 - July 25, 2023([NPM](https://www.npmjs.com/package/icon-sdk-js), [CDN](https://cdn.jsdelivr.net/npm/icon-sdk-js@1.5.1))
 
 #### Changes
