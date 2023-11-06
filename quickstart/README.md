@@ -50,7 +50,7 @@ If you want to use custom ICON node url, change the value of `NODE_URL` variable
 *For more information on the testnet, see [the documentation](https://github.com/icon-project/icon-project.github.io/blob/master/docs/icon_network.md) for the ICON network.*
 
 ```javascript
-const NODE_URL = 'https://bicon.net.solidwallet.io/api/v3'; 
+const NODE_URL = 'https://bicon.net.solidwallet.io/api/v3';
 ```
 
 
@@ -122,7 +122,7 @@ After calling `store`, Keystore json object can be looked up with the returned v
 const privateKey = '38f792b95a5202ab431bfc799f7e1e5c74ec0b9ede5c6142ee7364f2c84d72f6'
 const wallet = IconWallet.loadPrivateKey(privateKey);
 console.log(wallet.store('qwer1234!'));
-// Output: 
+// Output:
 // {
 // 	"version": 3,
 // 	"id": "e00e113c-1e45-47e4-b732-10f3d1903d75",
@@ -225,7 +225,7 @@ Generate SignedTransaction to add signature of the transaction.
 const signedTransaction = new SignedTransaction(transaction, wallet);
 // Read params to transfer to nodes
 console.log(signedTransaction.getProperties());
-// Output: 
+// Output:
 // {
 //     from: "hx902ecb51c109183ace539f247b4ea1347fbf23b5",
 //     nid: "0x3",
@@ -294,7 +294,7 @@ const wallet = IconWallet.loadPrivateKey(MockData.PRIVATE_KEY_2);
 const balance = await iconService.getBalance(wallet.getAddress()).execute();
 console.log(balance);
 
-// Output: 
+// Output:
 // 100432143214321432143
 ```
 
@@ -308,18 +308,18 @@ This example shows how to deploy IRC token and transfer deployed token.
 
 You need the SCORE Project to deploy token.
 
-In this example, you will use ‘test.zi’ from the ‘resources’ folder.
+In this example, you will use ‘irc2-token.jar’ from the ‘resources’ folder.
 
-*test.zi : SampleToken SCORE Project Zip file.
+*irc2-token.jar : SampleToken SCORE contract.
 
-Generate wallet using `MockData.PRIVATE_KEY_1`, then read the binary data from ‘test.zi’
+Generate wallet using `MockData.PRIVATE_KEY_1`, then read the binary data from ‘irc2-token.jar’
 
 ```javascript
 const { Wallet } = this.iconService;
 this.wallet = IconWallet.loadPrivateKey(MockData.PRIVATE_KEY_1);
 
 this.content = '';
-// Read test.zi from ‘resources’ folder.
+// Read irc2-token.jar from ‘resources’ folder.
 ```
 
 Enter the basic information of the token you want to deploy.
@@ -338,7 +338,7 @@ You can get the maximum step limit value as follows.
 // GOVERNANCE_ADDRESS : cx0000000000000000000000000000000000000001
 async getMaxStepLimit() {
     const { CallBuilder } = IconBuilder;
-    
+
     const governanceApi = await this.iconService.getScoreApi(MockData.GOVERNANCE_ADDRESS).execute();
     // "getMaxStepLimit" : the maximum step limit value that any SCORE execution should be bounded by.
     const methodName = 'getMaxStepLimit';
@@ -370,15 +370,15 @@ async buildDeployTransaction() {
     const decimals = IconConverter.toBigNumber("18");
     const tokenName = "StandardToken";
     const tokenSymbol = "ST";
-    const contentType = "application/zip";
+    const contentType = "application/java";
     // Enter token information
-    // key name ("initialSupply", "decimals", "name", "symbol")
+    // key name ("_initialSupply", "_decimals", "_name", "_symbol")
     // You must enter the given values. Otherwise, your transaction will be rejected.
     const params = {
-        initialSupply: IconConverter.toHex(initialSupply),
-        decimals: IconConverter.toHex(decimals),
-        name: tokenName,
-        symbol: tokenSymbol
+        _initialSupply: IconConverter.toHex(initialSupply),
+        _decimals: IconConverter.toHex(decimals),
+        _name: tokenName,
+        _symbol: tokenSymbol
     }
     const installScore = MockData.SCORE_INSTALL_ADDRESS;
     const stepLimit = await this.getMaxStepLimit();
@@ -402,8 +402,8 @@ async buildDeployTransaction() {
         .content(`0x${this.content}`)
         .params(params)
         .version(version)
-        .build();        
-    return transaction; 
+        .build();
+    return transaction;
 }
 ```
 
@@ -463,7 +463,7 @@ You can get a step cost to send token as follows.
 ```javascript
 async getDefaultStepCost() {
     const { CallBuilder } = IconBuilder;
-    
+
     // Get apis that provides Governance SCORE
     // GOVERNANCE_ADDRESS : cx0000000000000000000000000000000000000001
     const governanceApi = await this.iconService.getScoreApi(MockData.GOVERNANCE_ADDRESS).execute();
@@ -506,7 +506,7 @@ async buildTokenTransaction() {
         _to: MockData.WALLET_ADDRESS_2,
         _value: IconConverter.toHex(value)
     }
-    
+
     //Enter transaction information
     const tokenTransactionBuilder = new CallTransactionBuilder();
     const transaction = tokenTransactionBuilder
@@ -518,7 +518,7 @@ async buildTokenTransaction() {
         .method(methodName)
         .params(params)
         .version(version)
-        .build();        
+        .build();
     return transaction;
 }
 ```
@@ -652,13 +652,13 @@ async syncBlock(block) {
 
                     const tokenName = await this.getTokenName(transaction.to);
                     const symbol = await this.getTokenSymbol(transaction.to);
-                    
+
                     document.getElementById("S03-2").innerHTML += `<li>${block.height} - [${tokenName} - ${symbol}] status: ${txResult.status === 1 ? 'success' : 'failure'}  |  amount: ${value}</li>`;
                 }
             }
         })
     )
-    
+
     this.prevHeight = block.height;
 }
 
@@ -697,5 +697,5 @@ async getTokenSymbol(to) {
 
 ## References
 
-- [ICON JSON-RPC API v3](https://icondev.readme.io/docs/json-rpc-specification) 
+- [ICON JSON-RPC API v3](https://icondev.readme.io/docs/json-rpc-specification)
 - [IRC2 Specification](https://github.com/icon-project/IIPs/blob/master/IIPS/iip-2.md)
