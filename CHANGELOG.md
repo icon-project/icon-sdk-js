@@ -1,5 +1,11 @@
 # Changelog
 
+### Version 1.5.3 - December 23, 2023
+
+#### Changes
+- Upgrade dependencies to fix vulnerabilities
+- Update token deployment example
+
 ### Version 1.5.2 - August 30, 2023
 
 #### Changes
