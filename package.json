@@ -96,7 +96,7 @@
     "secp256k1": "5.0.1",
     "utf-8-validate": "^6.0.3",
     "utf8": "^3.0.0",
-    "uuid": "^9.0.0",
+    "uuid": "^14.0.0",
     "ws": "^8.13.0"
   },
   "browser": "./build/icon-sdk-js.web.min.js"
